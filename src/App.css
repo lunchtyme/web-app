@@ -1,3 +1,6 @@
+@import './index.css';
+
+/* Root Element Styling */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,19 +8,24 @@
   text-align: center;
 }
 
+/* Logo Styling */
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
+/* Logo Hover Effects */
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em var(--logo-hover-color-default, #646cffaa));
 }
 
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em var(--logo-hover-color-react, #61dafbaa));
+}
+
+/* Spin Animation for Logo */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -27,16 +35,40 @@
   }
 }
 
+/* Reduced Motion Preference */
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
 }
 
+/* Card Styling */
 .card {
   padding: 2em;
 }
 
+/* Read The Docs Styling */
 .read-the-docs {
   color: #888;
+}
+
+/* Custom Scrollbar Styles */
+@layer utilities {
+  .scrollbar {
+    @apply scrollbar-thumb-gray-400 scrollbar-track-gray-200 scrollbar-thin; /* Tailwind scrollbar classes */
+  }
+}
+
+/* Apply Custom Scrollbar Styles Globally */
+body {
+  @apply scrollbar;
+}
+
+/* Additional Scrollbar States */
+.scrollbar-thumb-hover {
+  @apply scrollbar-thumb-gray-600; /* Darker color for hover state */
+}
+
+.scrollbar-thumb-active {
+  @apply scrollbar-thumb-gray-800; /* Even darker color for active state */
 }

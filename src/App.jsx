@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import HomePage from './components/pages/HomePage';
+import OnboardingOptions from './components/onboarding/OnboardingOptions';
+import EmployeeForm from './components/forms/EmployeeForm';
+import CompanyForm from './components/forms/CompanyForm';
+import AdminForm from './components/forms/AdminForm';
+import { Routes, Route } from 'react-router-dom';
+import SucessPage from './components/pages/SucessPage';
+// import LogInPage from './components/LogInPage';
+import CreateAccount from './components/Account/CreateAccount';
+import LogInPage from './components/pages/LoginPage';
+import VerifyOTP from './components/pages/VerifyOTP';
+import AdminDashboard from './Admin/AdminDasboard';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/onboarding" element={<OnboardingOptions />} />
+        <Route path="/signup" element={<CreateAccount />} />
+        <Route path="/employee" element={<EmployeeForm />} />
+        <Route path="/company" element={<CompanyForm />} />
+        <Route path="/admin" element={<AdminForm />} />
+        <Route path="/success" element={<SucessPage />} />
+        <Route path="/login" element={<LogInPage />} />
+        <Route path="/verify" element={<VerifyOTP />} />
 
-export default App
+        {/**Private route */}
+        <Route path="/dashboard" element={<AdminDashboard />} />
+
+        {/* <Route path="/login" element={<LogInPage />} /> */}
+      </Routes>
+    </>
+  );
+};
+
+export default App;
