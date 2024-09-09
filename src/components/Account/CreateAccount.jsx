@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import AccountChooser from './AccountChooser'; // Import the AccountChooser component
-import EmployeeForm from './EmployeeForm'; // Import the EmployeeForm component
-import CompanyForm from './CompanyForm'; // Import the CompanyForm component
+import EmployeeForm from '../forms/EmployeeForm'; // Import the EmployeeForm component
+import CompanyForm from '../forms/CompanyForm'; // Import the CompanyForm component
 
 const CreateAccount = () => {
   const [step, setStep] = useState(1); // State to track the current step of the form
@@ -23,17 +23,14 @@ const CreateAccount = () => {
     <>
       {/* Header with logo and back button */}
       <div className="p-10 flex justify-evenly bg-gray-200 align-middle">
-        <Link to="/"> {/* Link back to the home page */}
+        <Link to="/">
+          {' '}
+          {/* Link back to the home page */}
           <h2 className="text-2xl font-semibold cursor-pointer">
             launch<span className="text-green-600">tyme</span>
           </h2>
         </Link>
-        <button
-          onClick={handleBack} // Go back to the first step when clicked
-          className="btn bg-green-600 text-white w-[10rem] text-xl font-semibold"
-        >
-          Back
-        </button>
+      
       </div>
 
       {/* Main content area */}

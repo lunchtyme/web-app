@@ -1,18 +1,16 @@
 import React from 'react';
-import HomePage from './components/HomePage';
-import OnboardingOptions from './components/OnboardingOptions';
-import EmployeeForm from './components/EmployeeForm';
-import CompanyForm from './components/CompanyForm';
-import AdminForm from './components/AdminForm';
+import HomePage from './components/pages/HomePage';
+import OnboardingOptions from './components/onboarding/OnboardingOptions';
+import EmployeeForm from './components/forms/EmployeeForm';
+import CompanyForm from './components/forms/CompanyForm';
+import AdminForm from './components/forms/AdminForm';
 import { Routes, Route } from 'react-router-dom';
-import SucessPage from './components/SucessPage';
+import SucessPage from './components/pages/SucessPage';
 // import LogInPage from './components/LogInPage';
-import CreateAccount from './components/CreateAccount';
-import LogInPage from './components/LoginPage';
-import VerifyOTP from './components/verifyOTP';
-import MainDashboard from './Admin/MainDashboard';
-
-
+import CreateAccount from './components/Account/CreateAccount';
+import LogInPage from './components/pages/LoginPage';
+import VerifyOTP from './components/pages/VerifyOTP';
+import AdminDashboard from './Admin/AdminDasboard';
 
 const App = () => {
   return (
@@ -27,7 +25,9 @@ const App = () => {
         <Route path="/success" element={<SucessPage />} />
         <Route path="/login" element={<LogInPage />} />
         <Route path="/verify" element={<VerifyOTP />} />
-        <Route path="/dashboard" element={<MainDashboard />} />
+
+        {/**Private route */}
+        <Route path="/dashboard" element={<AdminDashboard />} />
 
         {/* <Route path="/login" element={<LogInPage />} /> */}
       </Routes>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; // Import React and useState hook
 import axios from 'axios'; // Import Axios for making HTTP requests
 import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate for routing
-import { localStorageHelper } from '../utils/localStorage'; // Import custom localStorage helper
+import { localStorageHelper } from '../../utils/localStorage';
 
 // Define the VerifyOTP component
 const VerifyOTP = () => {
@@ -139,21 +139,6 @@ const VerifyOTP = () => {
         </button>
       </div>
 
-
-      <div className="p-10 flex justify-evenly bg-gray-200 align-middle">
-        <Link to="/">
-          {/* Link back to the home page */}
-          <h2 className="text-2xl font-semibold cursor-pointer">
-            launch<span className="text-green-600">tyme</span>
-          </h2>
-        </Link>
-        <button
-          onClick={handleGoBack} // Go back to the first step when clicked
-          className="btn bg-green-600 text-white w-[10rem] text-xl font-semibold"
-        >
-          Back
-        </button>
-      </div>
 
       <div className="min-h-screen flex items-center justify-center bg-gray-200">
         {' '}

@@ -1,8 +1,8 @@
 // Import necessary modules from React and other libraries
 import React, { useState } from 'react'; // React core and useState for state management
 import { useNavigate } from 'react-router-dom'; // useNavigate for navigation between routes
-import handleCreateUserSubmit from '../utils/handleCreateUserSubmit'; // Custom function to handle form submission
-import { localStorageHelper } from '../utils/localStorage'; // Helper for local storage operations
+import handleCreateUserSubmit from '../../utils/handleCreateUserSubmit'; // Custom function to handle form submission
+import { localStorageHelper } from '../../utils/localStorage'; // Helper for local storage operations
 
 // Define the CompanyForm component
 const CompanyForm = () => {
@@ -72,7 +72,7 @@ const CompanyForm = () => {
     <div className="min-h-screen flex items-center justify-center">
       {' '}
       {/* Center the form on the screen */}
-      <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg">
+      <div className="w-full max-w-lg p-6 bg-gray-200 rounded-lg">
         {' '}
         {/* Form container */}
         <div className="p-5 text-center">
@@ -88,32 +88,60 @@ const CompanyForm = () => {
         <form className="space-y-4" onSubmit={handleSubmit}>
           {/* Array of form fields with labels and input fields */}
           {[
-            { label: 'Company Email', name: 'email', type: 'email', placeholder: 'Comapany Email' },
-            { label: 'Password', name: 'password', type: 'password', placeholder: 'Password' },
-            { label: 'Name', name: 'name', type: 'text', placeholder: 'Company Name' },
-            { label: 'Website', name: 'website', type: 'text', placeholder: 'Website' },
-            { label: 'Dial Code', name: 'dial_code', type: 'text', placeholder: 'Dial Code' },
             {
-              label: 'Phone Number',
+              label: 'COMPANY NAME',
+              name: 'name',
+              type: 'text',
+              placeholder: 'Enter company name',
+            },
+            {
+              label: 'COMPANY EMAIL',
+              name: 'email',
+              type: 'email',
+              placeholder: 'Type company email',
+            },
+            {
+              label: 'COMPANY WEBSITE',
+              name: 'website',
+              type: 'text',
+              placeholder: 'Enter company website',
+            },
+            {
+              label: 'PASSWORD',
+              name: 'password',
+              type: 'password',
+              placeholder: 'Enter a secure password',
+            },
+            {
+              label: 'DIAL CODE',
+              name: 'dial_code',
+              type: 'text',
+              value: '+234',
+              placeholder: '+234',
+              isReadonly: true,
+            },
+            {
+              label: 'PHONE NUMBER',
               name: 'phone_number',
               type: 'text',
-              placeholder: 'Phone Number',
+              placeholder: 'Enter phone number',
             },
-          ].map(({ label, name, type, placeholder }) => (
+          ].map(({ label, name, type, placeholder, isReadonly, value }) => (
             // Map through fields to render input elements
-            <div key={name} className="form-control">
+            <div key={name} className="form-control border-4">
               <label className="label">
-                <span className="label-text text-xl font-semibold">{label}</span>
+                <span className="label-text text-[1rem] font-[500]">{label}</span>
               </label>
               <input
                 type={type}
                 name={name}
                 placeholder={placeholder}
-                className="input input-bordered"
-                value={formData[name]}
+                className="input input-bordered w-[30rem] h-[3rem] bg-gray-100 "
+                value={value ? value : formData[name]}
                 onChange={handleChange}
                 required
                 aria-label={label}
+                {...(isReadonly ? { disabled: true } : {})}
               />
             </div>
           ))}

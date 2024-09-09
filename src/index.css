@@ -1,27 +1,66 @@
+/* Tailwind CSS Directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*, *::after, *::before {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    font-family: "Inter-var", sans-serif;
+/* Global Reset and Styles */
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Inter-var', sans-serif;
+  scroll-behavior: smooth;
+}
+
+@layer utilities {
+  .scrollbar-custom {
+    @apply scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-200;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 10px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: #d0d0d0;
+    border-radius: 10px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background-color: #b0b0b0;
+  }
+}
+
+html {
+  scrollbar-color: #d0d0d0 #f0f0f0;
+  scrollbar-width: thin;
+}
+
+body {
+  @apply scrollbar-custom;
+}
+
+/* Font Face Definitions */
+@font-face {
+  font-family: 'Inter-var';
+  src: url('../public/fonts/Inter-Var.730e8169.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'Inter-var';
-    src: url('../public/fonts/Inter-Var.730e8169.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'lyon-text';
-    src: url('../public/fonts/LyonText-Regular-Web.d7bfb4be.woff2') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  
+  font-family: 'lyon-text';
+  src: url('../public/fonts/LyonText-Regular-Web.d7bfb4be.woff2') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

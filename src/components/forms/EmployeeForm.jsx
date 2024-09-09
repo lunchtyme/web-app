@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import handleCreateUserSubmit from '../utils/handleCreateUserSubmit';
-import { localStorageHelper } from '../utils/localStorage';
+import handleCreateUserSubmit from '../../utils/handleCreateUserSubmit';
+import { localStorageHelper } from '../../utils/localStorage';
 
 const EmployeeForm = () => {
   const navigate = useNavigate();
@@ -13,13 +13,13 @@ const EmployeeForm = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    account_type: '',
+    account_type: 'Individual',
     first_name: '',
     last_name: '',
-    dial_code: '',
     phone_number: '',
     invitation_code: '',
     lunch_time: '',
+    dial_code:'+234',
     time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
 
@@ -36,21 +36,20 @@ const EmployeeForm = () => {
     setIsLoading(true);
     setError(null);
     console.log('Form data:', formData);
+
     try {
       const createEmployeeAPIResponse = await handleCreateUserSubmit(formData);
 
-      if (createEmployeeAPIResponse && createEmployeeAPIResponse.data) {
+      if (createEmployeeAPIResponse?.data) {
         console.log('API Response for Create Employee:', createEmployeeAPIResponse);
         setFormData({
           email: '',
           password: '',
-          account_type: '',
           first_name: '',
           last_name: '',
           dial_code: '',
           phone_number: '',
           invitation_code: '',
-          lunch_time: '',
           time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone, // Reset time_zone
         });
 
@@ -58,11 +57,11 @@ const EmployeeForm = () => {
         navigate('/verify');
       } else {
         console.log('API Response for Create Employee:', createEmployeeAPIResponse);
-        setError(createEmployeeAPIResponse.message || 'An error occurred');
+        setError(createEmployeeAPIResponse?.message || 'An error occurred');
       }
     } catch (err) {
-      console.log('Error creating employee:', err);
-      setError(err.message || 'An error occurred');
+      console.error('Error creating employee:', err);
+      setError(err?.message || 'An error occurred');
     } finally {
       setIsLoading(false);
     }
@@ -70,9 +69,15 @@ const EmployeeForm = () => {
 
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg mt-24  mb-24">
-          <div className="p-5 text-center">
+      <div className="min-h-screen flex items-center justify-center p-3">
+        <div className="w-full max-w-lg p-6 bg-gray rounded-lg mt-24 mb-24">
+          <div className="p-5 text-center flex justify-between align-middle">
+            <button
+              onClick={handleGoBack} // Go back when clicked
+              className="btn bg-green-600 hover:bg-green-500 hv text-white text-xl font-semibold rounded-full"
+            >
+              <img src="images/arrow.svg" className="w-[1.5rem]" alt="" />
+            </button>
             <h2 className="text-3xl font-semibold">
               Sign up as an <span className="text-green-700">Employee</span>
             </h2>
@@ -81,34 +86,46 @@ const EmployeeForm = () => {
           <form className="space-y-4" onSubmit={handleSubmit}>
             {error && <div className="text-red-500 mb-4">{error}</div>}
             {[
-              { label: 'First Name', name: 'first_name', type: 'text', placeholder: 'First Name' },
-              { label: 'Last Name', name: 'last_name', type: 'text', placeholder: 'Last Name' },
-              { label: 'Work email', name: 'email', type: 'email', placeholder: 'Work email' },
-              { label: 'Password', name: 'password', type: 'password', placeholder: 'Password' },
-
-              { label: 'Dial Code', name: 'dial_code', type: 'text', placeholder: 'Dial Code' },
               {
-                label: 'Phone Number',
-                name: 'phone_number',
+                label: 'FIRST NAME',
+                name: 'first_name',
                 type: 'text',
-                placeholder: 'Phone Number',
+                placeholder: 'Enter your first name',
               },
               {
-                label: 'Invitation Code',
+                label: 'LAST NAME',
+                name: 'last_name',
+                type: 'text',
+                placeholder: 'Enter your last name',
+              },
+              {
+                label: 'WORK EMAIL',
+                name: 'email',
+                type: 'email',
+                placeholder: 'Type your work email address',
+              },
+              {
+                label: 'PASSWORD',
+                name: 'password',
+                type: 'password',
+                placeholder: 'Enter a secure password',
+              },
+              {
+                label: 'INVITE CODE',
                 name: 'invitation_code',
                 type: 'text',
-                placeholder: 'Invitation Code',
+                placeholder: 'Provide invite code',
               },
             ].map(({ label, name, type, placeholder }) => (
               <div key={name} className="form-control">
                 <label className="label">
-                  <span className="label-text text-xl font-semibold">{label}</span>
+                  <span className="label-text text-[1rem] font-[500]">{label}</span>
                 </label>
                 <input
                   type={type}
                   name={name}
                   placeholder={placeholder}
-                  className="input input-bordered"
+                  className="input input-bordered w-[30rem] h-[3rem] bg-gray-100"
                   value={formData[name]}
                   onChange={handleChange}
                   required
@@ -116,6 +133,28 @@ const EmployeeForm = () => {
                 />
               </div>
             ))}
+            <div className="flex gap-2 w-[30rem]">
+              <div className="flex-1">
+                <label className="block text-[1rem] font-[500] mb-1">DIAL CODE</label>
+                <input
+                  type="text"
+                  value="+234"
+                  onChange={handleChange}
+                  className="input input-bordered w-full h-[3rem] bg-gray-100"
+                  disabled
+                />
+              </div>
+              <div className="flex-[3]">
+                <label className="block text-[1rem] font-[500] mb-1">PHONE NUMBER</label>
+                <input
+                  name="phone_number"
+                  type="text"
+                  onChange={handleChange}
+                  value={formData.phone_number}
+                  className="input input-bordered w-full h-[3rem] bg-gray-100"
+                />
+              </div>
+            </div>
             <div className="form-control mt-6">
               <button
                 type="submit"
