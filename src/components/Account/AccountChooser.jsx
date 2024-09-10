@@ -3,18 +3,20 @@ import { CheckIcon } from '@heroicons/react/20/solid'; // Ensure you have Heroic
 
 const AccountChooser = ({ handleSelect, selected }) => {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="flex justify-center">
       <section className="bg-gray-200 p-10 rounded-lg w-[40rem] flex flex-col items-center">
         <h2 className="text-2xl font-semibold mb-1">How are you planning to use Lunchtyme?</h2>
         <p className="text-lg mb-4 text-gray-700 font-[600]">
           We'll streamline your setup experience accordingly.
         </p>
         {/* Container for selectable cards */}
-        <div className="flex gap-10 justify-center mt-10">
+        <div className="flex gap-10 justify-center">
           {/* Individual Account Option */}
           <label
             htmlFor="account_type_individual"
-            className={`relative cursor-pointer w-[18rem] h-[24rem] bg-white p-5 flex flex-col gap-4 rounded-xl justify-center items-center transition-all duration-300 border-2 ${
+            className={`relative cursor-pointer w-[18rem] h-[24rem] bg-white p-5 flex
+              flex-col gap-4 rounded-xl justify-center items-center transition-all duration-300
+              border-2 ${
               selected === 'Individual'
                 ? 'border-green-500 shadow-md'
                 : 'border-transparent hover:border-4 hover:border-green-700'
@@ -40,7 +42,7 @@ const AccountChooser = ({ handleSelect, selected }) => {
               alt="Individual Account"
               className="w-[8rem] h-[8rem] object-contain mx-auto"
             />
-            <h2 className="text-xl font-semibold text-center">An Individual</h2>
+            <h2 className="text-xl font-semibold text-center">An Employee</h2>
           </label>
 
           {/* Company Account Option */}

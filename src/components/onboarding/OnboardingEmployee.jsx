@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import APIHelper from '../../utils/APIHelper'
 
 const OnboardingEmployee = () => {
   const [formData, setFormData] = useState({
@@ -23,12 +24,12 @@ const OnboardingEmployee = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        'https://lunchtyme-api.onrender.com/auth/onboard',
+      const response = await APIHelper.makeAPICall.post(
+        'auth/onboard',
         formData,
       );
       if (response.status === 200) {
-        navigate('/success'); // Redirect to the success page or desired route
+        navigate('/dashboard'); // Redirect to the success page or desired route
       }
     } catch (error) {
       console.error('Error submitting the form', error);

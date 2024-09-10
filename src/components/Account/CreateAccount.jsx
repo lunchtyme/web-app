@@ -22,19 +22,19 @@ const CreateAccount = () => {
   return (
     <>
       {/* Header with logo and back button */}
-      <div className="p-10 flex justify-evenly bg-gray-200 align-middle">
+      <div className="p-5 flex justify-left bg-gray-200 align-middle">
         <Link to="/">
           {' '}
           {/* Link back to the home page */}
-          <h2 className="text-2xl font-semibold cursor-pointer">
-            launch<span className="text-green-600">tyme</span>
+          <h2 className="text-4xl font-bold cursor-pointer p-5">
+            Lunch<span className="text-green-600">tyme</span>
           </h2>
         </Link>
       
       </div>
 
       {/* Main content area */}
-      <div className="min-h-screen flex flex-row items-center justify-center bg-gray-200">
+      <div className="h-[100.5vh] flex flex-row items-center justify-center bg-gray-200 border-4">
         {/* Step 1: AccountChooser component */}
         {step === 1 && <AccountChooser handleSelect={handleSelect} selected={selected} />}
 

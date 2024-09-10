@@ -30,7 +30,7 @@ const OnboardingCompany = () => {
       );
       if (response.status === 200) {
 
-        navigate('/success'); // Redirect to the success page or desired route
+        navigate('/dashboard'); // Redirect to the success page or desired route
       }
     } catch (error) {
       console.error('Error submitting the form', error);
@@ -62,7 +62,7 @@ const OnboardingCompany = () => {
                 value={formData.address_line_1}
                 onChange={handleChange}
                 placeholder="Enter street address 1"
-                className="input input-bordered focus:outline-none h-[1rem]"
+                className="input input-bordered focus:outline-none"
                 required
               />
             </div>
