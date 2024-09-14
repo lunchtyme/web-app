@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        custom: ['Inter-var', 'lyon-text'],
+        custom: ['Inter-var', 'lyon-text','wise-sans'],
       },
       scale: {
         '110': '1.10',  // Adds a scale of 110%

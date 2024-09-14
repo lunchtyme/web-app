@@ -69,14 +69,12 @@ const CompanyForm = () => {
 
   // Render the form component
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      {' '}
+    <div className="flex justify-center">
       {/* Center the form on the screen */}
-      <div className="w-full max-w-lg p-6 bg-gray-200 rounded-lg">
-        {' '}
+      <div className="w-full p-6 bg-gray-200 rounded-lg mb-24">
         {/* Form container */}
         <div className="p-5 text-center">
-          {' '}
+
           {/* Form header */}
           <h2 className="text-3xl font-semibold">
             Sign up as a <span className="text-green-700">Company</span>
@@ -128,7 +126,7 @@ const CompanyForm = () => {
             },
           ].map(({ label, name, type, placeholder, isReadonly, value }) => (
             // Map through fields to render input elements
-            <div key={name} className="form-control border-4">
+            <div key={name} className="form-control border-4 border-red-600">
               <label className="label">
                 <span className="label-text text-[1rem] font-[500]">{label}</span>
               </label>

@@ -69,8 +69,8 @@ const EmployeeForm = () => {
 
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center p-3">
-        <div className="w-full max-w-lg p-6 bg-gray rounded-lg mt-24 mb-24">
+      <div className="flex justify-center p-3">
+        <div className="w-full p-6 bg-gray rounded-lg h-auto mb-10">
           <div className="p-5 text-center flex justify-between align-middle">
             <button
               onClick={handleGoBack} // Go back when clicked

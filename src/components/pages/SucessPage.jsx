@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SucessPage = () => {
-  return <div>SuucessPage</div>;
+  return <div>SuccessPage</div>;
 };
 
 export default SucessPage;

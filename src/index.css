@@ -64,3 +64,10 @@ body {
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'wise-sans';
+  src: url('../public/fonts/WiseSans-Heavy.4bf7de7a\ \(1\).woff2') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
