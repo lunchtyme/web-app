@@ -84,7 +84,16 @@ const Invitations = () => {
           <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content flex flex-col p-7">
             <div className="p-5 pt-10 border-2 w-full mt-10">
-              <h1 className="text-2xl">Invitations</h1>
+              <div className="flex items center align-middle p-2 justify-between">
+                <h1 className="text-2xl">Invitations</h1>
+                <button
+                  onClick={toggleModal}
+                  className="px-4 py-2 bg-green-600 text-white rounded text-lg"
+                >
+                  Invite Employee
+                </button>
+              </div>
+
               <div className="overflow-x-auto mt-10">
                 <table className="table">
                   <thead>
@@ -103,12 +112,6 @@ const Invitations = () => {
                           <p className="text-xl text-gray-500">
                             You haven't sent any invitations yet!
                           </p>
-                          <button
-                            onClick={toggleModal}
-                            className="mt-4 px-4 py-2 bg-green-600 text-white rounded text-lg"
-                          >
-                            Invite Employee
-                          </button>
                         </td>
                       </tr>
                     ) : (

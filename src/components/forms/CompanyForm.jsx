@@ -1,13 +1,13 @@
-// Import necessary modules from React and other libraries
-import React, { useState } from 'react'; // React core and useState for state management
-import { useNavigate } from 'react-router-dom'; // useNavigate for navigation between routes
-import handleCreateUserSubmit from '../../utils/handleCreateUserSubmit'; // Custom function to handle form submission
-import { localStorageHelper } from '../../utils/localStorage'; // Helper for local storage operations
 
-// Define the CompanyForm component
+import React, { useState } from 'react'; 
+import { useNavigate } from 'react-router-dom'; 
+import handleCreateUserSubmit from '../../utils/handleCreateUserSubmit'; 
+import { localStorageHelper } from '../../utils/localStorage'; 
+
+
 const CompanyForm = () => {
-  const navigate = useNavigate(); // Hook for navigation
-  // Initialize form data state with empty fields
+  const navigate = useNavigate();
+ 
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -16,19 +16,19 @@ const CompanyForm = () => {
     dial_code: '',
     phone_number: '',
   });
-  const [loading, setLoading] = useState(false); // State to track loading status
-  const [error, setError] = useState(''); // State to track errors
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(''); 
 
-  // Handle input changes and update form data state
+
   const handleChange = (e) => {
-    const { name, value } = e.target; // Destructure the name and value from the event target
-    setFormData({ ...formData, [name]: value }); // Update formData with the new value
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value }); 
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    setLoading(true); // Set loading state to true when submitting
+    e.preventDefault(); 
+    setLoading(true); 
 
     try {
       // Call the API to create a user with form data
@@ -36,8 +36,8 @@ const CompanyForm = () => {
 
       // Check if the API response contains data
       if (createEmployeeAPIResponse && createEmployeeAPIResponse.data) {
-        console.log('API Response for Create Employee:', createEmployeeAPIResponse); // Log the API response
-        // Reset form data to initial empty state
+        console.log('API Response for Create Employee:', createEmployeeAPIResponse);
+      
         setFormData({
           email: '',
           password: '',
@@ -49,25 +49,25 @@ const CompanyForm = () => {
           dial_code: '',
           phone_number: '',
         });
-        // Save the email to local storage
+      
         localStorageHelper.saveToLocalStorage('acct_mail', formData.email);
-        // Navigate to the verify page
+       
         navigate('/verify');
       } else {
-        // If no data, set error message from API response or a default message
+       
         console.log('API Response for Create Employee:', createEmployeeAPIResponse);
         setError(createEmployeeAPIResponse.message || 'An error occurred');
       }
     } catch (error) {
-      // Handle any errors during submission
+  
       console.error('Error submitting form:', error);
       setError('An error occurred. Please try again.');
     } finally {
-      setLoading(false); // Set loading state back to false
+      setLoading(false); 
     }
   };
 
-  // Render the form component
+
   return (
     <div className="flex justify-center">
       {/* Center the form on the screen */}
@@ -125,7 +125,7 @@ const CompanyForm = () => {
               placeholder: 'Enter phone number',
             },
           ].map(({ label, name, type, placeholder, isReadonly, value }) => (
-            // Map through fields to render input elements
+          
             <div key={name} className="form-control border-4 border-red-600">
               <label className="label">
                 <span className="label-text text-[1rem] font-[500]">{label}</span>

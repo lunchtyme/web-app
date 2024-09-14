@@ -1,31 +1,31 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
-import AccountChooser from './AccountChooser'; // Import the AccountChooser component
-import EmployeeForm from '../forms/EmployeeForm'; // Import the EmployeeForm component
-import CompanyForm from '../forms/CompanyForm'; // Import the CompanyForm component
+import { Link } from 'react-router-dom'; 
+import AccountChooser from './AccountChooser'; 
+import EmployeeForm from '../forms/EmployeeForm'; 
+import CompanyForm from '../forms/CompanyForm'; 
 
 const CreateAccount = () => {
-  const [step, setStep] = useState(1); // State to track the current step of the form
-  const [selected, setSelected] = useState(''); // State to store the selected account type
+  const [step, setStep] = useState(1);
+  const [selected, setSelected] = useState(''); 
 
-  // Handle selection of account type and proceed to the next step
+
   const handleSelect = (value) => {
-    setSelected(value); // Set the selected account type ('Individual' or 'Company')
-    setStep(2); // Move to the second step of the form
+    setSelected(value);
+    setStep(2); 
   };
 
-  // Handle navigation back to the first step
+ 
   const handleBack = () => {
-    setStep(1); // Reset to the first step
+    setStep(1); 
   };
 
   return (
     <>
-      {/* Header with logo and back button */}
+    
       <div className="p-5 flex justify-left bg-gray-200 align-middle">
         <Link to="/">
           {' '}
-          {/* Link back to the home page */}
+         
           <h2 className="text-4xl font-bold cursor-pointer p-5">
             Lunch<span className="text-green-600">tyme</span>
           </h2>
