@@ -7,11 +7,13 @@ const EmployeeOrders = () => {
   return (
     <>
       <section className="p-5">
-        <div className="p-5">
-          <h2 className="text-2xl">Orders</h2>
-        </div>
-        <div>
-          <Tables2 headers={headers} data={data} emptyMessage={'No orders yet!'} />
+        <div className=" bg-gray-50 p-5 mt-10">
+          <div className="p-5">
+            <h2 className="text-2xl">Orders</h2>
+          </div>
+          <div>
+            <Tables2 headers={headers} data={data} emptyMessage={'No orders yet!'} />
+          </div>
         </div>
       </section>
     </>

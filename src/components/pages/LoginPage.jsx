@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from 'react'; 
-import axios from 'axios'; 
-import { useNavigate, Link } from 'react-router-dom'; 
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import APIHelper from '../../utils/APIHelper'; 
+import APIHelper from '../../utils/APIHelper';
 
 const LoginForm = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    identifier: '', 
-    password: '', 
+    identifier: '',
+    password: '',
   });
   const [accountType, setAccountType] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
 
-  const [loading, setLoading] = useState(false); 
-  const [error, setError] = useState(null); 
-
- 
   const handleChange = (e) => {
-    const { name, value } = e.target; 
-    setFormData({ ...formData, [name]: value }); 
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setShowToast(false);
+    setShowSuccessToast(false);
 
     try {
-     
       const response = await APIHelper.makeAPICall.post('auth/login', formData);
 
       if (response.data.success) {
@@ -38,47 +39,46 @@ const LoginForm = () => {
         const result = await APIHelper.makeSecureAPICall(accessTokenHash).get('auth/me');
         const { account_type } = result.data.data;
 
-        console.log(accountType);
+        setShowSuccessToast(true); // Show success toast
 
-        if (account_type === 'Admin' || response.data.data.onboarded) {
-          navigate('/admin/overview');
-        } else {
-          navigate('/onboarding');
-        }
+        setTimeout(() => {
+          if (account_type === 'Admin' || response.data.data.onboarded) {
+            navigate('/admin/overview');
+          } else {
+            navigate('/onboarding');
+          }
+        }, 1000); // Give 1 second for the success toast to display
       } else {
         setError(response.data.message || 'Login failed. Please check your credentials.');
+        setShowToast(true); // Show error toast on failure
       }
     } catch (err) {
       console.error('Error logging in:', err);
-
       setError(err.response?.data?.message || 'An error occurred while logging in.');
+      setShowToast(true); // Show error toast on failure
     } finally {
       setLoading(false);
     }
   };
 
-  // useEffect(() => {
-  //   // fetch api
-  //   const fetchAccountType = async () => {
-  //     try {
-  //       // Replace endpoint
-  //       const response = await APIHelper.makeSecureAPICall(accessTokenHash).get('auth/me');
-  //       const { account_type } = response.data.data;
-  //       console.log(response);
+  // Manage hiding the toasts after 5 seconds
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
 
-  //       setAccountType(account_type);
-  //     } catch (error) {
-  //       console.error('Error fetching account type:', error.data);
-  //     }
-  //   };
-
-  //   fetchAccountType();
-  // }, [accessTokenHash]); // Add token as a dependency in case it changes
-
-  // Handle 'Back' button click to navigate back one page
-  const handleGoBack = () => {
-    navigate(-1); // Navigate back one step in history
-  };
+  useEffect(() => {
+    if (showSuccessToast) {
+      const timer = setTimeout(() => {
+        setShowSuccessToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessToast]);
 
   return (
     <>
@@ -98,8 +98,6 @@ const LoginForm = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email input field */}
             <div className="form-control">
-              {error && <p className="text-red-500 text-sm">{error}</p>}{' '}
-              {/* Display error if exists */}
               <label className="label">
                 <span className="label-text text-lg font-[500]">EMAIL</span>
               </label>
@@ -138,11 +136,29 @@ const LoginForm = () => {
               } text-white text-xl font-semibold`}
               disabled={loading}
             >
-              {loading ? 'Logging in...' : 'Login'} 
+              {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
         </div>
       </div>
+
+      {/* Error Toast */}
+      {showToast && (
+        <div className="toast toast-end toast-top">
+          <div className="alert alert-error text-white p-5">
+            <span>{error}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Success Toast */}
+      {showSuccessToast && (
+        <div className="toast toast-end toast-top">
+          <div className="alert alert-success text-white p-5">
+            <span>Login successful! Redirecting...</span>
+          </div>
+        </div>
+      )}
     </>
   );
 };

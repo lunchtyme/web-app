@@ -8,8 +8,6 @@ const CartContainer = ({
   onIncrementItem,
   onDecrementItem,
 }) => {
-  const priceData = total;
-  console.log(priceData);
   return (
     <div className="bg-white shadow-2xl w-[35rem] rounded-lg p-5 h-auto ml-auto">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-3">Shopping Cart</h2>
@@ -21,7 +19,7 @@ const CartContainer = ({
             key={index}
             className="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm"
           >
-            <div className="flex items-center gap-4 ">
+            <div className="flex items-center gap-4">
               <div className="text-lg font-semibold text-gray-700">{item.name}</div>
               <div className="flex items-center">
                 <button
@@ -45,9 +43,9 @@ const CartContainer = ({
               </span>
               <button
                 onClick={() => onRemoveItem(index)}
-                className="w-[3rem] h-[3rem] bg-gray-300 rounded-full hover:bg-gray-2 00"
+                className="w-[3rem] h-[3rem] bg-gray-300 rounded-full hover:bg-gray-400"
               >
-                <img src="/images/cancel.svg" alt="" className="w-[1.5rem] mx-auto" />
+                <img src="/images/cancel.svg" alt="Remove" className="w-[1.5rem] mx-auto" />
               </button>
             </div>
           </li>

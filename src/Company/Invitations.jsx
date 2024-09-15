@@ -81,9 +81,8 @@ const Invitations = () => {
     <>
       <section className="bg-gray-200 h-[100vh]">
         <div className="drawer lg:drawer-open">
-          <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content flex flex-col p-7">
-            <div className="p-5 pt-10 border-2 w-full mt-10">
+            <div className="p-5 pt-10 w-full mt-10 bg-gray-50">
               <div className="flex items center align-middle p-2 justify-between">
                 <h1 className="text-2xl">Invitations</h1>
                 <button

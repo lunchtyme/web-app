@@ -6,7 +6,10 @@ const Transactions = () => {
   const invitations = [];
   return (
     <>
-      <section>
+      <section className='p-6 bg-gray-50 rounded'>
+        <div>
+          <h2 className='text-2xl'>Transactions</h2>
+        </div>
         <Table
         headers={headers} 
         data={invitations} 

@@ -7,37 +7,43 @@ import PaginationComponent from '../utils/PaginationComponent';
 const Employees = () => {
   const headers = ['Name', 'Email', 'Date Joined', 'Status', 'Balance'];
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-  const token = Cookies.get('esp_lunchtyme_id');
-
-  //query
   const [query, setQuery] = useState('');
   const [result, setResult] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
+  const [message, setMessage] = useState('');
   const [error, setError] = useState(null);
-
-  //pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const token = Cookies.get('esp_lunchtyme_id');
 
-  //handle input
-  const handleInput = (e) => {
-    setQuery(e.target.value);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await APIHelper.makeSecureAPICall(token).get('users/employees?limit=10');
+        setData(response.data.data.list);
+      } catch (error) {
+        setMessage('Error fetching employees');
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //submit form
+    fetchData();
+  }, [token]);
+
   const handleSearch = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading2(true);
     setError(null);
 
     try {
-      const response2 = await APIHelper.makeSecureAPICall(token).get('users/employees?limit=5', {
+      const response = await APIHelper.makeSecureAPICall(token).get('users/employees', {
         params: { query },
       });
-      console.log(response2);
-      setResult(response2.data.data.list);
+      setResult(response.data.data.list);
       setCurrentPage(1);
     } catch (error) {
       setError('Error fetching employees');
@@ -47,77 +53,57 @@ const Employees = () => {
     }
   };
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await APIHelper.makeSecureAPICall(token).get('users/employees?limit=10');
-      const fetchedData = response.data.data.list;
-      setData(fetchedData);
-      console.log(fetchedData);
-    } catch (error) {
-      setMessage('Error fetching employees', error);
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const currentData = (result.length > 0 ? result : data).slice(
+  const currentData = (result.length ? result : data).slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
   return (
-    <>
-      <section className="w-full p-5">
-        <div className="p-5">
-          <div className="p-5">
-            <h2 className="text-2xl">Employees</h2>
-          </div>
+    <section className="p-8 bg-gray-50 min-h-screen rounded-lg mt-10">
+      <div className="p-6 bg-white shadow-md rounded-lg mb-6">
+        <h2 className="text-3xl font-semibold text-gray-800">Employees</h2>
+      </div>
 
-          <form className="border-4 flex gap-10" onSubmit={handleSearch}>
-            <input
-              type="text"
-              className="input w-[70%] p-2 h-[3.5rem]"
-              placeholder="Search employee"
-              onChange={handleInput}
-            />
-            <button className="btn bg-green-600 text-white">Search</button>
-          </form>
-        </div>
-        <div>
-          {message && <p>{message}</p>}
-          {error && <p>{error}</p>}
-          {loading || loading2 ? (
-            <p>Loading...</p>
-          ) : (
-            <>
-              <Tables3
-                headers={headers}
-                data={data} // Display current data slice based on pagination
-                emptyMessage="No Lunches added!"
-              />
+      <form className="flex gap-4 mb-6" onSubmit={handleSearch}>
+        <input
+          type="text"
+          className="flex-grow h-12 px-4 rounded-lg bg-gray-200 border-0 focus:ring-4 focus:ring-green-500 text-gray-700 placeholder-gray-500"
+          placeholder="Search employee"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button
+          type="submit"
+          className="h-12 px-6 rounded-lg bg-green-600 text-white hover:bg-green-700 transition duration-300"
+        >
+          Search
+        </button>
+      </form>
 
-              <div className="p-5">
-                <PaginationComponent
-                  totalItems={result.length > 0 ? result.length : data.length}
-                  itemsPerPage={currentPage}
-                  currentPage={currentPage}
-                  onPageChange={handlePageChange}
-                />
-              </div>
-            </>
-          )}
+      {loading || loading2 ? (
+        <div className="flex justify-center items-center mt-10">
+          <div className="w-12 h-12 border-4 border-t-transparent border-gray-300 rounded-full animate-spin"></div>
         </div>
-      </section>
-    </>
+      ) : (
+        <>
+          {message && <p className="text-red-500 text-center mb-4">{message}</p>}
+          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+          <Tables3
+            headers={headers}
+            data={currentData}
+            emptyMessage="No employees found!"
+            className="bg-white shadow-md rounded-lg overflow-hidden"
+          />
+          <PaginationComponent
+            totalItems={result.length || data.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+            className="mt-6"
+          />
+        </>
+      )}
+    </section>
   );
 };
 

@@ -27,7 +27,7 @@ const OnboardingOptions = () => {
     };
 
     fetchAccountType();
-  }, [token]); 
+  }, [token]);  
 
   if (accountType === null) {
     return (

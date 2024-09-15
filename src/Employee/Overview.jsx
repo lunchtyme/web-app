@@ -7,7 +7,10 @@ const Overview = () => {
   const [isCartVisible, setIsCartVisible] = useState(false);
 
   const imgUrl = '/images/gbegiri.jpg';
-  const imgUrl3 = '/images/grilled-chicken.webp';
+  const imgUrl2 = '/images/grilled-chicken.webp';
+  const imgUrl3 = '/images/fish.jpg';
+  const imgUrl4 = '/images/burger.jpg';
+  const imgUrl5 = '/images/coffee.jpg';
 
   const handleAddToCart = (name, price) => {
     // Check if item already exists in cart
@@ -56,7 +59,7 @@ const Overview = () => {
     <div className="flex">
       {/* Main Content */}
       <section className=" p-5">
-        <div className="border-4 border-red-500 p-5 w-auto">
+        <div className="w-auto bg-gray-100 p-10 rounded">
           <h2 className="text-2xl p-5">Overview</h2>
           <div className="flex flex-wrap gap-10">
             <MenuCard
@@ -67,7 +70,7 @@ const Overview = () => {
               onAddToCart={handleAddToCart}
             />
             <MenuCard
-              image={imgUrl3}
+              image={imgUrl2}
               name={'Grilled Chicken'}
               description={'Tasty chicken can be eaten with mayo.'}
               price={'8000'}
@@ -75,16 +78,23 @@ const Overview = () => {
             />
             <MenuCard
               image={imgUrl3}
-              name={'Grilled Chicken'}
-              description={'Tasty chicken can be eaten with mayo.'}
-              price={'8000'}
+              name={'Roasted Fish'}
+              description={'Roasted and spiced to deliciousness.'}
+              price={'18000'}
               onAddToCart={handleAddToCart}
             />
             <MenuCard
-              image={imgUrl3}
-              name={'Grilled Chicken'}
-              description={'Tasty chicken can be eaten with mayo.'}
-              price={'8000'}
+              image={imgUrl4}
+              name={'Cheese Burger'}
+              description={'Filled with sumptuous cheese and steak.'}
+              price={'5000'}
+              onAddToCart={handleAddToCart}
+            />
+            <MenuCard
+              image={imgUrl5}
+              name={'Black Coffee'}
+              description={'Hot and fresh, just how you like it.'}
+              price={'3000'}
               onAddToCart={handleAddToCart}
             />
           </div>

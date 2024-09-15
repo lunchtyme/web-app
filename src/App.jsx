@@ -12,6 +12,7 @@ import VerifyOTP from './components/pages/VerifyOTP';
 import CompanyDashboard from './Company/CompanyDashboard';
 import AdminDashboard from './Admin/AdminDashboard';
 import EmployeeDashboard from './Employee/EmployeeDashboard';
+import NotFound from './utils/NotFound';
 
 const App = () => {
   return (
@@ -32,6 +33,9 @@ const App = () => {
         <Route path="/worker/*" element={<EmployeeDashboard />} />
 
         {/* <Route path="/login" element={<LogInPage />} /> */}
+
+        {/**Indefind Routes */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
