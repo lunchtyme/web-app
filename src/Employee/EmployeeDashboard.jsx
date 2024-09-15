@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import EmployeeSidebar from './EmployeeSidebar';
 import EmployeeOrders from './EmployeeOrders';
 import Overview from './Overview';
+import Logout from './Logout';
 
 const EmployeeDashboard = () => {
   return (
@@ -18,6 +19,7 @@ const EmployeeDashboard = () => {
         <Routes>
           <Route path="orders" element={<EmployeeOrders />} />
           <Route path="overview" element={<Overview />} />
+          <Route path="logout" element={<Logout />} />
           {/* Add other routes here */}
         </Routes>
       </div>

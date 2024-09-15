@@ -38,9 +38,9 @@ const EmployeeSidebar = () => {
             </li>
 
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/worker/settings">
-                <img src="images/settings.svg" alt="" className="w-6" />
-                Settings
+              <Link className="text-xl flex gap-5 items-center" to="/worker/logout">
+                <img src="images/logout.svg" alt="" className="w-6" />
+                Logout
               </Link>
             </li>
           </ul>

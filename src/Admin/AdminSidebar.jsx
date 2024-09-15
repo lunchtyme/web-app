@@ -20,46 +20,46 @@ const AdminSidebar = () => {
             </h2>
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/admin/overview">
-                <img src="images/home.svg" alt="" className="w-6" />
+                <img src="/images/home.svg" alt="" className="w-6" />
                 Overview
               </Link>
             </li>
 
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/admin/orders">
-                <img src="images/carry-out.svg" alt="" className="w-6" />
+                <img src="/images/carry-out.svg" alt="" className="w-6" />
                 Orders
               </Link>
             </li>
 
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/admin/customers">
-                <img src="images/users.svg" alt="" className="w-6" />
+                <img src="/images/users.svg" alt="" className="w-6" />
                 Customers
               </Link>
             </li>
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/admin/menu">
-                <img src="images/menu2.svg" alt="" className="w-6" />
+                <img src="/images/menu2.svg" alt="" className="w-6" />
                 Create Menu
               </Link>
             </li>
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/admin/lists">
-                <img src="images/list.svg" alt="" className="w-6" />
+                <img src="/images/list.svg" alt="" className="w-6" />
                 Lists
               </Link>
             </li>
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/admin/transactions">
-                <img src="images/transaction.svg" alt="" className="w-6" />
+                <img src="/images/transaction.svg" alt="" className="w-6" />
                 Transactions
               </Link>
             </li>
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/admin/settings">
-                <img src="images/settings.svg" alt="" className="w-6" />
-                Settings
+              <Link className="text-xl flex gap-5 items-center" to="/admin/logout">
+                <img src="/images/logout.svg" alt="" className="w-6" />
+                Log out
               </Link>
             </li>
           </ul>
