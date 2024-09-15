@@ -1,13 +1,11 @@
-
-import React, { useState } from 'react'; 
-import { useNavigate } from 'react-router-dom'; 
-import handleCreateUserSubmit from '../../utils/handleCreateUserSubmit'; 
-import { localStorageHelper } from '../../utils/localStorage'; 
-
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import handleCreateUserSubmit from '../../utils/handleCreateUserSubmit';
+import { localStorageHelper } from '../../utils/localStorage';
 
 const CompanyForm = () => {
   const navigate = useNavigate();
- 
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -16,19 +14,18 @@ const CompanyForm = () => {
     dial_code: '',
     phone_number: '',
   });
-  const [loading, setLoading] = useState(false); 
-  const [error, setError] = useState(''); 
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value }); 
+    setFormData({ ...formData, [name]: value });
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
-    setLoading(true); 
+    e.preventDefault();
+    setLoading(true);
 
     try {
       // Call the API to create a user with form data
@@ -37,7 +34,7 @@ const CompanyForm = () => {
       // Check if the API response contains data
       if (createEmployeeAPIResponse && createEmployeeAPIResponse.data) {
         console.log('API Response for Create Employee:', createEmployeeAPIResponse);
-      
+
         setFormData({
           email: '',
           password: '',
@@ -49,24 +46,21 @@ const CompanyForm = () => {
           dial_code: '',
           phone_number: '',
         });
-      
+
         localStorageHelper.saveToLocalStorage('acct_mail', formData.email);
-       
+
         navigate('/verify');
       } else {
-       
         console.log('API Response for Create Employee:', createEmployeeAPIResponse);
         setError(createEmployeeAPIResponse.message || 'An error occurred');
       }
     } catch (error) {
-  
       console.error('Error submitting form:', error);
       setError('An error occurred. Please try again.');
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
-
 
   return (
     <div className="flex justify-center">
@@ -74,7 +68,6 @@ const CompanyForm = () => {
       <div className="w-full p-6 bg-gray-200 rounded-lg mb-24">
         {/* Form container */}
         <div className="p-5 text-center">
-
           {/* Form header */}
           <h2 className="text-3xl font-semibold">
             Sign up as a <span className="text-green-700">Company</span>
@@ -125,8 +118,7 @@ const CompanyForm = () => {
               placeholder: 'Enter phone number',
             },
           ].map(({ label, name, type, placeholder, isReadonly, value }) => (
-          
-            <div key={name} className="form-control border-4 border-red-600">
+            <div key={name} className="form-control">
               <label className="label">
                 <span className="label-text text-[1rem] font-[500]">{label}</span>
               </label>

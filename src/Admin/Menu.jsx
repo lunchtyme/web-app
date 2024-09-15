@@ -7,6 +7,7 @@ const Menu = () => {
     name: '',
     description: '',
     price: '',
+    food_image: '',
     categories: [],
   });
 
@@ -67,6 +68,7 @@ const Menu = () => {
           name: '',
           description: '',
           price: '',
+          food_image: '',
           categories: [],
         });
       } else {
@@ -142,6 +144,20 @@ const Menu = () => {
                     />
                   </label>
                 ))}
+              </div>
+
+              {/**Upload image for image */}
+              <div className="pt-5">
+                <div className="p-2">
+                  <h2 className="text-lg">Upload image for menu</h2>
+                </div>
+                <input
+                  type="file"
+                  name="food_image"
+                  value={formData.food_image}
+                  onChange={handleChange}
+                  className="file-input file-input-bordered file-input-success w-full max-w-xs"
+                />
               </div>
             </div>
             {/** Submit Button */}

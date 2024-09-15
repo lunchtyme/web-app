@@ -25,34 +25,34 @@ const Sidebar = () => {
             </h2>
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/dashboard/overview">
-                <img src="images/home.svg" alt="" className="w-6" />
+                <img src="/images/home.svg" alt="" className="w-6" />
                 Overview
               </Link>
             </li>
 
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/dashboard/employees">
-                <img src="images/employees.svg" alt="" className="w-6" />
+                <img src="/images/employees.svg" alt="" className="w-6" />
                 Employees
               </Link>
             </li>
 
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/dashboard/invitations">
-                <img src="images/invite.svg" alt="" className="w-6" />
+                <img src="/images/invite.svg" alt="" className="w-6" />
                 Invitations
               </Link>
             </li>
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/dashboard/billings">
-                <img src="images/bill.svg" alt="" className="w-6" />
+                <img src="/images/bill.svg" alt="" className="w-6" />
                 Billings
               </Link>
             </li>
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/dashboard/settings">
-                <img src="images/settings.svg" alt="" className="w-6" />
-                Settings
+              <Link className="text-xl flex gap-5 items-center" to="/dashboard/logout">
+                <img src="/images/logout.svg" alt="" className="w-6" />
+                Log out
               </Link>
             </li>
           </ul>

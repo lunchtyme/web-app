@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import StatCard from '../utils/StatCard';
+import APIHelper from '../utils/APIHelper';
+import Cookies from 'js-cookie';
 
 const Overview = () => {
+  const [data, setData] = useState({});
+  const token = Cookies.get('esp_lunchtyme_id');
+
+  const fetchData = async () => {
+    try {
+      const response = await APIHelper.makeSecureAPICall(token).get('analytics/admin');
+      const fetchedData = response.data.data;
+      setData(fetchedData);
+      console.log(fetchedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const stats = [
-    { number: '120', groupName: 'Total Users' },
-    { number: '60', groupName: 'Employees' },
-    { number: '40', groupName: 'Orders' },
-    { number: '10', groupName: 'Admin' },
+    { number: data.orders || '0', groupName: 'Orders' },
+    { number: data.users || '0', groupName: 'Users' },
+    { number: data.employees || '0', groupName: 'Employees' },
+    { number: data.companies || '0', groupName: 'Company(ies)' },
   ];
 
   return (

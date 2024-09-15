@@ -13,6 +13,7 @@ import CompanyDashboard from './Company/CompanyDashboard';
 import AdminDashboard from './Admin/AdminDashboard';
 import EmployeeDashboard from './Employee/EmployeeDashboard';
 import NotFound from './utils/NotFound';
+import RequireAuth from './utils/RequireAuth';
 
 const App = () => {
   return (
@@ -21,16 +22,35 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/onboarding" element={<OnboardingOptions />} />
         <Route path="/signup" element={<CreateAccount />} />
-        <Route path="/employee" element={<EmployeeForm />} />
-        <Route path="/company" element={<CompanyForm />} />
         <Route path="/success" element={<SucessPage />} />
         <Route path="/login" element={<LogInPage />} />
         <Route path="/verify" element={<VerifyOTP />} />
 
         {/**Private route */}
-        <Route path="/dashboard/*" element={<CompanyDashboard />} />
-        <Route path="/admin/*" element={<AdminDashboard />} />
-        <Route path="/worker/*" element={<EmployeeDashboard />} />
+        <Route
+          path="/dashboard/*"
+          element={
+            <RequireAuth>
+              <CompanyDashboard />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/admin/*"
+          element={
+            <RequireAuth>
+              <AdminDashboard />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/worker/*"
+          element={
+            <RequireAuth>
+              <EmployeeDashboard />
+            </RequireAuth>
+          }
+        />
 
         {/* <Route path="/login" element={<LogInPage />} /> */}
 
