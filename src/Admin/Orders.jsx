@@ -4,6 +4,7 @@ import Table from '../utils/Tables';
 const Orders = () => {
   const headers = ['ID', 'Employee Email', 'Lunch', 'Status'];
   const invitations = [];
+  
   return (
     <>
       <section className="bg-gray-50 p-6 rounded">
