@@ -2,8 +2,8 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
-  // Sign-in function (currently not implemented)
-  const signIn = () => {};
+ 
+ 
   const navigate = useNavigate();
   const handleNewPage = () => {
     navigate('/login');

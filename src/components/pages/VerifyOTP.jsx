@@ -1,6 +1,6 @@
-import React, { useState } from 'react'; // Import React and useState hook
-import axios from 'axios'; // Import Axios for making HTTP requests
-import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate for routing
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 import { localStorageHelper } from '../../utils/localStorage';
 import APIHelper from '../../utils/APIHelper';
 
@@ -9,21 +9,19 @@ const VerifyOTP = () => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
-    navigate(-1); // Navigate to the previous page
+    navigate(-1);
   };
 
-  // State to store the OTP input values as an array of single characters
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
-  // State to manage loading state while verifying OTP
+
   const [loading, setLoading] = useState(false);
-  // State to manage resend button loading state
+
   const [resendLoading, setResendLoading] = useState(false);
-  // State to store any error messages
+
   const [error, setError] = useState(null);
-  // State to store success messages
+
   const [success, setSuccess] = useState('');
 
-  // Function to handle changes in the OTP input fields
   const handleChange = (e, index) => {
     const value = e.target.value;
 
@@ -33,7 +31,6 @@ const VerifyOTP = () => {
       newOtp[index] = value; // Update the specific index with the new value
       setOtp(newOtp); // Update the state with the new OTP array
 
-      // Automatically focus the next input field if the current field is filled
       if (value && index < otp.length - 1) {
         document.getElementById(`otp-input-${index + 1}`).focus();
       }
@@ -45,22 +42,19 @@ const VerifyOTP = () => {
     }
   };
 
-  // Function to handle OTP verification when the form is submitted
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    setLoading(true); // Set loading state to true
-    setError(null); // Clear previous error messages
-    setSuccess(''); // Clear previous success messages
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSuccess('');
 
-    // Join the OTP array into a single string
     const otpCode = otp.join('');
     console.log('OTP Code:', otpCode);
 
-    // Retrieve the email from local storage
     const email = localStorageHelper.getLocalStorage('acct_mail');
     if (!email) {
-      setError('Email not found. Please try again.'); // Handle case where email is missing
-      setLoading(false); // Set loading state back to false
+      setError('Email not found. Please try again.');
+      setLoading(false);
       return;
     }
 
@@ -71,33 +65,29 @@ const VerifyOTP = () => {
         email, // Include the email in the request payload
       });
 
-      // Check if the response indicates success
       if (response.data.success) {
-        setSuccess('OTP verified successfully!'); // Set success message
-        navigate('/login'); // Redirect to the login page
+        setSuccess('OTP verified successfully!');
+        navigate('/login');
       } else {
-        setError(response.data.message || 'OTP verification failed.'); // Handle failed verification
+        setError(response.data.message || 'OTP verification failed.');
       }
     } catch (err) {
-      // Handle errors such as network issues or server-side errors
       console.error('Error verifying OTP:', err);
-      setError(err.response?.data?.message || 'An error occurred while verifying OTP.'); // Set error message
+      setError(err.response?.data?.message || 'An error occurred while verifying OTP.');
     } finally {
-      setLoading(false); // Set loading state back to false
+      setLoading(false);
     }
   };
 
-  // Function to handle resending the OTP
   const handleResendOtp = async () => {
-    setResendLoading(true); // Set resend loading state to true
-    setError(null); // Clear previous error messages
-    setSuccess(''); // Clear previous success messages
+    setResendLoading(true);
+    setError(null);
+    setSuccess('');
 
-    // Retrieve the email from local storage
     const email = localStorage.getItem('email');
     if (!email) {
-      setError('Email not found. Please try again.'); // Handle case where email is missing
-      setResendLoading(false); // Set resend loading state back to false
+      setError('Email not found. Please try again.');
+      setResendLoading(false);
       return;
     }
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import { CheckIcon } from '@heroicons/react/20/solid'; // Ensure you have Heroicons installed
-
+import { CheckIcon } from '@heroicons/react/20/solid'; 
 const AccountChooser = ({ handleSelect, selected }) => {
   return (
     <div className="flex justify-center">
@@ -9,9 +8,9 @@ const AccountChooser = ({ handleSelect, selected }) => {
         <p className="text-lg mb-4 text-gray-700 font-[600]">
           We'll streamline your setup experience accordingly.
         </p>
-        {/* Container for selectable cards */}
+      
         <div className="flex gap-10 justify-center">
-          {/* Individual Account Option */}
+        
           <label
             htmlFor="account_type_individual"
             className={`relative cursor-pointer w-[18rem] h-[24rem] bg-white p-5 flex

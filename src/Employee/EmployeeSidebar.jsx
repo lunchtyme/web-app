@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Sidebar = () => {
+const EmployeeSidebar = () => {
   return (
     <section className="bg-gray-200 h-[100vh]">
       <div className="drawer lg:drawer-open">
@@ -21,36 +21,24 @@ const Sidebar = () => {
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
             {/* Sidebar content here */}
             <h2 className="text-2xl p-5 font-[600]">
-              <span className="text-md">Company Dashboard</span>
+              <span className="text-md">Employee Dashboard</span>
             </h2>
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/dashboard/overview">
+              <Link className="text-xl flex gap-5 items-center" to="/worker/overview">
                 <img src="images/home.svg" alt="" className="w-6" />
                 Overview
               </Link>
             </li>
 
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/dashboard/employees">
-                <img src="images/employees.svg" alt="" className="w-6" />
-                Employees
+              <Link className="text-xl flex gap-5 items-center" to="/worker/orders">
+                <img src="images/carry-out.svg" alt="" className="w-6" />
+                Orders
               </Link>
             </li>
 
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/dashboard/invitations">
-                <img src="images/invite.svg" alt="" className="w-6" />
-                Invitations
-              </Link>
-            </li>
-            <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/dashboard/billings">
-                <img src="images/bill.svg" alt="" className="w-6" />
-                Billings
-              </Link>
-            </li>
-            <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/dashboard/settings">
+              <Link className="text-xl flex gap-5 items-center" to="/worker/settings">
                 <img src="images/settings.svg" alt="" className="w-6" />
                 Settings
               </Link>
@@ -62,4 +50,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default EmployeeSidebar;

@@ -7,15 +7,15 @@ import APIHelper from '../../utils/APIHelper';
 const OnboardingOptions = () => {
   const [accountType, setAccountType] = useState(null);
 
-  // Retrieve token
+
   const token = Cookies.get('esp_lunchtyme_id');
 
-  // Triggers a data fetch when the component mounts
+  
   useEffect(() => {
-    // fetch api
+    
     const fetchAccountType = async () => {
       try {
-        // Replace endpoint
+      
         const response = await APIHelper.makeSecureAPICall(token).get('auth/me');
         const { account_type } = response.data.data;
         console.log(response);
@@ -27,7 +27,7 @@ const OnboardingOptions = () => {
     };
 
     fetchAccountType();
-  }, [token]); // Add token as a dependency in case it changes
+  }, [token]);  
 
   if (accountType === null) {
     return (
@@ -41,6 +41,7 @@ const OnboardingOptions = () => {
       </div>
     );
   }
+  
 
   return <>{accountType === 'Company' ? <OnboardingCompany /> : <OnboardingEmployee />}</>;
 };

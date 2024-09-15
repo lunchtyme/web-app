@@ -1,16 +1,14 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import Invitations from './Invitations';
+import EmployeeSidebar from './EmployeeSidebar';
+import EmployeeOrders from './EmployeeOrders';
 import Overview from './Overview';
-import Billings from './Billings';
-import Employees from './Employees';
 
-const CompanyDashboard = () => {
+const EmployeeDashboard = () => {
   return (
     <section className="bg-gray-200 h-[100vh] flex">
       {/* Sidebar */}
-      <Sidebar />
+      <EmployeeSidebar />
 
       {/* Main content */}
       <div className="flex-1 p-7 overflow-y-auto">
@@ -18,10 +16,8 @@ const CompanyDashboard = () => {
           Lunch<span className="text-green-600">tyme</span>
         </h2>
         <Routes>
-          <Route path="invitations" element={<Invitations />} />
+          <Route path="orders" element={<EmployeeOrders />} />
           <Route path="overview" element={<Overview />} />
-          <Route path="billings" element={<Billings />} />
-          <Route path="employees" element={<Employees />} />
           {/* Add other routes here */}
         </Routes>
       </div>
@@ -29,4 +25,4 @@ const CompanyDashboard = () => {
   );
 };
 
-export default CompanyDashboard;
+export default EmployeeDashboard;

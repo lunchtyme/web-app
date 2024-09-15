@@ -1,65 +1,84 @@
-import React, { useState } from 'react'; // Import React and useState hook for state management
-import axios from 'axios'; // Import axios for making HTTP requests
-import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate and Link for navigation
-import Cookies from 'js-cookie'; // Import js-cookie to handle cookies
-import APIHelper from '../../utils/APIHelper'; // Import a helper for making API calls
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import APIHelper from '../../utils/APIHelper';
 
 const LoginForm = () => {
-  const navigate = useNavigate(); // Hook for programmatic navigation
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    identifier: '', // State to hold the user's email
-    password: '', // State to hold the user's password
+    identifier: '',
+    password: '',
   });
+  const [accountType, setAccountType] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
 
-  const [loading, setLoading] = useState(false); // State to manage loading status
-  const [error, setError] = useState(null); // State to manage error messages
-
-  // Handle input changes and update formData state
   const handleChange = (e) => {
-    const { name, value } = e.target; // Get name and value from the input field
-    setFormData({ ...formData, [name]: value }); // Update the formData state with the new value
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    setLoading(true); // Set loading state to true to indicate processing
-    setError(null); // Clear any previous errors
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setShowToast(false);
+    setShowSuccessToast(false);
 
     try {
-      // Make a POST request to the login API endpoint with form data
       const response = await APIHelper.makeAPICall.post('auth/login', formData);
 
       if (response.data.success) {
-        // Extract access token from response data
-        const { accessTokenHash } = response.data.data;
+        const { accessTokenHash, onboarded } = response.data.data;
 
-        // Store the access token in a cookie with secure options
         Cookies.set('esp_lunchtyme_id', accessTokenHash, { secure: true });
 
-        // Check if the user is onboarded and navigate accordingly
-        if (response.data.onboarded) {
-          navigate('/dashboard'); // Navigate to dashboard if onboarded
-        } else {
-          navigate('/onboarding'); // Navigate to onboarding if not onboarded
-        }
+        const result = await APIHelper.makeSecureAPICall(accessTokenHash).get('auth/me');
+        const { account_type } = result.data.data;
+
+        setShowSuccessToast(true); // Show success toast
+
+        setTimeout(() => {
+          if (account_type === 'Admin' || response.data.data.onboarded) {
+            navigate('/admin/overview');
+          } else {
+            navigate('/onboarding');
+          }
+        }, 1000); // Give 1 second for the success toast to display
       } else {
-        // Display error message if login fails
         setError(response.data.message || 'Login failed. Please check your credentials.');
+        setShowToast(true); // Show error toast on failure
       }
     } catch (err) {
-      console.error('Error logging in:', err); // Log error to console
-      // Display error message from the server or a generic message
+      console.error('Error logging in:', err);
       setError(err.response?.data?.message || 'An error occurred while logging in.');
+      setShowToast(true); // Show error toast on failure
     } finally {
-      setLoading(false); // Set loading state back to false after processing
+      setLoading(false);
     }
   };
 
-  // Handle 'Back' button click to navigate back one page
-  const handleGoBack = () => {
-    navigate(-1); // Navigate back one step in history
-  };
+  // Manage hiding the toasts after 5 seconds
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
+
+  useEffect(() => {
+    if (showSuccessToast) {
+      const timer = setTimeout(() => {
+        setShowSuccessToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessToast]);
 
   return (
     <>
@@ -79,8 +98,6 @@ const LoginForm = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email input field */}
             <div className="form-control">
-              {error && <p className="text-red-500 text-sm">{error}</p>}{' '}
-              {/* Display error if exists */}
               <label className="label">
                 <span className="label-text text-lg font-[500]">EMAIL</span>
               </label>
@@ -119,13 +136,31 @@ const LoginForm = () => {
               } text-white text-xl font-semibold`}
               disabled={loading}
             >
-              {loading ? 'Logging in...' : 'Login'} {/* Show loading state text if loading */}
+              {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
         </div>
       </div>
+
+      {/* Error Toast */}
+      {showToast && (
+        <div className="toast toast-end toast-top">
+          <div className="alert alert-error text-white p-5">
+            <span>{error}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Success Toast */}
+      {showSuccessToast && (
+        <div className="toast toast-end toast-top">
+          <div className="alert alert-success text-white p-5">
+            <span>Login successful! Redirecting...</span>
+          </div>
+        </div>
+      )}
     </>
   );
 };
 
-export default LoginForm; // Export the LoginForm component
+export default LoginForm;

@@ -29,7 +29,7 @@ const OnboardingEmployee = () => {
         formData,
       );
       if (response.status === 200) {
-        navigate('/dashboard'); // Redirect to the success page or desired route
+        navigate('/worker/overview'); // Redirect to the success page or desired route
       }
     } catch (error) {
       console.error('Error submitting the form', error);
