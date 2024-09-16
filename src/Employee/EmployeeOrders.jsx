@@ -1,9 +1,26 @@
 import React, { useState } from 'react';
 import Tables4 from '../utils/Tables4';
+import APIHelper from '../utils/APIHelper';
+import Cookies from 'js-cookie';
 
 const EmployeeOrders = () => {
   const headers = ['Name', 'Title', 'Date', 'Status'];
   const [data, setData] = useState('');
+  const token = Cookies.get('esp_lunchtyme_id');
+
+  const fetchData = async () => {
+    try {
+      const response = await APIHelper.makeSecureAPICall(token).get('orders?limit=10');
+      const fetchedData = response.data.data.list;
+      setData(fetchedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <>
       <section className="p-5">
@@ -12,7 +29,7 @@ const EmployeeOrders = () => {
             <h2 className="text-2xl">My orders</h2>
           </div>
           <div>
-            <Tables4 headers={headers} data={headers} emptyMessage={'No orders yet!'} />
+            <Tables4 headers={headers} data={data} emptyMessage={'No orders yet!'} />
           </div>
         </div>
       </section>

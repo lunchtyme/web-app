@@ -1,4 +1,6 @@
 import React from 'react';
+import Cookies from 'js-cookie';
+import APIHelper from './APIHelper'; // Ensure this is configured correctly
 
 const CartContainer = ({
   items,
@@ -8,6 +10,34 @@ const CartContainer = ({
   onIncrementItem,
   onDecrementItem,
 }) => {
+  const token = Cookies.get('esp_lunchtyme_id'); // Ensure token is retrieved correctly
+
+  // Handle checkout functionality
+  const handleCheckout = async () => {
+    const checkoutData = {
+      foodItems: items.map((item) => [
+        {
+          food_menu: item.name, // Adjust this to match API expectation
+          quantity: item.quantity,
+        },
+      ]),
+    };
+
+    try {
+      // Make a secure API call using the token
+      const response = await APIHelper.makeSecureAPICall(token).post('orders', checkoutData); // Ensure the endpoint 'orders' is correct
+      if (response.status === 200) {
+        alert('Checkout successful!');
+        // You can clear the cart or redirect the user here
+      } else {
+        throw new Error('Checkout failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Checkout failed:', error.data.data.message);
+      alert('Checkout failed. Please try again.');
+    }
+  };
+
   return (
     <div className="bg-white shadow-2xl w-[35rem] rounded-lg p-5 h-auto ml-auto">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-3">Shopping Cart</h2>
@@ -65,7 +95,10 @@ const CartContainer = ({
           >
             Close Cart
           </button>
-          <button className="w-full px-4 py-3 bg-green-600 text-white rounded-md hover:bg-green-500 transition duration-300 text-lg font-semibold">
+          <button
+            onClick={handleCheckout} // Call the checkout function on button click
+            className="w-full px-4 py-3 bg-green-600 text-white rounded-md hover:bg-green-500 transition duration-300 text-lg font-semibold"
+          >
             Checkout
           </button>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import APIHelper from '../utils/APIHelper';
 import Cookies from 'js-cookie';
 import StatCard from '../utils/StatCard';
@@ -6,7 +6,7 @@ import Tables2 from '../utils/Tables2';
 
 const Billings = () => {
   const headers = ['Title', 'Description', 'Date', 'Amount'];
-  const data = [1, 2, 3, 4];
+  const [data, setData] = useState('');
   const [amount, setAmount] = useState('');
   const token = Cookies.get('esp_lunchtyme_id');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,7 +28,7 @@ const Billings = () => {
 
     try {
       const response = await APIHelper.makeSecureAPICall(token).post('billings/topup', { amount });
-      if (response.status === 200) {
+      if (response.data.success) {
         setAmount(''); // Reset the amount field
         setSuccess('Top-up successful!');
       } else {
@@ -41,6 +41,20 @@ const Billings = () => {
     }
   };
 
+  const fetchTable = async () => {
+    try {
+      const response2 = await APIHelper.makeSecureAPICall(token).get('billings?limit=10');
+      const fetchedData = response2.data.data.list;
+      setData(fetchedData);
+      console.log(response2.data.data.list);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTable();
+  }, []);
   return (
     <>
       <section className="w-full p-5">
@@ -64,9 +78,8 @@ const Billings = () => {
           </div>
         </div>
 
-        <div>
-          <Tables2 
-          headers={headers} data={headers} emptyMessage={'No billings made!'}/>
+        <div className="bg-gray-50 p-5 rounded">
+          <Tables2 headers={headers} data={data} emptyMessage={'No billings made!'} />
         </div>
 
         {isModalOpen && (

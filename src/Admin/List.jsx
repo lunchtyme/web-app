@@ -5,7 +5,7 @@ import APIHelper from '../utils/APIHelper';
 import Cookies from 'js-cookie';
 
 const List = () => {
-  const headers = ['Name', 'Price', 'Status', 'Date'];
+  const headers = ['Name', 'Price', 'Status', 'Date', 'Availability'];
   const [data, setData] = useState([]);
   const [result, setResult] = useState([]);
   const [query, setQuery] = useState('');
@@ -48,6 +48,19 @@ const List = () => {
       setError('Error fetching data. Please try again.');
     } finally {
       setLoadingSearch(false);
+    }
+  };
+
+  const handleAvailabilityToggle = async (id, availability) => {
+    try {
+      const response = await APIHelper.makeSecureAPICall(token).patch(`/food-menu/${id}`, {
+        availability: !availability,
+      });
+      setData((prevData) =>
+        prevData.map((item) => (item.id === id ? { ...item, availability: !availability } : item)),
+      );
+    } catch (error) {
+      setMessage('Error updating availability');
     }
   };
 
@@ -94,7 +107,16 @@ const List = () => {
         <>
           <Table2
             headers={headers}
-            data={currentData}
+            data={currentData.map((item) => ({
+              ...item,
+              availabilityToggle: (
+                <input
+                  type="checkbox"
+                  checked={item.availability}
+                  onChange={() => handleAvailabilityToggle(item.id, item.availability)}
+                />
+              ),
+            }))}
             emptyMessage="No Lunches added!"
             className="mt-4 shadow-lg rounded-xl overflow-hidden bg-white"
           />
