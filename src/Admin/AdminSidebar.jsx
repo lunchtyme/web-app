@@ -1,7 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import APIHelper from '../utils/APIHelper';
+import AdminLogout from './AdminLogout';
 
 const AdminSidebar = () => {
+  const [data, setData] = useState('');
+  const [loading, setLoading] = useState('');
+  const [error, setError] = useState('');
+  const token = Cookies.get('esp_lunchtyme_id');
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await APIHelper.makeSecureAPICall(token).get('auth/me');
+      const fetchedData = response.data.data;
+      setData(fetchedData);
+    } catch (error) {
+      setError(error.data);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <section className="bg-gray-200 h-[100vh]">
       <div className="drawer lg:drawer-open">
@@ -15,9 +40,26 @@ const AdminSidebar = () => {
           ></label>
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
             {/* Sidebar content here */}
-            <h2 className="text-2xl p-5 font-[600]">
-              <span className="text-md">Admin Dashboard</span>
-            </h2>
+            {loading ? (
+              <div className="flex justify-center items-center mt-10">
+                <div className="w-12 h-12 border-4 border-t-transparent border-gray-300 rounded-full animate-spin"></div>
+              </div>
+            ) : (
+              <details className="collapse bg-gray-100 rounded-xl hover:bg-gray-200 transition">
+                <summary className="collapse-title text-xl font-medium">Profile</summary>
+                <div className="collapse-content flex flex-col gap-3">
+                  <p className="text-xl font-semibold">{data.account_type}</p>
+                  <div className="flex items-center gap-5">
+                    <p className="text-md">{data.email}</p>
+                    <div className="">
+                      <AdminLogout />
+                    </div>
+                  </div>
+                </div>
+              </details>
+            )}
+
+            {error && <p>{error}</p>}
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/admin/overview">
                 <img src="/images/home.svg" alt="" className="w-6" />
@@ -54,12 +96,6 @@ const AdminSidebar = () => {
               <Link className="text-xl flex gap-5 items-center" to="/admin/transactions">
                 <img src="/images/transaction.svg" alt="" className="w-6" />
                 Transactions
-              </Link>
-            </li>
-            <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/admin/logout">
-                <img src="/images/logout.svg" alt="" className="w-6" />
-                Log out
               </Link>
             </li>
           </ul>

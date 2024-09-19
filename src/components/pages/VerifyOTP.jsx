@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import { localStorageHelper } from '../../utils/localStorage';
+import  localStorageHelper  from '../../utils/localStorage.js';
 import APIHelper from '../../utils/APIHelper';
 
 // Define the VerifyOTP component
@@ -60,7 +60,7 @@ const VerifyOTP = () => {
 
     try {
       // Send the OTP code and email to the server for verification
-      const response = await axios.post('https://lunchtyme-api.onrender.com/auth/confirm-email', {
+      const response = await APIHelper.makeAPICall.post('auth/confirm-email', {
         otp: otpCode,
         email, // Include the email in the request payload
       });

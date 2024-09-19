@@ -8,7 +8,6 @@ import Transactions from './Transactions';
 import Overview from './Overview';
 import List from './List';
 import Settings from './Settings';
-import AdminLogout from './AdminLogout';
 
 const AdminDashboard = () => {
   return (
@@ -30,7 +29,7 @@ const AdminDashboard = () => {
           <Route path="settings" element={<Settings />} />
           <Route path="lists" element={<List />} />
           <Route path="menu" element={<Menu />} />
-          <Route path="logout" element={<AdminLogout />} />
+
 
           {/* Wildcard route for undefined sub-routes */}
         </Routes>

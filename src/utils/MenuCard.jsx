@@ -1,12 +1,16 @@
 import React from 'react';
 
-const MenuCard = ({ image, name, description, price, onAddToCart }) => {
+const placeholderImage = '/images/blank.jpg';
+
+const MenuCard = ({ image, name, description, price, onAddToCart, id }) => {
+  const displayImage = image || placeholderImage;
+
   return (
     <div className="max-w-md bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="flex">
         {/* Image Section */}
         <div className="w-2/5">
-          <img src={image} alt={name} className="object-cover w-full h-full" />
+          <img src={displayImage} alt={name} className="object-cover w-full h-full" />
         </div>
 
         {/* Text Section */}

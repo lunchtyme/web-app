@@ -5,7 +5,6 @@ import Invitations from './Invitations';
 import Overview from './Overview';
 import Billings from './Billings';
 import Employees from './Employees';
-import CompanyLogout from './CompanyLogout';
 
 const CompanyDashboard = () => {
   return (
@@ -23,7 +22,6 @@ const CompanyDashboard = () => {
           <Route path="overview" element={<Overview />} />
           <Route path="billings" element={<Billings />} />
           <Route path="employees" element={<Employees />} />
-          <Route path="logout" element={<CompanyLogout />} />
           {/* Add other routes here */}
         </Routes>
       </div>

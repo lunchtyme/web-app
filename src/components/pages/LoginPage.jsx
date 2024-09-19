@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import APIHelper from '../../utils/APIHelper';
@@ -10,7 +9,6 @@ const LoginForm = () => {
     identifier: '',
     password: '',
   });
-  const [accountType, setAccountType] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showToast, setShowToast] = useState(false);
@@ -37,17 +35,16 @@ const LoginForm = () => {
         Cookies.set('esp_lunchtyme_id', accessTokenHash, { secure: true });
 
         const result = await APIHelper.makeSecureAPICall(accessTokenHash).get('auth/me');
-        const { account_type } = result.data.data;
 
         setShowSuccessToast(true); // Show success toast
 
         setTimeout(() => {
-          if (account_type === 'Admin' || response.data.data.onboarded) {
-            navigate('/admin/overview');
-          } else {
+          if (response.data.data.onboarded === false) {
             navigate('/onboarding');
+          } else {
+            navigate('/auth-onboard');
           }
-        }, 1000); // Give 1 second for the success toast to display
+        }, 2000); // Give 1 second for the success toast to display
       } else {
         setError(response.data.message || 'Login failed. Please check your credentials.');
         setShowToast(true); // Show error toast on failure

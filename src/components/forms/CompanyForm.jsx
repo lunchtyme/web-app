@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import handleCreateUserSubmit from '../../utils/handleCreateUserSubmit';
-import { localStorageHelper } from '../../utils/localStorage';
+import localStorageHelper from '../../utils/localStorage.js';
 
 const CompanyForm = () => {
   const navigate = useNavigate();
@@ -48,6 +48,7 @@ const CompanyForm = () => {
         });
 
         localStorageHelper.saveToLocalStorage('acct_mail', formData.email);
+        localStorageHelper.saveToLocalStorage('comp_name', formData.name);
 
         navigate('/verify');
       } else {

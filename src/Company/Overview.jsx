@@ -7,6 +7,10 @@ const Overview = () => {
   const [data, setData] = useState({});
   const token = Cookies.get('esp_lunchtyme_id');
 
+  const formatBalance = (balance) => {
+    return new Intl.NumberFormat().format(balance);
+  };
+
   const fetchData = async () => {
     try {
       const response = await APIHelper.makeSecureAPICall(token).get('analytics/company');
@@ -24,8 +28,8 @@ const Overview = () => {
 
   const stats = [
     { number: data.orders || '0', groupName: 'Orders' },
-    { number: data.balance || '0', groupName: 'Employees' },
-    { number: data.employees || '0', groupName: 'Balance' },
+    { number: `₦ ${formatBalance(Math.round(data.balance))}` || '0', groupName: 'Balance' },
+    { number: data.employees || '0', groupName: 'Employees' },
     { number: data.amount_spent || '0', groupName: 'Amount spent till date' },
   ];
 

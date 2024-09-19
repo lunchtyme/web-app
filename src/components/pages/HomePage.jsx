@@ -2,8 +2,6 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
- 
- 
   const navigate = useNavigate();
   const handleNewPage = () => {
     navigate('/login');
@@ -121,11 +119,6 @@ const HomePage = () => {
                 alt="Dining Redefined"
                 className="mt-16 rounded-full w-[40rem] h-[40rem] mx-auto sm:w-[25rem] sm:h-[25rem] text-center"
               />
-              <Link to="/onboarding">
-                <button className="mt-10 hover:text-white hover:bg-green-600 btn text-green-600 border-green-600 border-2 font-bold">
-                  Get Started
-                </button>
-              </Link>
             </div>
             <div className="p-10 w-[40rem] flex flex-col justify-evenly gap-10">
               <p className="text-2xl w-[30rem] text-start">
@@ -150,7 +143,7 @@ const HomePage = () => {
 
         {/* Footer Section */}
         <footer className="footer footer-center bg-gray-100 p-10 mt-36">
-          <aside className='flex justify-between w-full'>
+          <aside className="flex justify-between w-full">
             <p className="font-bold text-4xl">
               Lunch<span className="text-green-600">tyme</span>
               <br />
@@ -161,9 +154,7 @@ const HomePage = () => {
             </p>
             */}
 
-            <p>
-              Copyright © {new Date().getFullYear()} -{' '}
-            </p>
+            <p>Copyright © {new Date().getFullYear()} - </p>
           </aside>
         </footer>
       </section>

@@ -5,10 +5,10 @@ const AdminLogout = () => {
   const { logout } = useLogout();
   return (
     <>
-      <div className="p-10">
-        <button
-        onClick={logout}
-        className="btn bg-green-600 text-white">Log out</button>
+      <div className="">
+        <button onClick={logout} className="btn bg-green-500 text-white">
+          Log out
+        </button>
       </div>
     </>
   );

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import APIHelper from '../../utils/APIHelper';
 
 const OnboardingCompany = () => {
+  const token = Cookies.get('esp_lunchtyme_id');
   const [formData, setFormData] = useState({
     address_line_1: '',
     address_line_2: '',
@@ -24,12 +26,8 @@ const OnboardingCompany = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        'https://lunchtyme-api.onrender.com/auth/onboard',
-        formData,
-      );
+      const response = await APIHelper.makeSecureAPICall(token).post('auth/onboard', formData);
       if (response.status === 200) {
-
         navigate('/dashboard/overview'); // Redirect to the success page or desired route
       }
     } catch (error) {
@@ -58,7 +56,7 @@ const OnboardingCompany = () => {
               </label>
               <input
                 type="text"
-                name="addressLine1"
+                name="address_line_1"
                 value={formData.address_line_1}
                 onChange={handleChange}
                 placeholder="Enter street address 1"
@@ -74,7 +72,7 @@ const OnboardingCompany = () => {
               </label>
               <input
                 type="text"
-                name="addressLine2"
+                name="address_line_2"
                 value={formData.address_line_2}
                 onChange={handleChange}
                 placeholder="Enter street address 2"
@@ -137,7 +135,7 @@ const OnboardingCompany = () => {
               </label>
               <input
                 type="text"
-                name="zipcode"
+                name="zip_code"
                 value={formData.zip_code}
                 onChange={handleChange}
                 placeholder="Enter zip code"
@@ -159,7 +157,7 @@ const OnboardingCompany = () => {
               </label>
               <input
                 type="text"
-                name="employeeMaxSpend"
+                name="max_spend_amount_per_employee"
                 value={formData.max_spend_amount_per_employee}
                 onChange={handleChange}
                 placeholder="Enter budget amount"
@@ -175,7 +173,7 @@ const OnboardingCompany = () => {
                 </span>
               </label>
               <select
-                name="companySize"
+                name="size"
                 value={formData.size}
                 onChange={handleChange}
                 className="h-[3.5rem] rounded-md p-2 focus:outline-none"

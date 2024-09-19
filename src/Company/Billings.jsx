@@ -3,10 +3,12 @@ import APIHelper from '../utils/APIHelper';
 import Cookies from 'js-cookie';
 import StatCard from '../utils/StatCard';
 import Tables2 from '../utils/Tables2';
+import { Navigate } from 'react-router-dom';
 
 const Billings = () => {
   const headers = ['Title', 'Description', 'Date', 'Amount'];
   const [data, setData] = useState('');
+  const [data2, setData2] = useState('');
   const [amount, setAmount] = useState('');
   const token = Cookies.get('esp_lunchtyme_id');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,7 +32,9 @@ const Billings = () => {
       const response = await APIHelper.makeSecureAPICall(token).post('billings/topup', { amount });
       if (response.data.success) {
         setAmount(''); // Reset the amount field
-        setSuccess('Top-up successful!');
+        setSuccess('Topup in progress!');
+        window.location.href = response.data.data;
+        console.log(response.data.data);
       } else {
         throw new Error('Failed to top up');
       }
@@ -55,30 +59,52 @@ const Billings = () => {
   useEffect(() => {
     fetchTable();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response3 = await APIHelper.makeSecureAPICall(token).get('analytics/company');
+      const fetchedData2 = response3.data.data;
+      setData2(fetchedData2);
+      console.log(fetchedData2);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // Format balance with commas
+  const formatBalance = (balance) => {
+    return new Intl.NumberFormat().format(balance);
+  };
+
   return (
     <>
       <section className="w-full p-5">
-        <div className="p-5">
-          <div className="p-5">
-            <h2 className="text-2xl">Billings</h2>
-          </div>
-          <div className="flex flex-col gap-5">
-            <div>
-              <StatCard number={`₦ 0`} groupName={'Balance'} />
-            </div>
-            <div className="flex gap-5 items-center">
-              <h2 className="text-xl font-semibold">Top up your balance</h2>
-              <button
+        <div className="p-10">
+          <div className="p-5 flex gap-10 items-center ">
+            <h2 className="text-2xl">Balance</h2>
+
+            <button
                 onClick={toggleModal}
                 className="btn bg-green-600 w-[6rem] text-lg text-white"
               >
                 Top up
               </button>
+          </div>
+          <div className="flex flex-col gap-5">
+            <div>
+              <StatCard
+                number={`₦ ${formatBalance(data2.balance)}`}
+                groupName={''}
+              />
             </div>
           </div>
         </div>
 
-        <div className="bg-gray-50 p-5 rounded">
+        <div className="bg-gray-50 p-10 rounded">
           <Tables2 headers={headers} data={data} emptyMessage={'No billings made!'} />
         </div>
 

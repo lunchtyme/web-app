@@ -1,10 +1,8 @@
 // components/Table.jsx
 import React from 'react';
 import moment from 'moment';
-import Cookies from 'js-cookie';
 
-const token = Cookies.get('esp_lunchtyme_id');
-
+const blank = '/images/blank.jpg';
 const Tables4 = ({ headers, data, emptyMessage }) => {
   return (
     <div className="overflow-x-auto mt-10">
@@ -28,10 +26,12 @@ const Tables4 = ({ headers, data, emptyMessage }) => {
           ) : (
             data.map((item) => (
               <tr key={item.name}>
+                <td>
+                  {<img src={item.food_image || blank} className="w-[4rem] h-[4rem] rounded " />}
+                </td>
                 <td>{item.name}</td>
+                <td>{`₦ ${item.price}`}</td>
                 <td>{moment(item.created_at).format('MMM Do YY')}</td>
-                <td>{item.account_state}</td>
-                <td>{item.account_details.spend_balance}</td>
               </tr>
             ))
           )}
