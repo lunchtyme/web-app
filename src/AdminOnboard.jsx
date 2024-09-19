@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import OnboardingCompany from './OnboardingCompany';
-import OnboardingEmployee from './OnboardingEmployee';
 import Cookies from 'js-cookie';
-import APIHelper from '../../utils/APIHelper';
 import { useNavigate } from 'react-router-dom';
+import APIHelper from './utils/APIHelper';
 
-const OnboardingOptions = () => {
+const AdminOnboard = () => {
   const navigate = useNavigate();
   const [accountType, setAccountType] = useState(null);
-
+  const [error, setError] = useState('')
   const token = Cookies.get('esp_lunchtyme_id');
 
   useEffect(() => {
@@ -20,6 +18,7 @@ const OnboardingOptions = () => {
 
         setAccountType(account_type);
       } catch (error) {
+        setError(error.data)
         console.error('Error fetching account type:', error.data);
       }
     };
@@ -42,15 +41,15 @@ const OnboardingOptions = () => {
 
   return (
     <>
-      {accountType === 'Company' ? (
-        <OnboardingCompany />
-      ) : accountType === 'Individual' ? (
-        <OnboardingEmployee />
-      ) : accountType === 'Admin' ? (
-        navigate('/admin/overview')
-      ) : null}
+      {accountType === 'Company'
+        ? navigate('/dashboard/overview')
+        : accountType === 'Admin'
+        ? navigate('/admin/overview')
+        : accountType === 'Individual'
+        ? navigate('/worker/overview')
+        : null}
     </>
   );
 };
 
-export default OnboardingOptions;
+export default AdminOnboard;

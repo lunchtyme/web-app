@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import APIHelper from '../../utils/APIHelper'
+import APIHelper from '../../utils/APIHelper';
+import Cookies from 'js-cookie'
 
 const OnboardingEmployee = () => {
+  const token = Cookies.get('esp_lunchtyme_id')
   const [formData, setFormData] = useState({
     address_line_1: '',
     address_line_2: '',
@@ -24,10 +25,7 @@ const OnboardingEmployee = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await APIHelper.makeAPICall.post(
-        'auth/onboard',
-        formData,
-      );
+      const response = await APIHelper.makeSecureAPICall(token).post('auth/onboard', formData);
       if (response.status === 200) {
         navigate('/worker/overview'); // Redirect to the success page or desired route
       }
@@ -60,7 +58,7 @@ const OnboardingEmployee = () => {
               </label>
               <input
                 type="text"
-                name="addressLine1"
+                name="address_line_1"
                 value={formData.address_line_1}
                 onChange={handleChange}
                 placeholder="Enter street address 1"
@@ -76,7 +74,7 @@ const OnboardingEmployee = () => {
               </label>
               <input
                 type="text"
-                name="addressLine2"
+                name="address_line_2"
                 value={formData.address_line_2}
                 onChange={handleChange}
                 placeholder="Enter street address 2"
@@ -139,7 +137,7 @@ const OnboardingEmployee = () => {
               </label>
               <input
                 type="text"
-                name="zipcode"
+                name="zip_code"
                 value={formData.zip_code}
                 onChange={handleChange}
                 placeholder="Enter zip code"
@@ -161,7 +159,7 @@ const OnboardingEmployee = () => {
               </label>
               <input
                 type="time"
-                name="lunchTime"
+                name="lunch_time"
                 value={formData.lunch_time}
                 onChange={handleChange}
                 placeholder="Enter preferred lunch time"

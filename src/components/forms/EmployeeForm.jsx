@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import handleCreateUserSubmit from '../../utils/handleCreateUserSubmit';
-import { localStorageHelper } from '../../utils/localStorage';
 
 const EmployeeForm = () => {
   const navigate = useNavigate();
@@ -14,12 +13,12 @@ const EmployeeForm = () => {
     email: '',
     password: '',
     account_type: 'Individual',
-    first_name: '',
+    first_name: 'wertt',
     last_name: '',
     phone_number: '',
     invitation_code: '',
     lunch_time: '',
-    dial_code:'+234',
+    dial_code: '+234',
     time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
 
@@ -45,7 +44,7 @@ const EmployeeForm = () => {
         setFormData({
           email: '',
           password: '',
-          first_name: '',
+          first_name: 'wertt',
           last_name: '',
           dial_code: '',
           phone_number: '',
@@ -53,7 +52,6 @@ const EmployeeForm = () => {
           time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone, // Reset time_zone
         });
 
-        localStorageHelper.saveToLocalStorage('acct_mail', formData.email);
         navigate('/verify');
       } else {
         console.log('API Response for Create Employee:', createEmployeeAPIResponse);
@@ -66,6 +64,8 @@ const EmployeeForm = () => {
       setIsLoading(false);
     }
   };
+
+  
 
   return (
     <>

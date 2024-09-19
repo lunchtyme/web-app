@@ -1,8 +1,6 @@
 import React from 'react';
 import HomePage from './components/pages/HomePage';
 import OnboardingOptions from './components/onboarding/OnboardingOptions';
-import EmployeeForm from './components/forms/EmployeeForm';
-import CompanyForm from './components/forms/CompanyForm';
 import { Routes, Route } from 'react-router-dom';
 import SucessPage from './components/pages/SucessPage';
 // import LogInPage from './components/LogInPage';
@@ -14,6 +12,7 @@ import AdminDashboard from './Admin/AdminDashboard';
 import EmployeeDashboard from './Employee/EmployeeDashboard';
 import NotFound from './utils/NotFound';
 import RequireAuth from './utils/RequireAuth';
+import AdminOnboard from './AdminOnboard';
 
 const App = () => {
   return (
@@ -48,6 +47,14 @@ const App = () => {
           element={
             <RequireAuth>
               <EmployeeDashboard />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/auth-onboard"
+          element={
+            <RequireAuth>
+              <AdminOnboard />
             </RequireAuth>
           }
         />

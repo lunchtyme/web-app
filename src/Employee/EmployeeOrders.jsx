@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tables4 from '../utils/Tables4';
 import APIHelper from '../utils/APIHelper';
 import Cookies from 'js-cookie';
@@ -10,8 +10,9 @@ const EmployeeOrders = () => {
 
   const fetchData = async () => {
     try {
-      const response = await APIHelper.makeSecureAPICall(token).get('orders?limit=10');
+      const response = await APIHelper.makeSecureAPICall(token).get('orders');
       const fetchedData = response.data.data.list;
+      console.log(fetchedData);
       setData(fetchedData);
     } catch (error) {
       console.error(error);
