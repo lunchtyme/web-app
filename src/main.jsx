@@ -28,11 +28,11 @@ const Preloader = ({ onComplete }) => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-200">
       <div className="p-10">
-        <h2 className="text-4xl font-semibold">
+        <h2 className="text-2xl font-semibold">
           Lunch<span className="text-green-600">tyme</span>
         </h2>
       </div>
-      <div className="w-96 bg-gray-300 rounded-sm h-2.5">
+      <div className="w-64 bg-gray-300 rounded-sm h-2.5">
         <div className="bg-green-600 h-2.5 rounded-lg" style={{ width: `${progress}%` }}></div>
       </div>
       {/* <p className="mt-4 text-gray-700">{Math.round(progress)}%</p> */}
