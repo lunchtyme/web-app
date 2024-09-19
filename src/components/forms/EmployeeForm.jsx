@@ -13,11 +13,10 @@ const EmployeeForm = () => {
     email: '',
     password: '',
     account_type: 'Individual',
-    first_name: 'wertt',
+    first_name: '',
     last_name: '',
     phone_number: '',
     invitation_code: '',
-    lunch_time: '',
     dial_code: '+234',
     time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
@@ -44,7 +43,7 @@ const EmployeeForm = () => {
         setFormData({
           email: '',
           password: '',
-          first_name: 'wertt',
+          first_name: '',
           last_name: '',
           dial_code: '',
           phone_number: '',
@@ -64,8 +63,6 @@ const EmployeeForm = () => {
       setIsLoading(false);
     }
   };
-
-  
 
   return (
     <>

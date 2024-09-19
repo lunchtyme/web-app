@@ -10,9 +10,11 @@ const CompanyForm = () => {
     email: '',
     password: '',
     name: '',
+    account_type: 'Company',
     website: '',
-    dial_code: '',
+    dial_code: '+234',
     phone_number: '',
+    time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -41,10 +43,9 @@ const CompanyForm = () => {
           account_type: '',
           name: '',
           website: '',
-          size: '',
-          max_spend_amount_per_employee: '',
           dial_code: '',
           phone_number: '',
+          time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         });
 
         localStorageHelper.saveToLocalStorage('acct_mail', formData.email);
@@ -108,7 +109,6 @@ const CompanyForm = () => {
               label: 'DIAL CODE',
               name: 'dial_code',
               type: 'text',
-              value: '+234',
               placeholder: '+234',
               isReadonly: true,
             },
