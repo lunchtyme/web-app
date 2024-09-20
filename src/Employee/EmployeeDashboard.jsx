@@ -4,6 +4,7 @@ import EmployeeSidebar from './EmployeeSidebar';
 import EmployeeOrders from './EmployeeOrders';
 import Overview from './Overview';
 import Analytics from './Analytics';
+import NotFound from '../utils/NotFound';
 
 const EmployeeDashboard = () => {
   return (
@@ -20,6 +21,7 @@ const EmployeeDashboard = () => {
           <Route path="orders" element={<EmployeeOrders />} />
           <Route path="overview" element={<Overview />} />
           <Route path="analytics" element={<Analytics />} />
+          <Route path="*" element={<NotFound />} />
           {/* Add other routes here */}
         </Routes>
       </div>

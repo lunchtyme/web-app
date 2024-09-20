@@ -24,6 +24,7 @@ const App = () => {
         <Route path="/success" element={<SucessPage />} />
         <Route path="/login" element={<LogInPage />} />
         <Route path="/verify" element={<VerifyOTP />} />
+        <Route path="*" element={<NotFound />} />
 
         {/**Private route */}
         <Route
@@ -62,7 +63,7 @@ const App = () => {
         {/* <Route path="/login" element={<LogInPage />} /> */}
 
         {/**Indefind Routes */}
-        <Route path="*" element={<NotFound />} />
+       
       </Routes>
     </>
   );

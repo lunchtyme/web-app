@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import APIHelper from '../../utils/APIHelper';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 
 const OnboardingEmployee = () => {
-  const token = Cookies.get('esp_lunchtyme_id')
+  const token = Cookies.get('esp_lunchtyme_id');
   const [formData, setFormData] = useState({
     address_line_1: '',
     address_line_2: '',
@@ -35,12 +35,32 @@ const OnboardingEmployee = () => {
     }
   };
 
+  const [empName, setEmpName] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const fetchUserData = async () => {
+    setLoading(true);
+    try {
+      const response2 = await APIHelper.makeSecureAPICall(token).get('auth/me');
+      const fetchedData = response2.data.data;
+      setEmpName(fetchedData);
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
   return (
     <>
       <section className="w-full bg-gray-200 h-auto">
         <section className="p-10 w-full">
           <h1 className="text-4xl font-[600] text-center tracking-tight">
-            Let's complete your Lunchtyme setup, John!
+            Let's complete your Lunchtyme setup!
           </h1>
         </section>
 
@@ -69,7 +89,7 @@ const OnboardingEmployee = () => {
             <div className="form-control">
               <label className="label">
                 <span className="label-text text-[1rem]">
-                  ADDRESS LINE 2 <span className="text-md">(OPTIONAL)</span>
+                  ADDRESS LINE 2 <span className="text-red-600 w-20">&#42;</span>
                 </span>
               </label>
               <input
@@ -79,6 +99,7 @@ const OnboardingEmployee = () => {
                 onChange={handleChange}
                 placeholder="Enter street address 2"
                 className="input input-bordered focus:outline-none"
+                required
               />
             </div>
             <div className="form-control">

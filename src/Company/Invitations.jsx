@@ -24,8 +24,6 @@ const Invitations = () => {
     setSuccess('');
   };
 
- 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -42,11 +40,10 @@ const Invitations = () => {
         setEmail({ employee_work_email: '' });
         setIsModalOpen(false);
         setToast({ message: 'Invitation sent successfully!', type: 'success' });
-        setInvitations();
       }
     } catch (error) {
       setError('Failed to send the invitation. Please try again.');
-      console.log(error.response.data);
+      console.log(error);
       setToast({ message: 'Failed to send the invitation. Please try again.', type: 'error' });
     } finally {
       setLoading(false);
@@ -57,7 +54,7 @@ const Invitations = () => {
     setLoading(true);
     try {
       const response = await APIHelper.makeSecureAPICall(token).get('invitations/list');
-      console.log(response.data.data[0].id);
+      console.log(response.data);
       setInvitations(response.data.data); // Update state with fetched data
     } catch (error) {
       setError('Failed to fetch invitations. Please try again.');

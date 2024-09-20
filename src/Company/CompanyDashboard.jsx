@@ -5,6 +5,7 @@ import Invitations from './Invitations';
 import Overview from './Overview';
 import Billings from './Billings';
 import Employees from './Employees';
+import NotFound from '../utils/NotFound';
 
 const CompanyDashboard = () => {
   return (
@@ -22,6 +23,7 @@ const CompanyDashboard = () => {
           <Route path="overview" element={<Overview />} />
           <Route path="billings" element={<Billings />} />
           <Route path="employees" element={<Employees />} />
+          <Route path="*" element={<NotFound />} />
           {/* Add other routes here */}
         </Routes>
       </div>
