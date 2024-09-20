@@ -8,6 +8,7 @@ import Transactions from './Transactions';
 import Overview from './Overview';
 import List from './List';
 import Settings from './Settings';
+import NotFound from '../utils/NotFound';
 
 const AdminDashboard = () => {
   return (
@@ -29,6 +30,7 @@ const AdminDashboard = () => {
           <Route path="settings" element={<Settings />} />
           <Route path="lists" element={<List />} />
           <Route path="menu" element={<Menu />} />
+          <Route path="*" element={<NotFound />} />
 
 
           {/* Wildcard route for undefined sub-routes */}

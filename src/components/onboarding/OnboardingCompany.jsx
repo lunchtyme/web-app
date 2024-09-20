@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import APIHelper from '../../utils/APIHelper';
@@ -36,12 +36,14 @@ const OnboardingCompany = () => {
     }
   };
 
+  //fetch company name
+  
   return (
     <>
       <section className="w-full bg-gray-200 h-auto">
         <section className="p-10 w-full">
           <h1 className="text-4xl font-[600] text-center tracking-tight">
-            Let's complete your Lunchtyme setup, Twitter Inc!
+             Let's complete your Lunchtyme setup!
           </h1>
         </section>
 
@@ -67,7 +69,7 @@ const OnboardingCompany = () => {
             <div className="form-control">
               <label className="label">
                 <span className="label-text text-[1rem]">
-                  ADDRESS LINE 2 <span className="text-md">(OPTIONAL)</span>
+                  ADDRESS LINE 2 <span className="text-red-600 w-20">&#42;</span>
                 </span>
               </label>
               <input
@@ -77,6 +79,7 @@ const OnboardingCompany = () => {
                 onChange={handleChange}
                 placeholder="Enter street address 2"
                 className="input input-bordered focus:outline-none"
+                required
               />
             </div>
             <div className="form-control">

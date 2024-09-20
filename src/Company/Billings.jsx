@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import APIHelper from '../utils/APIHelper';
 import Cookies from 'js-cookie';
 import StatCard from '../utils/StatCard';
-import Tables2 from '../utils/Tables2';
+import Tables7 from '../utils/Tables7';
 import { Navigate } from 'react-router-dom';
 
 const Billings = () => {
-  const headers = ['Title', 'Description', 'Date', 'Amount'];
+  const headers = ['Name', 'Email', 'Date', 'Type', 'Status', 'Amount'];
   const [data, setData] = useState('');
   const [data2, setData2] = useState('');
   const [amount, setAmount] = useState('');
@@ -87,25 +87,19 @@ const Billings = () => {
           <div className="p-5 flex gap-10 items-center ">
             <h2 className="text-2xl">Balance</h2>
 
-            <button
-                onClick={toggleModal}
-                className="btn bg-green-600 w-[6rem] text-lg text-white"
-              >
-                Top up
-              </button>
+            <button onClick={toggleModal} className="btn bg-green-600 w-[6rem] text-lg text-white">
+              Top up
+            </button>
           </div>
           <div className="flex flex-col gap-5">
             <div>
-              <StatCard
-                number={`₦ ${formatBalance(data2.balance)}`}
-                groupName={''}
-              />
+              <StatCard number={`₦ ${formatBalance(data2.balance)}`} groupName={''} />
             </div>
           </div>
         </div>
 
         <div className="bg-gray-50 p-10 rounded">
-          <Tables2 headers={headers} data={data} emptyMessage={'No billings made!'} />
+          <Tables7 headers={headers} data={data} emptyMessage={'No billings made!'} />
         </div>
 
         {isModalOpen && (
