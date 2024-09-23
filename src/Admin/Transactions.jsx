@@ -9,6 +9,8 @@ const Transactions = () => {
   const [data, setData] = useState('');
   const [loading, setLoading] = useState(false); // Boolean instead of empty string
   const [error, setError] = useState('');
+  const [showToast, setShowToast] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
 
   const token = Cookies.get('esp_lunchtyme_id');
 
@@ -19,8 +21,10 @@ const Transactions = () => {
       const fetchedData = response.data.data.list;
       console.log(fetchedData);
       setData(fetchedData);
+      setShowSuccessToast(true);
     } catch (error) {
       setError(error);
+      setShowToast(true);
     } finally {
       setLoading(false);
     }
@@ -29,6 +33,24 @@ const Transactions = () => {
   useEffect(() => {
     fetchTable();
   }, []);
+
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
+
+  useEffect(() => {
+    if (showSuccessToast) {
+      const timer = setTimeout(() => {
+        setShowSuccessToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessToast]);
 
   return (
     <>
@@ -47,8 +69,24 @@ const Transactions = () => {
           </div>
         ) : (
           <Tables5 headers={headers} data={data} emptyMessage="No transactions made!" />
+
         )}
-        {error && <p className="text-red-500">Error: {error.message}</p>}
+        {/* {error && <p className="text-red-500">Error: {error.message}</p>} */}
+        {showToast && (
+          <div className="toast toast-end toast-top">
+            <div className="alert alert-error text-white p-5">
+              <span>{error.message}</span>
+            </div>
+          </div>
+        )}
+
+        {showSuccessToast && (
+          <div className="toast toast-end toast-top">
+            <div className="alert alert-success text-white p-5">
+              <span>Table fetched successfully.</span>
+            </div>
+          </div>
+        )}
       </section>
     </>
   );

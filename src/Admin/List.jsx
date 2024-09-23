@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 
 const List = () => {
-  const headers = ['Image', 'Name', 'Price', 'Date'];
+  const headers = ['Image', 'Name', 'Price', 'Date', 'Status'];
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -16,6 +16,10 @@ const List = () => {
   const [loading2, setLoading2] = useState(false);
   const [error2, setError2] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [showToast, setShowToast] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+
   const itemsPerPage = 10;
   const token = Cookies.get('esp_lunchtyme_id');
 
@@ -46,8 +50,10 @@ const List = () => {
     try {
       const response = await APIHelper.makeSecureAPICall(token).get('/food-menu');
       setData(response.data.data.list);
+      setShowSuccessToast(true);
     } catch (error) {
       setMessage('Error fetching menu data');
+      setShowToast(true);
     } finally {
       setLoading(false);
     }
@@ -56,6 +62,24 @@ const List = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
+
+  useEffect(() => {
+    if (showSuccessToast) {
+      const timer = setTimeout(() => {
+        setShowSuccessToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessToast]);
 
   const currentData = (result.length > 0 ? result : data).slice(
     (currentPage - 1) * itemsPerPage,
@@ -82,7 +106,7 @@ const List = () => {
             onChange={handleInput}
             type="text"
             className="w-full h-12 px-4 rounded bg-gray-200 border-0 focus:ring-4 focus:ring-green-500 text-gray-700 placeholder-gray-500 transition duration-300"
-            placeholder="Search category..."
+            placeholder="Search menu..."
           />
           <button
             type="submit"
@@ -93,8 +117,8 @@ const List = () => {
         </form>
       </div>
 
-      {message && <p className="text-red-500 text-center">{message}</p>}
-      {error2 && <p className="text-red-500 text-center">{error2}</p>}
+      {/* {message && <p className="text-red-500 text-center">{message}</p>}
+      {error2 && <p className="text-red-500 text-center">{error2}</p>} */}
 
       {loading || loading2 ? (
         <div className="flex justify-center items-center mt-10">
@@ -117,6 +141,22 @@ const List = () => {
               className="flex space-x-4"
             />
           </div>
+
+          {showToast && (
+            <div className="toast toast-end toast-top">
+              <div className="alert alert-error text-white p-5">
+                <span>{message}</span>
+              </div>
+            </div>
+          )}
+
+          {showSuccessToast && (
+            <div className="toast toast-end toast-top">
+              <div className="alert alert-success text-white p-5">
+                <span>Table fetched successfully.</span>
+              </div>
+            </div>
+          )}
         </>
       )}
     </section>

@@ -7,7 +7,7 @@ const token = Cookies.get('esp_lunchtyme_id');
 
 const Tables3 = ({ headers, data, emptyMessage }) => {
   return (
-    <div className="overflow-x-auto mt-10">
+    <div className="mt-10">
       <table className="table">
         <thead>
           <tr>

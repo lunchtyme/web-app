@@ -80,9 +80,7 @@ const Main = () => {
 };
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BrowserRouter>
-      <Main />
-    </BrowserRouter>
-  </StrictMode>,
+  <BrowserRouter>
+    <Main />
+  </BrowserRouter>,
 );

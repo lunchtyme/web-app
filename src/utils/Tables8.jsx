@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 
 const blank = '/images/blank.jpg';
 
-const Tables4 = ({ headers, data, emptyMessage }) => {
+const Tables8 = ({ headers, data, emptyMessage }) => {
   const token = Cookies.get('esp_lunchtyme_id');
 
   const handleStatusChange = async (id, status) => {
@@ -50,33 +50,10 @@ const Tables4 = ({ headers, data, emptyMessage }) => {
           ) : (
             data.map((item) => (
               <tr key={item.name}>
-                <td>
-                  <img src={item.food_image || blank} className="w-[4rem] h-[4rem] rounded" />
-                </td>
-                <td>{item.name}</td>
-                <td>{`₦ ${item.price}`}</td>
+                <td>{`${item.employee_details.first_name} ${item.employee_details.last_name}`}</td>
+                <td>{`₦ ${item.total_amount}`}</td>
                 <td>{moment(item.created_at).format('MMM Do YY')}</td>
-                <td>{item.available ? 'AVAILABLE' : 'UNAVAILABLE'}</td>
-                <td>
-                  <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn m-1">
-                      ...
-                    </div>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-                    >
-                      <li>
-                        <a onClick={() => handleStatusChange(item._id, 'AVAILABLE')}>AVAILABLE</a>
-                      </li>
-                      <li>
-                        <a onClick={() => handleStatusChange(item._id, 'UNAVAILABLE')}>
-                          UNAVAILABLE
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
+                <td>{item.status}</td>
               </tr>
             ))
           )}
@@ -86,4 +63,4 @@ const Tables4 = ({ headers, data, emptyMessage }) => {
   );
 };
 
-export default Tables4;
+export default Tables8;
