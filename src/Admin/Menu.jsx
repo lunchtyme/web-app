@@ -7,10 +7,11 @@ const Menu = () => {
     name: '',
     description: '',
     price: '',
-    food_image: '',
+    food_image: null,
     categories: [],
   });
 
+  const [imagePreview, setImagePreview] = useState(null); // For previewing the image
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const token = Cookies.get('esp_lunchtyme_id');
@@ -41,8 +42,20 @@ const Menu = () => {
   ];
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type, files } = e.target;
+
+    if (type === 'file') {
+      const file = files[0];
+      if (file && file.type.startsWith('image/')) {
+        // Validate that the file is an image
+        setFormData({ ...formData, [name]: file });
+        setImagePreview(URL.createObjectURL(file)); // Create a preview URL for the image
+      } else {
+        setError('Please upload a valid image file');
+      }
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleCheckboxChange = (e) => {
@@ -50,8 +63,8 @@ const Menu = () => {
     setFormData((prevData) => ({
       ...prevData,
       categories: checked
-        ? [...prevData.categories, value]
-        : prevData.categories.filter((category) => category !== value),
+        ? [...prevData.categories, value] // Add category if checked
+        : prevData.categories.filter((category) => category !== value), // Remove category if unchecked
     }));
   };
 
@@ -60,22 +73,41 @@ const Menu = () => {
     setLoading(true);
     setError(null);
 
+    const formDataToSend = new FormData();
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('description', formData.description);
+    formDataToSend.append('price', formData.price);
+    formDataToSend.append('food_image', formData.food_image); // Append the file
+    formData.categories.forEach((category) => {
+      formDataToSend.append('categories[]', category); // Send categories as an array
+    });
+
     try {
-      const response = await APIHelper.makeSecureAPICall(token).post('food-menu/new', formData);
+      const response = await APIHelper.makeSecureAPICall(token).post(
+        'food-menu/new',
+        formDataToSend,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+
       if (response.status === 200) {
         alert('Menu item added successfully!');
         setFormData({
           name: '',
           description: '',
           price: '',
-          food_image: '',
+          food_image: null,
           categories: [],
         });
+        setImagePreview(null); // Clear the image preview
       } else {
         throw new Error('Failed to create menu item');
       }
     } catch (error) {
-      setError(error.data || 'Something went wrong');
+      setError(error.response?.data?.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }
@@ -89,7 +121,6 @@ const Menu = () => {
           <h2 className="text-xl font-semibold text-center mb-4">Add Menu Item</h2>
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/** Name Input */}
             <div className="form-control">
               <label className="label font-medium text-md">NAME</label>
               <input
@@ -102,7 +133,7 @@ const Menu = () => {
                 required
               />
             </div>
-            {/** Description Input */}
+
             <div className="form-control">
               <label className="label font-medium text-md">DESCRIPTION</label>
               <input
@@ -115,7 +146,7 @@ const Menu = () => {
                 required
               />
             </div>
-            {/** Price Input */}
+
             <div className="form-control">
               <label className="label font-medium text-md">PRICE</label>
               <input
@@ -128,7 +159,7 @@ const Menu = () => {
                 required
               />
             </div>
-            {/** Categories Checkbox */}
+
             <div className="form-control">
               <label className="label font-medium text-md">CATEGORIES</label>
               <div className="grid grid-cols-2 gap-2">
@@ -145,22 +176,24 @@ const Menu = () => {
                   </label>
                 ))}
               </div>
-
-              {/**Upload image for image */}
-              <div className="pt-5">
-                <div className="p-2">
-                  <h2 className="text-lg">Upload image for menu</h2>
-                </div>
-                <input
-                  type="file"
-                  name="food_image"
-                  value={formData.food_image}
-                  onChange={handleChange}
-                  className="file-input file-input-bordered file-input-success w-full max-w-xs"
-                />
-              </div>
             </div>
-            {/** Submit Button */}
+
+            <div className="form-control pt-5">
+              <h2 className="text-lg">Upload image for menu</h2>
+              <input
+                type="file"
+                name="food_image"
+                accept="image/*"
+                onChange={handleChange}
+                className="file-input file-input-bordered file-input-success w-full max-w-xs"
+              />
+              {imagePreview && (
+                <div className="mt-4">
+                  <img src={imagePreview} alt="Preview" className="w-32 h-32 object-cover" />
+                </div>
+              )}
+            </div>
+
             <button
               type="submit"
               className={`btn w-full h-12 text-white text-lg font-semibold ${

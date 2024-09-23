@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Tables4 from '../utils/Tables4';
+import Tables8 from '../utils/Tables8';
 import APIHelper from '../utils/APIHelper';
 import Cookies from 'js-cookie';
 
 const EmployeeOrders = () => {
   const headers = ['Name', 'Title', 'Date', 'Status'];
   const [data, setData] = useState('');
+  const [loading, setLoading] = useState(false)
   const token = Cookies.get('esp_lunchtyme_id');
 
   const fetchData = async () => {
@@ -30,7 +31,7 @@ const EmployeeOrders = () => {
             <h2 className="text-2xl">My orders</h2>
           </div>
           <div>
-            <Tables4 headers={headers} data={data} emptyMessage={'No orders yet!'} />
+            <Tables8 headers={headers} data={data} emptyMessage={'No orders yet!'} />
           </div>
         </div>
       </section>

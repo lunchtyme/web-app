@@ -89,7 +89,7 @@ const AdminSidebar = () => {
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/admin/lists">
                 <img src="/images/list.svg" alt="" className="w-6" />
-                Lists
+                Menu Lists
               </Link>
             </li>
             <li className="p-2">
