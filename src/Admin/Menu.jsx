@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import APIHelper from '../utils/APIHelper';
 import Cookies from 'js-cookie';
 
 const Menu = () => {
+  const [showToast, setShowToast] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     price: '',
     food_image: null,
     categories: [],
+    health_benefits: [],
+    allergens: [],
+    suitable_for_conditions: [],
+    suitable_for_diet: [],
   });
 
   const [currentStep, setCurrentStep] = useState(1); // Step tracking
@@ -17,6 +23,47 @@ const Menu = () => {
   const [error, setError] = useState(null);
   const [validationError, setValidationError] = useState(''); // To show validation errors
   const token = Cookies.get('esp_lunchtyme_id');
+
+  const handleHealthChange = (e) => {
+    const value = e.target.value;
+    const allergyList = value.split(',').map((item) => item.trim());
+    // .filter((item) => item);
+    setFormData((prevData) => ({
+      ...prevData,
+      health_benefits: allergyList,
+    }));
+    console.log(allergyList);
+  };
+  const handleAllergensChange = (e) => {
+    const value = e.target.value;
+    const allergyList = value.split(',').map((item) => item.trim());
+    // .filter((item) => item);
+    setFormData((prevData) => ({
+      ...prevData,
+      allergens: allergyList,
+    }));
+    console.log(allergyList);
+  };
+  const handleConditionsChange = (e) => {
+    const value = e.target.value;
+    const allergyList = value.split(',').map((item) => item.trim());
+    // .filter((item) => item);
+    setFormData((prevData) => ({
+      ...prevData,
+      suitable_for_conditions: allergyList,
+    }));
+    console.log(allergyList);
+  };
+  const handleDietsChange = (e) => {
+    const value = e.target.value;
+    const allergyList = value.split(',').map((item) => item.trim());
+    // .filter((item) => item);
+    setFormData((prevData) => ({
+      ...prevData,
+      suitable_for_diet: allergyList,
+    }));
+    console.log(allergyList);
+  };
 
   const categoriesList = [
     'Soup',
@@ -79,6 +126,10 @@ const Menu = () => {
     formDataToSend.append('description', formData.description);
     formDataToSend.append('price', formData.price);
     formDataToSend.append('food_image', formData.food_image);
+    formDataToSend.append('allergens', formData.allergens);
+    formDataToSend.append('health_benefits', formData.health_benefits);
+    formDataToSend.append('suitable_for_conditions', formData.suitable_for_conditions);
+    formDataToSend.append('suitable_for_diet', formData.suitable_for_diet);
     formData.categories.forEach((category) => {
       formDataToSend.append('categories[]', category);
     });
@@ -91,7 +142,7 @@ const Menu = () => {
       );
 
       if (response.status === 200) {
-        alert('Menu item added successfully!');
+        setShowSuccessToast(true);
         setFormData({
           name: '',
           description: '',
@@ -105,6 +156,7 @@ const Menu = () => {
         throw new Error('Failed to create menu item');
       }
     } catch (error) {
+      setShowToast(true);
       setError(error.response?.data?.message || 'Something went wrong');
     } finally {
       setLoading(false);
@@ -126,9 +178,27 @@ const Menu = () => {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
+
+  useEffect(() => {
+    if (showSuccessToast) {
+      const timer = setTimeout(() => {
+        setShowSuccessToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessToast]);
+
   return (
     <section className="w-full ">
-      <h2 className="text-2xl p-5 lato-bold text-2xl">Create Menu</h2>
+      <h2 className="text-2xl p-5 lato-bold">Create Menu</h2>
       <div className="flex gap-24 bg-gray-200 p-8 rounded-lg w-[100%] ">
         <div className="w-full bg-white shadow-lg rounded-lg p-10">
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
@@ -140,7 +210,7 @@ const Menu = () => {
           {currentStep === 1 && (
             <form className="space-y-6 w-[100%]">
               <div className="form-control">
-                <label className="label font-medium text-md">NAME</label>
+                <label className="label font-medium text-md lato-regular">NAME</label>
                 <input
                   type="text"
                   name="name"
@@ -153,7 +223,7 @@ const Menu = () => {
               </div>
 
               <div className="form-control ">
-                <label className="label font-medium text-md">DESCRIPTION</label>
+                <label className="label font-medium text-md lato-regular">DESCRIPTION</label>
                 <input
                   type="text"
                   name="description"
@@ -166,7 +236,7 @@ const Menu = () => {
               </div>
 
               <div className="form-control">
-                <label className="label font-medium text-md">PRICE</label>
+                <label className="label font-medium text-md lato-regular">PRICE</label>
                 <input
                   type="text"
                   name="price"
@@ -175,6 +245,58 @@ const Menu = () => {
                   placeholder="Enter price"
                   className="focus:ring-0 input input-bordered w-full h-12 bg-transparent"
                   required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-[1rem]">HEALTH BENEFITS</span>
+                </label>
+                <input
+                  type="text"
+                  name="health_benefits"
+                  value={formData.health_benefits.join(', ')} // Join array for display
+                  onChange={handleHealthChange}
+                  placeholder="Enter allergies, separated by commas"
+                  className="input input-bordered focus:outline-none"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-[1rem]">ALLERGENS</span>
+                </label>
+                <input
+                  type="text"
+                  name="allergens"
+                  value={formData.allergens.join(', ')} // Join array for display
+                  onChange={handleAllergensChange}
+                  placeholder="Enter allergies, separated by commas"
+                  className="input input-bordered focus:outline-none"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-[1rem]">SUITABLE CONDITIONS</span>
+                </label>
+                <input
+                  type="text"
+                  name="suitable_for_conditions"
+                  value={formData.suitable_for_conditions.join(', ')} // Join array for display
+                  onChange={handleConditionsChange}
+                  placeholder="Enter allergies, separated by commas"
+                  className="input input-bordered focus:outline-none"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-[1rem]">SUITABLE DIETS</span>
+                </label>
+                <input
+                  type="text"
+                  name="suitable_for_diet"
+                  value={formData.suitable_for_diet.join(', ')} // Join array for display
+                  onChange={handleDietsChange}
+                  placeholder="Enter allergies, separated by commas"
+                  className="input input-bordered focus:outline-none"
                 />
               </div>
               <div className="w-full flex justify-end">
@@ -193,25 +315,27 @@ const Menu = () => {
           {currentStep === 2 && (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="form-control">
-                <label className="label font-medium text-md">CATEGORIES</label>
-                <div className="grid grid-cols-2 gap-2">
+                <label className="label font-medium text-xl lato-regular">CATEGORIES</label>
+                <div className="grid grid-cols-2 gap-5">
                   {categoriesList.map((category) => (
-                    <label key={category} className="flex items-center justify-between">
-                      <span className="text-md">{category}</span>
-                      <input
-                        type="checkbox"
-                        value={category}
-                        onChange={handleCheckboxChange}
-                        checked={formData.categories.includes(category)}
-                        className="checkbox"
-                      />
+                    <label key={category} className="flex items-center">
+                      <div className="w-[80%] flex justify-between">
+                        <span className="text-md mr-10">{category}</span>
+                        <input
+                          type="checkbox"
+                          value={category}
+                          onChange={handleCheckboxChange}
+                          checked={formData.categories.includes(category)}
+                          className="checkbox"
+                        />
+                      </div>
                     </label>
                   ))}
                 </div>
               </div>
 
               <div className="form-control pt-5">
-                <h2 className="text-lg">Upload image for menu</h2>
+                <h2 className="text-xl lato-bold p-2">Upload image for menu</h2>
                 <input
                   type="file"
                   name="food_image"
@@ -248,6 +372,22 @@ const Menu = () => {
           )}
         </div>
       </div>
+
+      {showToast && (
+        <div className="toast toast-end toast-top mr-10">
+          <div className="alert alert-error text-white p-5">
+            <span>{error.message}</span>
+          </div>
+        </div>
+      )}
+
+      {showSuccessToast && (
+        <div className="toast toast-end toast-top mr-10 z-50">
+          <div className="alert alert-success text-white p-5">
+            <span>Menu added successfully.</span>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

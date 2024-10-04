@@ -71,23 +71,22 @@ const HomePage = () => {
 
         {/* Hero Section */}
         <section className="mx-auto mb-10 mt-3 text-center h-auto p-8">
-          <main className="pt-32 p-5">
+          <main className=" p-5">
             <div className="flex flex-col lg:flex-row justify-between gap-10 flex-wrap p-10">
               <div className="flex-1 lg:w-[45rem] flex flex-col gap-10">
                 <p className="text-4xl lg:text-8xl lato-bold text-left leading-tight lg:leading-[7rem] text-gray-700">
-                  Automated Lunch For Your Remote Teams
+                  Empowering remote teams with seamless lunch solutions
                 </p>
                 <p className="lato-regular text-gray-500 text-lg lg:text-4xl text-start leading-tight">
                   Lunchtyme offers companies of all sizes an easy and automated way to buy lunch for
                   their remote teams.
                 </p>
                 <div className="flex justify-start gap-5 pt-10">
-                  <button className="bg-gray-200 lato-bold text-lg lg:text-2xl py-3 lg:py-4 hover:bg-gray-300 rounded-lg text-center px-5 transition">
-                    Order Now
-                  </button>
-                  <button className="bg-gray-200 lato-bold text-lg lg:text-2xl py-3 lg:py-4 hover:bg-gray-300 rounded-lg text-center px-5 transition">
-                    Explore Menus
-                  </button>
+                  <Link to="/signup">
+                    <button className="bg-gray-200 lato-bold text-lg lg:text-2xl py-3 lg:py-4 hover:bg-gray-300 rounded-lg text-center px-5 transition">
+                      Get started
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className="flex-1 flex flex-col lg:flex-row justify-start items-center gap-5">
@@ -106,7 +105,7 @@ const HomePage = () => {
 
         {/* features */}
         <section className="w-full p-5 lg:p-10">
-          <div className="shadow-lg border-2 border-gray-300 rounded-lg flex flex-col lg:flex-row flex-wrap justify-evenly p-5 lg:p-10 items-center">
+          <div className="shadow-lg border-2 border-gray-800 rounded-lg flex flex-col gap-10 sm:flex-col md:flex-col lg:flex-row flex-wrap justify-evenly p-5 lg:p-10 items-center">
             <div className="w-full lg:w-[40%] flex flex-col gap-10">
               <p className="text-4xl lg:text-7xl lato-bold text-left leading-tight">
                 Delicious Features You'll Love
@@ -116,7 +115,7 @@ const HomePage = () => {
                 experience. Explore what we have to offer below.
               </p>
 
-              <div className="flex flex-col gap-10 lg:gap-14 p-0 lg:p-5 w-full lg:w-[40rem]">
+              <div className="flex flex-col gap-10 lg:gap-14 p-0 lg:p-5 w-auto lg:w-auto">
                 <div className="flex items-start gap-5">
                   <img src="/images/case.svg" alt="" className="w-8" />
                   <div>
@@ -149,10 +148,11 @@ const HomePage = () => {
                     </p>
                   </div>
                 </div>
-
-                <button className="w-[10rem] bg-gray-200 lato-bold text-xl lg:text-2xl py-3 lg:py-4 hover:bg-gray-300 rounded-lg text-center px-5 transition">
-                  Try it now
-                </button>
+                <Link to="/signup">
+                  <button className="w-[10rem] bg-gray-200 lato-bold text-xl lg:text-2xl py-3 lg:py-4 hover:bg-gray-300 rounded-lg text-center px-5 transition">
+                    Try it now
+                  </button>
+                </Link>
               </div>
             </div>
 
@@ -298,7 +298,7 @@ const HomePage = () => {
               {/* Achievement 1 */}
               <div className="flex-1 border-b-2 lg:border-b-0 lg:border-r-2 border-gray-300 h-full flex flex-col items-center">
                 <div className="my-auto">
-                  <p className="text-3xl lg:text-4xl lato-bold">0</p>
+                  <p className="text-3xl lg:text-4xl lato-bold">25</p>
                   <p className="text-xl lg:text-2xl text-gray-500 lato-regular">Orders placed</p>
                 </div>
               </div>
@@ -306,7 +306,7 @@ const HomePage = () => {
               {/* Achievement 2 */}
               <div className="flex-1 border-b-2 lg:border-b-0 lg:border-r-2 border-gray-300 h-full flex flex-col items-center">
                 <div className="my-auto">
-                  <p className="text-3xl lg:text-4xl lato-bold">0</p>
+                  <p className="text-3xl lg:text-4xl lato-bold">10</p>
                   <p className="text-xl lg:text-2xl text-gray-500 lato-regular">
                     Partnered restaurants
                   </p>
@@ -315,7 +315,7 @@ const HomePage = () => {
 
               {/* Achievement 3 */}
               <div className="flex-1">
-                <p className="text-3xl lg:text-4xl lato-bold">0</p>
+                <p className="text-3xl lg:text-4xl lato-bold">30</p>
                 <p className="text-xl lg:text-2xl text-gray-500 lato-regular">Happy customers</p>
               </div>
             </div>
