@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import APIHelper from '../../utils/APIHelper';
 import Cookies from 'js-cookie';
@@ -13,6 +13,9 @@ const OnboardingEmployee = () => {
     country: '',
     zip_code: '',
     lunch_time: '',
+    allergies: [],
+    medical_conditions: [],
+    dietary_preferences: [],
   });
 
   const navigate = useNavigate();
@@ -20,6 +23,40 @@ const OnboardingEmployee = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleMedicalChange = (e) => {
+    const value = e.target.value;
+    const allergyList = value.split(',').map((item) => item.trim());
+    // .filter((item) => item);
+    setFormData((prevData) => ({
+      ...prevData,
+      medical_conditions: allergyList,
+    }));
+    console.log(allergyList);
+  };
+
+  const handleDietChange = (e) => {
+    const value = e.target.value;
+
+    const allergyList = value.split(',').map((item) => item.trim());
+    // .filter((item) => item);
+    setFormData((prevData) => ({
+      ...prevData,
+      dietary_preferences: allergyList,
+    }));
+    console.log(allergyList);
+  };
+
+  const handleAllergiesChange = (e) => {
+    const value = e.target.value;
+    const allergyList = value.split(',').map((item) => item.trim());
+    // .filter((item) => item);
+    setFormData((prevData) => ({
+      ...prevData,
+      allergies: allergyList,
+    }));
+    console.log(allergyList);
   };
 
   const handleSubmit = async (e) => {
@@ -34,26 +71,6 @@ const OnboardingEmployee = () => {
     }
   };
 
-  const [empName, setEmpName] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const fetchUserData = async () => {
-    setLoading(true);
-    try {
-      const response2 = await APIHelper.makeSecureAPICall(token).get('auth/me');
-      const fetchedData = response2.data.data;
-      setEmpName(fetchedData);
-    } catch (error) {
-      console.error(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
   return (
     <>
       <section className="w-full bg-gray-200 h-auto">
@@ -65,6 +82,7 @@ const OnboardingEmployee = () => {
 
         <section className="w-full">
           <form className="card-body w-full md:w-[40rem] mx-auto" onSubmit={handleSubmit}>
+            {/* Delivery Address Fields */}
             <div className="form-control">
               <h2 className="text-lg md:text-[1.3rem] p-3 pl-0 font-semibold">DELIVERY ADDRESS</h2>
               <p className="text-md md:text-lg mb-3 tracking-tight font-semibold">
@@ -85,11 +103,9 @@ const OnboardingEmployee = () => {
                 required
               />
             </div>
-            <div className="form-control">
+            <div className="form-control mt-4">
               <label className="label">
-                <span className="label-text text-[1rem]">
-                  ADDRESS LINE 2 <span className="text-red-600">&#42;</span>
-                </span>
+                <span className="label-text text-[1rem]">ADDRESS LINE 2</span>
               </label>
               <input
                 type="text"
@@ -98,10 +114,9 @@ const OnboardingEmployee = () => {
                 onChange={handleChange}
                 placeholder="Enter street address 2"
                 className="input input-bordered focus:outline-none"
-                required
               />
             </div>
-            <div className="form-control">
+            <div className="form-control mt-4">
               <label className="label">
                 <span className="label-text text-[1rem]">
                   CITY <span className="text-red-600">&#42;</span>
@@ -117,7 +132,7 @@ const OnboardingEmployee = () => {
                 required
               />
             </div>
-            <div className="form-control">
+            <div className="form-control mt-4">
               <label className="label">
                 <span className="label-text text-[1rem]">
                   STATE <span className="text-red-600">&#42;</span>
@@ -133,7 +148,7 @@ const OnboardingEmployee = () => {
                 required
               />
             </div>
-            <div className="form-control">
+            <div className="form-control mt-4">
               <label className="label">
                 <span className="label-text text-[1rem]">
                   COUNTRY <span className="text-red-600">&#42;</span>
@@ -149,10 +164,10 @@ const OnboardingEmployee = () => {
                 required
               />
             </div>
-            <div className="form-control">
+            <div className="form-control mt-4">
               <label className="label">
                 <span className="label-text text-[1rem]">
-                  ZIPCODE <span className="text-red-600">&#42;</span>
+                  ZIP CODE <span className="text-red-600">&#42;</span>
                 </span>
               </label>
               <input
@@ -165,6 +180,8 @@ const OnboardingEmployee = () => {
                 required
               />
             </div>
+
+            {/* Lunch Preference Fields */}
             <div className="mt-8">
               <h2 className="text-lg md:text-[1.3rem] font-semibold p-3 pl-0">LUNCH PREFERENCE</h2>
               <p className="text-md md:text-lg tracking-tight font-semibold">
@@ -182,14 +199,67 @@ const OnboardingEmployee = () => {
                 name="lunch_time"
                 value={formData.lunch_time}
                 onChange={handleChange}
-                placeholder="Enter preferred lunch time"
                 className="input input-bordered focus:outline-none"
                 required
               />
             </div>
+
+            {/* Health Information Fields */}
+            <div className="mt-8">
+              <h2 className="text-lg md:text-[1.3rem] font-semibold p-3 pl-0">
+                HEALTH INFORMATION <span className="text-[1rem]">(OPTIONAL)</span>
+              </h2>
+              <p className="text-md md:text-lg tracking-tight font-semibold">
+                Health information is needed to check your food suggestions.
+              </p>
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text text-[1rem]">ALLERGIES</span>
+              </label>
+              <input
+                type="text"
+                name="allergies"
+                value={formData.allergies.join(', ')} // Join array for display
+                onChange={handleAllergiesChange}
+                placeholder="Enter allergies, separated by commas"
+                className="input input-bordered focus:outline-none"
+              />
+            </div>
+            <div className="form-control mt-4">
+              <label className="label">
+                <span className="label-text text-[1rem]">MEDICAL CONDITIONS</span>
+              </label>
+              <input
+                type="text"
+                name="medical_conditions"
+                value={formData.medical_conditions.join(', ')} // Join array for display
+                onChange={handleMedicalChange}
+                placeholder="Enter medical conditions, separated by commas"
+                className="input input-bordered focus:outline-none"
+              />
+            </div>
+            <div className="form-control mt-4">
+              <label className="label">
+                <span className="label-text text-[1rem]">DIETARY PREFERENCES</span>
+              </label>
+              <input
+                type="text"
+                name="dietary_preferences"
+                value={formData.dietary_preferences.join(', ')} // Join array for display
+                onChange={handleDietChange}
+                placeholder="Enter dietary preferences, separated by commas"
+                className="input input-bordered focus:outline-none"
+              />
+            </div>
+
+            {/* Submit Button */}
             <div className="form-control mt-6">
-              <button type="submit" className="btn text-white bg-gray-800 text-lg">
-                Save
+              <button
+                type="submit"
+                className="text-lg lato-bold btn bg-gray-800 text-white hover:bg-gray-600"
+              >
+                SUBMIT
               </button>
             </div>
           </form>

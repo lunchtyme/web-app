@@ -15,6 +15,7 @@ import RequireAuth from './utils/RequireAuth';
 import AdminOnboard from './AdminOnboard';
 import Password from './components/forms/Password';
 import Password2 from './components/forms/Password2';
+import OnboardingEmployee from './components/onboarding/OnboardingEmployee';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
         <Route path="/reset" element={<Password />} />
         <Route path="/reset-password" element={<Password2 />} />
+        <Route path="/onboarding2" element={<OnboardingEmployee />} />
 
         {/**Private route */}
         <Route
