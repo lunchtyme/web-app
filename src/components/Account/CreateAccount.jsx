@@ -27,7 +27,7 @@ const CreateAccount = () => {
       </div>
 
       {/* Main content area */}
-      <div className="overflow-y-hidden h-[90vh] w-auto flex flex-row items-center justify-center bg-gray-200 border-4">
+      <div className=" border-red-500 overflow-y-hidden h-[90vh] w-auto flex flex-row items-center justify-center bg-gray-200 border-4">
         {/* Step 1: AccountChooser component */}
         {step === 1 && <AccountChooser handleSelect={handleSelect} selected={selected} />}
 
