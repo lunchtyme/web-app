@@ -12,6 +12,7 @@ import NotFound from '../utils/NotFound';
 import APIHelper from '../utils/APIHelper';
 import Cookies from 'js-cookie';
 import AdminLogout from './AdminLogout';
+import SuggestionList from './SuggestionsList';
 
 const AdminDashboard = () => {
   const color = 'bg-[#3f0c86]';
@@ -75,12 +76,12 @@ const AdminDashboard = () => {
           </div>
         )}
       </div>
-      <section className="overflow-y-hidden bg-gray-200 h-[100vh] flex pt-[4.5rem] sm:pt-[4.5rem] md:pt-[4.5rem]">
+      <section className="scrollbar-custom overflow-y-hidden bg-gray-200 h-[100vh] flex pt-[4.5rem] sm:pt-[4.5rem] md:pt-[4.5rem]">
         {/* Sidebar */}
         <AdminSidebar />
 
         {/* Main content */}
-        <div className="flex-1 overflow-y-auto px-[2%] border-4 pt-5">
+        <div className="scrollbar-custom flex-1 overflow-y-auto px-[2%] border-4 pt-5">
           {/* <h2 className="text-2xl font-semibold p-5">
           Lunch<span className="text-green-600">tyme</span>
         </h2> */}
@@ -95,6 +96,7 @@ const AdminDashboard = () => {
             <Route path="menu" element={<Menu />} />
             <Route path="logout" element={<AdminLogout />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="suggestion-list" element={<SuggestionList />} />
 
             {/* Wildcard route for undefined sub-routes */}
           </Routes>

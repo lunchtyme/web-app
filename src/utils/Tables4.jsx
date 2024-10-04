@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import APIHelper from './APIHelper';
@@ -8,6 +8,9 @@ const blank = '/images/blank.jpg';
 
 const Tables4 = ({ headers, data, emptyMessage }) => {
   const token = Cookies.get('esp_lunchtyme_id');
+
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleStatusChange = async (id, status) => {
     try {
@@ -25,6 +28,16 @@ const Tables4 = ({ headers, data, emptyMessage }) => {
       console.error('Failed to update status:', error.response || error.message);
       alert('Failed to update the status');
     }
+  };
+
+  const handleRowClick = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
   };
 
   return (
@@ -51,7 +64,11 @@ const Tables4 = ({ headers, data, emptyMessage }) => {
             </tr>
           ) : (
             data.map((item) => (
-              <tr key={item.name} className="border-t hover:bg-gray-50">
+              <tr
+                key={item.name}
+                className="border-t hover:bg-gray-50 cursor-pointer"
+                onClick={() => handleRowClick(item)}
+              >
                 <td className="px-4 py-4 md:px-6 md:py-6">
                   <img
                     src={item.food_image || blank}
@@ -98,6 +115,76 @@ const Tables4 = ({ headers, data, emptyMessage }) => {
           )}
         </tbody>
       </table>
+
+      {isModalOpen && selectedItem && (
+        <div className="w-full fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="scrollbar-custom bg-white rounded-lg p-6 w-full max-w-[30rem] h-[90%] overflow-auto shadow-lg">
+            <div className="relative">
+              <h2 className="text-3xl font-semibold mb-4 text-gray-800">{selectedItem.name}</h2>
+
+              <img
+                src={selectedItem.food_image || blank}
+                className="object-cover rounded-lg w-full h-60"
+                alt={selectedItem.name}
+              />
+
+              <div className="mt-6 leading-relaxed text-gray-700">
+                <p className="text-lg font-semibold">
+                  <strong>Price:</strong> ₦{selectedItem.price}
+                </p>
+                <p className="text-lg font-semibold">
+                  <strong>Created At:</strong> {moment(selectedItem.created_at).format('MMM Do YY')}
+                </p>
+                <p className="text-md font-semibold">
+                  <strong>Status:</strong> {selectedItem.available ? 'AVAILABLE' : 'UNAVAILABLE'}
+                </p>
+                <p className="text-xl font-semibold mt-4">
+                  <strong>Health benefits:</strong>
+                </p>
+                <ol className="list-disc pl-5">
+                  {selectedItem.health_benefits.map((benefit, index) => (
+                    <li key={index}>{benefit}</li>
+                  ))}
+                </ol>
+
+                <p className="text-xl font-semibold mt-4">
+                  <strong>Allergens:</strong>
+                </p>
+                <ol className="list-disc pl-5">
+                  {selectedItem.allergens.map((benefit, index) => (
+                    <li key={index}>{benefit}</li>
+                  ))}
+                </ol>
+
+                <p className="text-xl font-semibold mt-4">
+                  <strong>Conditions suitable for:</strong>
+                </p>
+                <ol className="list-disc pl-5">
+                  {selectedItem.suitable_for_conditions.map((benefit, index) => (
+                    <li key={index}>{benefit}</li>
+                  ))}
+                </ol>
+
+                <p className="text-xl font-semibold mt-4">
+                  <strong>Diet suitable for:</strong>
+                </p>
+                <ol className="list-disc pl-5">
+                  {selectedItem.suitable_for_diet.map((benefit, index) => (
+                    <li key={index}>{benefit}</li>
+                  ))}
+                </ol>
+              </div>
+
+              <button
+                onClick={closeModal}
+                className="absolute top-0 right-0 w-10 h-10 bg-gray-300 rounded-full hover:bg-gray-400 flex items-center justify-center"
+              >
+                <img src="/images/cancel.svg" alt="Close" className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

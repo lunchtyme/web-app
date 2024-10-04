@@ -1,19 +1,24 @@
+// components/List.jsxquery
 import React, { useEffect, useState } from 'react';
-import Tables4 from '../utils/Tables4';
+import Tables9 from '../utils/Tables9';
 import PaginationComponent from '../utils/PaginationComponent';
 import APIHelper from '../utils/APIHelper';
 import Cookies from 'js-cookie';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-const List = () => {
+const SuggestionList = () => {
   const navigate = useNavigate();
-  const headers = ['Image', 'Name', 'Price', 'Date', 'Status'];
+  const headers = ['Name', 'Reason', 'Description', 'Date'];
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [query, setQuery] = useState('');
   const [result, setResult] = useState([]);
+  const [loading2, setLoading2] = useState(false);
+  const [error2, setError2] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+
   const [showToast, setShowToast] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
@@ -26,24 +31,24 @@ const List = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading2(true);
+    setError2(null);
 
     try {
-      const response = await APIHelper.makeSecureAPICall(token).get(`food-menu?query=${query}`);
-      setResult(response.data.data.list);
+      const response2 = await APIHelper.makeSecureAPICall(token).get(`food-menu?query=${query}`);
+      setResult(response2.data.data.list);
       setCurrentPage(1);
     } catch (error) {
-      setMessage('Error fetching search data. Please try again.');
-      setShowToast(true);
+      setError2('Error fetching data. Please try again.');
     } finally {
-      setLoading(false);
+      setLoading2(false);
     }
   };
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await APIHelper.makeSecureAPICall(token).get('/food-menu');
+      const response = await APIHelper.makeSecureAPICall(token).get('/meal/suggestions?limit=10');
       setData(response.data.data.list);
       setShowSuccessToast(true);
     } catch (error) {
@@ -60,14 +65,18 @@ const List = () => {
 
   useEffect(() => {
     if (showToast) {
-      const timer = setTimeout(() => setShowToast(false), 5000);
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [showToast]);
 
   useEffect(() => {
     if (showSuccessToast) {
-      const timer = setTimeout(() => setShowSuccessToast(false), 5000);
+      const timer = setTimeout(() => {
+        setShowSuccessToast(false);
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [showSuccessToast]);
@@ -83,7 +92,11 @@ const List = () => {
 
   return (
     <section className="p-8 bg-gray-50 min-h-screen rounded">
-      <div className="flex justify-between items-center mb-8 space-x-4">
+      {/* <div className="flex justify-between p-6 bg-white shadow-sm rounded-xl items-center mb-8">
+        <h1 className="text-4xl font-semibold text-gray-800">Lunches</h1>
+      </div> */}
+
+      {/* <div className="flex justify-between items-center mb-8 space-x-4">
         <form
           onSubmit={handleSearch}
           className="w-full md:w-2/3 lg:w-1/2 flex items-center space-x-4"
@@ -105,18 +118,23 @@ const List = () => {
         <button className="btn btn-neutral" onClick={() => navigate('/admin/menu')}>
           Create menu
         </button>
-      </div>
+      </div> */}
+      <div>
+        <p className='lato-bold text-2xl'>Meal suggestions</p>
+        </div>
 
+      {/* {message && <p className="text-red-500 text-center">{message}</p>}
+      {error2 && <p className="text-red-500 text-center">{error2}</p>} */}
       {result.length === 0 && query && <p>No results found for "{query}"</p>}
       {result.length === 0 && !query && data.length === 0 && <p>No Lunches added!</p>}
 
-      {loading ? (
+      {loading || loading2 ? (
         <div className="flex justify-center items-center mt-10">
           <div className="w-12 h-12 border-4 border-t-transparent border-gray-300 rounded-full animate-spin"></div>
         </div>
       ) : (
         <>
-          <Tables4
+          <Tables9
             headers={headers}
             data={currentData}
             emptyMessage="No Lunches added!"
@@ -153,4 +171,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default SuggestionList;

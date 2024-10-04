@@ -8,21 +8,32 @@ const Overview = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [isCartVisible, setIsCartVisible] = useState(false);
+  const [risk, setRisk] = useState(false);
   const token = Cookies.get('esp_lunchtyme_id');
 
-  useEffect(() => {
-    const fetchMenuItems = async () => {
-      try {
-        const response = await APIHelper.makeSecureAPICall(token).get('food-menu?limit=10');
-        const fetchedData = response.data.data.list;
-        setMenuItems(fetchedData);
-      } catch (error) {
-        console.log('Error fetching menu items:', error);
-      }
-    };
+  const handleToggle = () => {
+    setRisk((prevState) => !prevState);
+  };
 
-    fetchMenuItems();
-  }, []);
+  const fetchMenuItems = async (value) => {
+    try {
+      const response = await APIHelper.makeSecureAPICall(token).get(
+        `food-menu?limit=10&risk_health=${value}`,
+      );
+      const fetchedData = response.data.data.list;
+      setMenuItems(fetchedData);
+    } catch (error) {
+      console.log('Error fetching menu items:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (risk) {
+      setRisk(true);
+    }
+
+    fetchMenuItems(risk);
+  }, [risk]);
 
   const handleAddToCart = (id, name, price) => {
     const existingItemIndex = cartItems.findIndex((item) => item.id === id);
@@ -72,14 +83,33 @@ const Overview = () => {
   const totalItemsInCart = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="flex h-[85vh]">
+    <div className="flex h-[85vh] ">
       {/* Main Content */}
-      <section>
-        <div className=" h-[80vh] w-auto bg-gray-100 rounded flex">
+      <section className="">
+        <div className="flex items-center space-x-4 p-3 ">
+          {/* Toggle button */}
+          <button
+            onClick={handleToggle}
+            className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer ${
+              risk ? 'bg-gray-800' : 'bg-gray-400'
+            }`}
+          >
+            {/* Toggle circle */}
+            <div
+              className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${
+                risk ? 'translate-x-6' : 'translate-x-0'
+              }`}
+            ></div>
+          </button>
+
+          {/* Display ON or OFF based on state */}
+          <p className="text-xl lato-regular">{risk ? 'All meals' : 'Healthy meals'}</p>
+        </div>
+        <div className=" h-[80vh] bg-gray-100 rounded flex">
           {/* Button to toggle cart visibility */}
           <div className="flex flex-col">
             <div className="flex flex-wrap items-center justify-between px-2 w-full">
-              <h2 className="text-4xl p-5 lato-bold">Menus</h2>
+              <h2 className="text-4xl p-5 lato-bold">Meals</h2>
               <button
                 onClick={() => setIsCartVisible(!isCartVisible)}
                 className="h-14 w-14 px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition duration-300 relative"
@@ -92,7 +122,7 @@ const Overview = () => {
               </button>
             </div>
 
-            <div className="scrollbar-custom p-2 flex flex-wrap gap-10 overflow-y-scroll h-auto">
+            <div className=" scrollbar-custom p-2 flex flex-wrap gap-10 overflow-x-hidden h-auto  border-2 border-red-400">
               {menuItems.length > 0 ? (
                 menuItems.map((menuItem, index) => (
                   <MenuCard

@@ -22,12 +22,12 @@ const CreateAccount = () => {
       <div className="p-5 flex justify-left bg-gray-200 align-middle">
         <Link to="/">
           {' '}
-          <h2 className="text-4xl font-bold cursor-pointer p-5">Lunchtyme</h2>
+          <img src="/images/lunchtyme-black.svg" alt="" className="w-[10rem]" />
         </Link>
       </div>
 
       {/* Main content area */}
-      <div className="w-auto flex flex-row items-center justify-center bg-gray-200 border-4">
+      <div className="overflow-y-hidden h-[90vh] w-auto flex flex-row items-center justify-center bg-gray-200 border-4">
         {/* Step 1: AccountChooser component */}
         {step === 1 && <AccountChooser handleSelect={handleSelect} selected={selected} />}
 

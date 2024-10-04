@@ -8,6 +8,7 @@ import Employees from './Employees';
 import NotFound from '../utils/NotFound';
 import Cookies from 'js-cookie';
 import APIHelper from '../utils/APIHelper';
+import Suggestions from './Suggestions';
 
 const CompanyDashboard = () => {
   const [data, setData] = useState('');
@@ -80,6 +81,7 @@ const CompanyDashboard = () => {
           <Route path="billings" element={<Billings />} />
           <Route path="employees" element={<Employees />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="suggestions" element={<Suggestions />} />
           {/* Add other routes here */}
         </Routes>
       </div>

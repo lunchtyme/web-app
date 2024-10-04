@@ -74,6 +74,12 @@ const Sidebar = () => {
                 Billings
               </Link>
             </li>
+            <li className="p-2">
+              <Link className="text-xl flex gap-5 items-center" to="/dashboard/suggestions">
+                <img src="/images/add.svg" alt="" className="w-6" />
+                Meal suggestions
+              </Link>
+            </li>
 
             <li className="border-gray-400 border-t-2 p-5 fixed bottom-32 w-[80%]">
               <Link
