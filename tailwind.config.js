@@ -9,6 +9,7 @@ export default {
       fontFamily: {
         custom: ['Inter-var', 'lyon-text','wise-sans'],
       },
+    
       scale: {
         '110': '1.10',  // Adds a scale of 110%
         '125': '1.25',  // Adds a scale of 125%

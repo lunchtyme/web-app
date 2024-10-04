@@ -59,23 +59,23 @@ const Customers = () => {
       ) : (
         <div>
           <div>
-            <h2 className="text-xl">Customers</h2>
+            <h2 className="text-xl lato-bold">Customers</h2>
           </div>
           <Tables3 headers={headers} data={data} emptyMessage="No customers yet!" />
         </div>
       )}
 
       {showToast && (
-        <div className="toast toast-end toast-top">
-          <div className="alert alert-error text-white p-5">
+        <div className="toast toast-end toast-top mr-5">
+          <div className="alert alert-error text-white p-5 rounded">
             <span>{message}</span>
           </div>
         </div>
       )}
 
       {showSuccessToast && (
-        <div className="toast toast-end toast-top">
-          <div className="alert alert-success text-white p-5">
+        <div className="toast toast-end toast-top mr-5">
+          <div className="alert alert-success text-white p-5 rounded">
             <span>Table fetched successfully.</span>
           </div>
         </div>

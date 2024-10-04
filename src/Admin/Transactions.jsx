@@ -56,7 +56,7 @@ const Transactions = () => {
     <>
       <section className="p-6 bg-gray-50 rounded">
         <div>
-          <h2 className="text-2xl">Transactions</h2>
+          <h2 className="text-2xl lato-bold">Transactions</h2>
         </div>
         {loading ? (
           <div className="flex justify-center items-center">
@@ -69,11 +69,10 @@ const Transactions = () => {
           </div>
         ) : (
           <Tables5 headers={headers} data={data} emptyMessage="No transactions made!" />
-
         )}
         {/* {error && <p className="text-red-500">Error: {error.message}</p>} */}
         {showToast && (
-          <div className="toast toast-end toast-top">
+          <div className="toast toast-end toast-top mr-10">
             <div className="alert alert-error text-white p-5">
               <span>{error.message}</span>
             </div>
@@ -81,7 +80,7 @@ const Transactions = () => {
         )}
 
         {showSuccessToast && (
-          <div className="toast toast-end toast-top">
+          <div className="toast toast-end toast-top mr-10 z-50">
             <div className="alert alert-success text-white p-5">
               <span>Table fetched successfully.</span>
             </div>

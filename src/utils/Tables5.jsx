@@ -1,25 +1,20 @@
-import React, { useState } from 'react';
-import axios from 'axios'; // Import axios for API requests
-import Cookies from 'js-cookie';
-import APIHelper from './APIHelper';
+import React from 'react';
 import moment from 'moment';
-
-const blank = '/images/blank.jpg';
+import Cookies from 'js-cookie';
 
 const Tables5 = ({ headers, data, emptyMessage }) => {
   const token = Cookies.get('esp_lunchtyme_id');
 
-  // State to manage the data (including status updates)
-
-  // Function to handle PATCH request and update the status
-
   return (
-    <div className="mt-10">
-      <table className="table">
-        <thead>
+    <div className="mt-10 overflow-x-auto">
+      <table className="min-w-full table-auto bg-white shadow rounded-lg">
+        <thead className="bg-gray-50 border-b">
           <tr>
             {headers.map((header, index) => (
-              <th key={index} className="text-lg">
+              <th
+                key={index}
+                className="text-lg w-[20rem] md:text-base text-sm px-4 py-2 md:px-6 md:py-3 text-left font-semibold text-gray-700 uppercase tracking-wider"
+              >
                 {header}
               </th>
             ))}
@@ -34,13 +29,15 @@ const Tables5 = ({ headers, data, emptyMessage }) => {
             </tr>
           ) : (
             data.map((item) => (
-              <tr key={item._id}>
-                <td>{item._id}</td>
-                <td>{item.email}</td>
-                <td>{`₦ ${item.amount}`}</td>
-                <td>{moment(item.created_at).format('YYYY-MM-DD')}</td>
-                <td>{item.company_details.name}</td> {/* Display the status */}
-                <td>{item.type}</td> {/* Display the status */}
+              <tr key={item._id} className="text-sm md:text-base border-b hover:bg-gray-100">
+                <td className="px-4 py-2 md:px-6 md:py-3">{item._id}</td>
+                <td className="px-4 py-2 md:px-6 md:py-3">{item.email}</td>
+                <td className="flex flex-row px-4 py-2 md:px-6 md:py-3">{`₦${item.amount}`}</td>
+                <td className="px-4 py-2 md:px-6 md:py-3">
+                  {moment(item.created_at).format('YYYY-MM-DD')}
+                </td>
+                <td className="px-4 py-2 md:px-6 md:py-3">{item.company_details.name}</td>
+                <td className="px-4 py-2 md:px-6 md:py-3">{item.type}</td>
               </tr>
             ))
           )}

@@ -69,7 +69,7 @@ const Orders = () => {
 
       {showToast && (
         <div className="toast toast-end toast-top">
-          <div className="alert alert-error text-white p-5">
+          <div className="alert alert-error text-white p-5 rounded">
             <span>{error}</span>
           </div>
         </div>
@@ -77,7 +77,7 @@ const Orders = () => {
 
       {showSuccessToast && (
         <div className="toast toast-end toast-top">
-          <div className="alert alert-success text-white p-5">
+          <div className="alert alert-success text-white p-5 rounded">
             <span>Table fetched successfully.</span>
           </div>
         </div>
