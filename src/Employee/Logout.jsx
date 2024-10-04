@@ -5,10 +5,13 @@ const Logout = () => {
   const { logout } = useLogout();
   return (
     <>
-      <div className="">
+      <div className="p-5">
         <button
-        onClick={logout}
-        className="btn bg-green-500 text-white">Log out</button>
+          onClick={logout}
+          className=" lato-bold btn text-xl  bg-gray-500 w-[14rem] text-white text-center"
+        >
+          Log out
+        </button>
       </div>
     </>
   );

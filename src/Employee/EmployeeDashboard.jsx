@@ -7,6 +7,7 @@ import Analytics from './Analytics';
 import NotFound from '../utils/NotFound';
 import APIHelper from '../utils/APIHelper';
 import Cookies from 'js-cookie';
+import Logout from './Logout';
 
 const EmployeeDashboard = () => {
   const [data, setData] = useState('');
@@ -32,11 +33,10 @@ const EmployeeDashboard = () => {
   }, []);
 
   return (
-    <section className="bg-gray-200 h-[100vh] flex pt-[4.5rem] sm:pt-[4.5rem] md:pt-[4.5rem]">
-      {/* Header */}
+    <>
       <div
-        className="bg-gray-800 w-full fixed top-0 left-0 z-50 text-white
-      text-xl text-center flex items-center justify-between py-4 px-5 h-[70px]"
+        className="bg-gray-800 w-full fixed top-0 left-0 z-50 text-white text-xl
+      text-center flex items-center justify-between py-4 px-5 h-[70px]"
       >
         <img src="/images/lunchtyme-wordmark-white.svg" className="h-9 align-middle" />
 
@@ -51,13 +51,10 @@ const EmployeeDashboard = () => {
               tabIndex={0}
               role="button"
               className="btn m-1 border-0 h-full bg-gray-800 hover:bg-gray-700
-              text-white px-5 flex gap-3"
+          text-white px-5 flex gap-3"
             >
               <p>{data.name}</p>
-              <div
-                className="bg-green-600 h-10 w-10 rounded-full flex items-center
-              justify-center p-2"
-              >
+              <div className="bg-green-600 h-10 w-10 rounded-full flex items-center justify-center p-2">
                 <p className="text-lg">
                   {data.name &&
                     data.name
@@ -70,20 +67,25 @@ const EmployeeDashboard = () => {
           </div>
         )}
       </div>
-      {/* Sidebar */}
-      <EmployeeSidebar />
+      <section className="overflow-y-hidden bg-gray-200 h-[100vh] flex pt-[4.5rem] sm:pt-[4.5rem] md:pt-[4.5rem]">
+        {/* Header */}
 
-      {/* Main content */}
-      <div className="flex-1 overflow-y-auto px-[2%] border-4 pt-5">
-        <Routes>
-          <Route path="orders" element={<EmployeeOrders />} />
-          <Route path="overview" element={<Overview />} />
-          <Route path="analytics" element={<Analytics />} />
-          <Route path="*" element={<NotFound />} />
-          {/* Add other routes here */}
-        </Routes>
-      </div>
-    </section>
+        {/* Sidebar */}
+        <EmployeeSidebar />
+
+        {/* Main content */}
+        <div className="flex-1 px-[2%] border-4 pt-5">
+          <Routes>
+            <Route path="orders" element={<EmployeeOrders />} />
+            <Route path="overview" element={<Overview />} />
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="logout" element={<Logout />} />
+            {/* Add other routes here */}
+          </Routes>
+        </div>
+      </section>
+    </>
   );
 };
 
