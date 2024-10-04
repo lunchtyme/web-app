@@ -54,7 +54,7 @@ const EmployeeSidebar = () => {
             <li className="p-2">
               <Link className="text-xl flex gap-5 items-center" to="/worker/overview">
                 <img src="/images/HomeIcon.svg" alt="" className="w-6" />
-                Overview
+                Menu
               </Link>
             </li>
 

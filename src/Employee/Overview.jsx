@@ -72,68 +72,69 @@ const Overview = () => {
   const totalItemsInCart = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="flex">
+    <div className="flex h-[85vh]">
       {/* Main Content */}
-      <section className="p-5">
-        <div className="w-auto bg-gray-100 p-10 rounded">
-          <h2 className="text-4xl p-5 lato-bold">Menus</h2>
+      <section>
+        <div className=" h-[80vh] w-auto bg-gray-100 rounded flex">
           {/* Button to toggle cart visibility */}
-          <div className="py-5 w-full flex justify-end p-5">
-            <button
-              onClick={() => setIsCartVisible(!isCartVisible)}
-              className="px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition duration-300 relative"
-            >
-              {/* {isCartVisible ? 'Hide Cart' : 'Show Cart'} */}
-              <img src="/images/cart.svg" alt="" className="w-6" />
-
-              {/* Cart item count */}
-              <div className="absolute top-[-1rem] right-[-1rem] w-6 h-6 bg-gray-800 text-white rounded-full text-xs flex items-center justify-center">
-                {totalItemsInCart}
-              </div>
-            </button>
-          </div>
-          <div className="flex flex-wrap gap-10">
-            {menuItems.length > 0 ? (
-              menuItems.map((menuItem, index) => (
-                <MenuCard
-                  key={index}
-                  image={menuItem.food_image}
-                  name={menuItem.name}
-                  description={menuItem.description}
-                  price={menuItem.price}
-                  onAddToCart={() => handleAddToCart(menuItem._id, menuItem.name, menuItem.price)}
-                />
-              ))
-            ) : (
-              <>
-                <p>Loading menu items...</p>
-                <div className="flex justify-center items-center">
-                  <div
-                    className="spinner-border animate-spin inline-block w-8 h-8 border-4 border-t-transparent border-gray-400 rounded-full"
-                    role="status"
-                  >
-                    <span className="sr-only">Loading...</span>
-                  </div>
+          <div className="flex flex-col">
+            <div className="flex flex-wrap items-center justify-between px-2 w-full">
+              <h2 className="text-4xl p-5 lato-bold">Menus</h2>
+              <button
+                onClick={() => setIsCartVisible(!isCartVisible)}
+                className="h-14 w-14 px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition duration-300 relative"
+              >
+                {/* {isCartVisible ? 'Hide Cart' : 'Show Cart'} */}
+                <img src="/images/cart.svg" alt="" className="w-6 mx-auto my-auto" />
+                <div className="absolute top-[-1rem] right-[-1rem] w-6 h-6 bg-gray-800 text-white rounded-full text-xs flex items-center justify-center">
+                  {totalItemsInCart}
                 </div>
-              </>
-            )}
+              </button>
+            </div>
+
+            <div className="scrollbar-custom p-2 flex flex-wrap gap-10 overflow-y-scroll h-auto">
+              {menuItems.length > 0 ? (
+                menuItems.map((menuItem, index) => (
+                  <MenuCard
+                    key={index}
+                    image={menuItem.food_image}
+                    name={menuItem.name}
+                    description={menuItem.description}
+                    price={menuItem.price}
+                    onAddToCart={() => handleAddToCart(menuItem._id, menuItem.name, menuItem.price)}
+                  />
+                ))
+              ) : (
+                <>
+                  <p>Loading menu items...</p>
+                  <div className="flex justify-center items-center">
+                    <div
+                      className="spinner-border animate-spin inline-block w-8 h-8 border-2 border-t-transparent border-gray-400 rounded-full"
+                      role="status"
+                    >
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
+          {isCartVisible && (
+            <div className=" w-[27rem] sm:w-[28rem] md:w-[30rem]">
+              <CartContainer
+                items={cartItems}
+                total={total}
+                onClose={handleCloseCart}
+                onRemoveItem={handleRemoveItem}
+                onIncrementItem={handleIncrementItem}
+                onDecrementItem={handleDecrementItem}
+              />
+            </div>
+          )}
         </div>
       </section>
 
       {/* Cart Container */}
-      {isCartVisible && (
-        <div className="w-auto">
-          <CartContainer
-            items={cartItems}
-            total={total}
-            onClose={handleCloseCart}
-            onRemoveItem={handleRemoveItem}
-            onIncrementItem={handleIncrementItem}
-            onDecrementItem={handleDecrementItem}
-          />
-        </div>
-      )}
     </div>
   );
 };

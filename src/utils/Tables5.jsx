@@ -13,7 +13,7 @@ const Tables5 = ({ headers, data, emptyMessage }) => {
             {headers.map((header, index) => (
               <th
                 key={index}
-                className="text-lg w-[20rem] md:text-base text-sm px-4 py-2 md:px-6 md:py-3 text-left font-semibold text-gray-700 uppercase tracking-wider"
+                className=" w-[20rem] md:text-base text-sm px-4 py-2 md:px-6 md:py-3 text-left font-semibold text-gray-700 uppercase tracking-wider"
               >
                 {header}
               </th>

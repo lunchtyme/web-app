@@ -66,7 +66,7 @@ const CartContainer = ({
     <>
       <div
         className="bg-white h-auto right-[5rem] rounded-lg
-      p-5 ml-auto  w-auto"
+      p-5 ml-auto w-[23rem]"
       >
         <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-3">Shopping Cart</h2>
 

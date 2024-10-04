@@ -39,10 +39,10 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <section className="bg-gray-200 h-[100vh] flex pt-[4.5rem] sm:pt-[4.5rem] md:pt-[4.5rem] border-4 border-red-300">
+    <>
       <div
         className="bg-gray-800 w-full fixed top-0 left-0 z-50 text-white
-      text-xl text-center flex items-center justify-between py-4 px-5 h-[70px]"
+  text-xl text-center flex items-center justify-between py-4 px-5 h-[70px]"
       >
         <img src="/images/lunchtyme-wordmark-white.svg" className="h-9 align-middle" />
 
@@ -56,12 +56,12 @@ const AdminDashboard = () => {
               tabIndex={0}
               role="button"
               className="btn m-1 border-0 h-full bg-gray-800 hover:bg-gray-700
-              text-white px-5 flex gap-3"
+          text-white px-5 flex gap-3"
             >
               <p>{data.name}</p>
               <div
                 className="bg-green-600 h-10 w-10 rounded-full flex items-center
-              justify-center p-2"
+          justify-center p-2"
               >
                 <p className="text-lg">
                   {data.name &&
@@ -75,30 +75,32 @@ const AdminDashboard = () => {
           </div>
         )}
       </div>
-      {/* Sidebar */}
-      <AdminSidebar />
+      <section className="overflow-y-hidden bg-gray-200 h-[100vh] flex pt-[4.5rem] sm:pt-[4.5rem] md:pt-[4.5rem]">
+        {/* Sidebar */}
+        <AdminSidebar />
 
-      {/* Main content */}
-      <div className="flex-1 overflow-y-auto px-[2%] border-4 pt-5">
-        {/* <h2 className="text-2xl font-semibold p-5">
+        {/* Main content */}
+        <div className="flex-1 overflow-y-auto px-[2%] border-4 pt-5">
+          {/* <h2 className="text-2xl font-semibold p-5">
           Lunch<span className="text-green-600">tyme</span>
         </h2> */}
 
-        <Routes>
-          <Route path="overview" element={<Overview />} />
-          <Route path="customers" element={<Customers />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="transactions" element={<Transactions />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="lists" element={<List />} />
-          <Route path="menu" element={<Menu />} />
-          <Route path="logout" element={<AdminLogout />} />
-          <Route path="*" element={<NotFound />} />
+          <Routes>
+            <Route path="overview" element={<Overview />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="transactions" element={<Transactions />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="lists" element={<List />} />
+            <Route path="menu" element={<Menu />} />
+            <Route path="logout" element={<AdminLogout />} />
+            <Route path="*" element={<NotFound />} />
 
-          {/* Wildcard route for undefined sub-routes */}
-        </Routes>
-      </div>
-    </section>
+            {/* Wildcard route for undefined sub-routes */}
+          </Routes>
+        </div>
+      </section>
+    </>
   );
 };
 
