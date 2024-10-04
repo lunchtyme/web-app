@@ -14,10 +14,13 @@ const Password2 = () => {
     confirmPassword: '',
   });
   const [loading, setLoading] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [showToast2, setShowToast2] = useState(false);
+  const [showSuccessToast2, setShowSuccessToast2] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +55,7 @@ const Password2 = () => {
       }
     } catch (err) {
       console.error('Error requesting password reset:', err);
-      setError(err.response?.data?.message || 'An error occurred while requesting the reset.');
+      setError(err || 'An error occurred while requesting the reset.');
       setShowToast(true);
     } finally {
       setLoading(false);
@@ -78,6 +81,53 @@ const Password2 = () => {
     }
   }, [showSuccessToast]);
 
+  const handleResendOtp = async () => {
+    setError(null);
+    setResendLoading(true);
+    setShowSuccessToast2(false);
+    setShowToast2(false);
+
+    if (!savedEmail) {
+      setMessage('Email not found');
+      setResendLoading(false);
+    }
+
+    try {
+      const response2 = await APIHelper.makeAPICall.post('auth/request-password-reset', {
+        email: savedEmail,
+      });
+      if (response2.data.success) {
+        setMessage('OTP has been resent successfully');
+        setResendLoading(true);
+        setShowSuccessToast2(true);
+      }
+    } catch (err) {
+      console.error(err.response?.data?.message || 'An error occured');
+      setError(err.response?.data?.message || 'An error occured');
+      setShowToast2(true);
+    } finally {
+      setResendLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showToast2) {
+      const timer = setTimeout(() => {
+        setShowToast2(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast2]);
+
+  useEffect(() => {
+    if (showSuccessToast2) {
+      const timer = setTimeout(() => {
+        setShowSuccessToast2(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessToast2]);
+
   return (
     <>
       {/* Header section with logo and Back button */}
@@ -92,21 +142,6 @@ const Password2 = () => {
         <div className="w-[25rem] max-w-md p-8 rounded-lg">
           <h2 className="text-2xl font-semibold text-center mb-6">Reset your password</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-lg font-medium">EMAIL</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Enter your email"
-                className="input input-bordered w-full h-[3rem] bg-gray-100"
-                required
-              />
-            </div>
-
             {/* OTP Field */}
             <div className="form-control">
               <label className="label">
@@ -169,11 +204,11 @@ const Password2 = () => {
                 'Send'
               )}
             </button>
-            {/* <div className="flex gap-5">
-              <Link to="/signup">
-                <p className="cursor-pointer hover:underline">Create account.</p>
-              </Link>
-            </div> */}
+            <div className="flex gap-5">
+              <p onClick={handleResendOtp} className="cursor-pointer hover:underline">
+                Resend otp
+              </p>
+            </div>
           </form>
         </div>
       </div>
@@ -189,6 +224,22 @@ const Password2 = () => {
 
       {/* Success Toast */}
       {showSuccessToast && (
+        <div className="toast toast-end toast-top">
+          <div className="alert alert-success text-white p-5 rounded font-semibold">
+            <span>{message}</span>
+          </div>
+        </div>
+      )}
+      {showToast2 && (
+        <div className="toast toast-end toast-top">
+          <div className="alert alert-error text-white p-5 rounded font-semibold">
+            <span>{error}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Success Toast */}
+      {showSuccessToast2 && (
         <div className="toast toast-end toast-top">
           <div className="alert alert-success text-white p-5 rounded font-semibold">
             <span>{message}</span>

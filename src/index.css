@@ -122,7 +122,7 @@ body {
 
 @font-face {
   font-family: 'lyon-text';
-  src: url('/fonts/LyonText-Regular-Web.d7bfb4be.woff2') format('woff');
+  src: url('../public/fonts/LyonText-Regular-Web.d7bfb4be.woff2') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
