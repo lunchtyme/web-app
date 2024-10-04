@@ -1,7 +1,7 @@
 import React from 'react';
 import HomePage from './components/pages/HomePage';
 import OnboardingOptions from './components/onboarding/OnboardingOptions';
-import { Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import SucessPage from './components/pages/SucessPage';
 // import LogInPage from './components/LogInPage';
 import CreateAccount from './components/Account/CreateAccount';
@@ -19,7 +19,7 @@ import OnboardingEmployee from './components/onboarding/OnboardingEmployee';
 
 const App = () => {
   return (
-    <>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/onboarding" element={<OnboardingOptions />} />
@@ -70,7 +70,7 @@ const App = () => {
 
         {/**Indefind Routes */}
       </Routes>
-    </>
+    </HashRouter>
   );
 };
 
