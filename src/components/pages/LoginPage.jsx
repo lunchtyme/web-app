@@ -82,21 +82,18 @@ const LoginForm = () => {
       {/* Header section with logo and Back button */}
       <div className="p-10 flex bg-gray-200 align-middle">
         <Link to="/">
-          <h2 className="text-4xl font-bold cursor-pointer">
-            Lunch<span className="text-green-600">tyme</span>
-          </h2>
+          <h2 className="text-4xl font-bold cursor-pointer">Lunchtyme</h2>
         </Link>
       </div>
 
       {/* Main content section with login form */}
       <div className="h-[85vh] flex items-center justify-center bg-gray-200">
-        <div className="w-full max-w-md p-8 bg-gray-200 rounded-lg">
+        <div className="w-[25rem] max-w-md p-8 rounded-lg">
           <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Email input field */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-lg font-[500]">EMAIL</span>
+                <span className="label-text text-lg font-medium">EMAIL</span>
               </label>
               <input
                 type="email"
@@ -104,15 +101,13 @@ const LoginForm = () => {
                 value={formData.identifier}
                 onChange={handleChange}
                 placeholder="Enter your email"
-                className="input input-bordered w-full bg-transparent h-[3rem]"
+                className="input input-bordered w-full h-[3rem] bg-gray-100"
                 required
               />
             </div>
-
-            {/* Password input field */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-lg font-[500]">PASSWORD</span>
+                <span className="label-text text-lg font-medium">PASSWORD</span>
               </label>
               <input
                 type="password"
@@ -120,21 +115,35 @@ const LoginForm = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
-                className="input input-bordered h-[3rem] w-full bg-transparent"
+                className="input input-bordered h-[3rem] w-full bg-gray-100"
                 required
               />
             </div>
-
-            {/* Submit button */}
             <button
               type="submit"
               className={`btn w-full ${
-                loading ? 'bg-gray-400' : 'bg-green-600'
+                loading ? 'bg-gray-400' : 'bg-gray-800'
               } text-white text-xl font-semibold`}
               disabled={loading}
             >
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? (
+                <>
+                  <div className="flex justify-center">
+                    <div className="w-6 h-6 border-4 border-t-transparent border-gray-50 rounded-full animate-spin"></div>
+                  </div>
+                  <p>Logging in...</p>
+                </>
+              ) : (
+                'Login'
+              )}
             </button>
+            <Link to="/reset"></Link>
+            <div className="flex gap-5">
+              <p className="cursor-pointer hover:underline">Forgot password?</p>
+              <Link to="/signup">
+                <p className="cursor-pointer hover:underline">Create account.</p>
+              </Link>
+            </div>
           </form>
         </div>
       </div>
@@ -142,7 +151,7 @@ const LoginForm = () => {
       {/* Error Toast */}
       {showToast && (
         <div className="toast toast-end toast-top">
-          <div className="alert alert-error text-white p-5">
+          <div className="alert alert-error text-white p-5 rounded font-semibold">
             <span>{error}</span>
           </div>
         </div>
@@ -151,7 +160,7 @@ const LoginForm = () => {
       {/* Success Toast */}
       {showSuccessToast && (
         <div className="toast toast-end toast-top">
-          <div className="alert alert-success text-white p-5">
+          <div className="alert alert-success text-white p-5 rounded  font-semibold">
             <span>Login successful! Redirecting...</span>
           </div>
         </div>

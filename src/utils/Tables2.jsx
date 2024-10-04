@@ -29,7 +29,7 @@ const Table2 = ({ headers, data, emptyMessage }) => {
             data.map((item, index) => (
               <tr key={item.id || `${item.name}-${index}`}>
                 <td>{item.name}</td>
-                <td>{item.price}</td>
+                <td>{`₦${item.price}`}</td>
                 <td>{item.available ? 'Available' : 'Not Available'}</td>{' '}
                 <td>{moment(item.created_at).format('MMM Do YY')}</td>
               </tr>

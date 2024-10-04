@@ -36,7 +36,7 @@ const Overview = () => {
   return (
     <section className="p-5">
       <h2 className="text-2xl font-semibold mb-6">Overview</h2>
-      <div className="flex gap-10">
+      <div className="flex gap-10 flex-wrap">
         {stats.map(({ number, groupName }) => (
           <StatCard key={groupName} number={number} groupName={groupName} />
         ))}

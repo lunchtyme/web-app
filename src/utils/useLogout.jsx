@@ -8,7 +8,7 @@ const useLogout = () => {
   const logout = () => {
     Cookies.remove('esp_lunchtyme_id');
 
-    navigate('/login');
+    navigate('/');
   };
 
   return { logout };

@@ -82,7 +82,7 @@ const Billings = () => {
 
   return (
     <>
-      <section className="w-full p-5">
+      <section className="rounded-lg shadow-lg bg-gray-100 w-full p-5">
         <div className="p-10">
           <div className="p-5 flex gap-10 items-center ">
             <h2 className="text-2xl">Balance</h2>

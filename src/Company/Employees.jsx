@@ -17,22 +17,46 @@ const Employees = () => {
   const itemsPerPage = 10;
   const token = Cookies.get('esp_lunchtyme_id');
 
+  const [showToast, setShowToast] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await APIHelper.makeSecureAPICall(token).get('users/employees?limit=10');
+        const response = await APIHelper.makeSecureAPICall(token).get('users/employees');
         setData(response.data.data.list);
+        setShowSuccessToast(true);
       } catch (error) {
         setMessage('Error fetching employees');
+        setQuery('');
         console.error(error);
+        setShowToast(true);
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [token]);
+  }, []);
+
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
+
+  useEffect(() => {
+    if (showSuccessToast) {
+      const timer = setTimeout(() => {
+        setShowSuccessToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessToast]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -40,13 +64,12 @@ const Employees = () => {
     setError(null);
 
     try {
-      const response = await APIHelper.makeSecureAPICall(token).get('users/employees', {
-        params: { query },
-      });
-      setResult(response.data.data.list);
+      const response2 = await APIHelper.makeSecureAPICall(token).get(`users?query=${query}`);
+
+      setResult(response2.data.data.list);
       setCurrentPage(1);
     } catch (error) {
-      setError('Error fetching employees');
+      setError('Error searching employees');
       console.error(error);
     } finally {
       setLoading2(false);
@@ -59,7 +82,7 @@ const Employees = () => {
   );
 
   return (
-    <section className="p-8 bg-gray-50 min-h-screen rounded-lg mt-10">
+    <section className="h-[100rem] p-8 bg-gray-50 min-h-screen rounded-lg">
       <div className="p-6 bg-white shadow-md rounded-lg mb-6">
         <h2 className="text-3xl font-semibold text-gray-800">Employees</h2>
       </div>
@@ -82,7 +105,7 @@ const Employees = () => {
 
       {loading || loading2 ? (
         <div className="flex justify-center items-center mt-10">
-          <div className="w-12 h-12 border-4 border-t-transparent border-gray-300 rounded-full animate-spin"></div>
+          <div className="w-6 h-6 border-4 border-t-transparent border-gray-300 rounded-full animate-spin"></div>
         </div>
       ) : (
         <>
@@ -94,6 +117,7 @@ const Employees = () => {
             emptyMessage="No employees found!"
             className="bg-white shadow-md rounded-lg overflow-hidden"
           />
+
           <PaginationComponent
             totalItems={result.length || data.length}
             itemsPerPage={itemsPerPage}
@@ -102,6 +126,22 @@ const Employees = () => {
             className="mt-6"
           />
         </>
+      )}
+
+      {showToast && (
+        <div className="mt-16 toast toast-end toast-top mr-10">
+          <div className="alert alert-error text-white p-5 rounded">
+            <span>{message}</span>
+          </div>
+        </div>
+      )}
+
+      {showSuccessToast && (
+        <div className="mt-16 toast toast-end toast-top mr-10">
+          <div className="alert alert-success text-white p-5 rounded">
+            <span>Table fetched successfully.</span>
+          </div>
+        </div>
       )}
     </section>
   );

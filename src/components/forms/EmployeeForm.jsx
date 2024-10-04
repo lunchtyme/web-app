@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import handleCreateUserSubmit from '../../utils/handleCreateUserSubmit';
 
@@ -6,7 +6,8 @@ const EmployeeForm = () => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
-    navigate(-1);
+    // Navigate to another component, for example: /another-component
+    navigate('/signup');
   };
 
   const [formData, setFormData] = useState({
@@ -23,6 +24,8 @@ const EmployeeForm = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,13 +36,10 @@ const EmployeeForm = () => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
-    console.log('Form data:', formData);
 
     try {
       const createEmployeeAPIResponse = await handleCreateUserSubmit(formData);
-
       if (createEmployeeAPIResponse?.data) {
-        console.log('API Response for Create Employee:', createEmployeeAPIResponse);
         setFormData({
           email: '',
           password: '',
@@ -48,42 +48,54 @@ const EmployeeForm = () => {
           dial_code: '',
           phone_number: '',
           invitation_code: '',
-          time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone, // Reset time_zone
+          time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         });
-
+        setShowSuccessToast(true);
         navigate('/verify');
       } else {
-        console.log('API Response for Create Employee:', createEmployeeAPIResponse);
         setError(createEmployeeAPIResponse?.message || 'An error occurred');
       }
     } catch (err) {
-      console.error('Error creating employee:', err);
       setError(err?.message || 'An error occurred');
+      setShowToast(true);
     } finally {
       setIsLoading(false);
     }
   };
 
-  
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
+
+  useEffect(() => {
+    if (showSuccessToast) {
+      const timer = setTimeout(() => {
+        setShowSuccessToast(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessToast]);
 
   return (
     <>
       <div className="flex justify-center p-3">
-        <div className="w-full p-6 bg-gray rounded-lg h-auto mb-10">
-          <div className="p-5 text-center flex justify-between align-middle">
-            <button
-              onClick={handleGoBack} // Go back when clicked
-              className="btn bg-green-600 hover:bg-green-500 hv text-white text-xl font-semibold rounded-full"
+        <div className="w-full p-6 bg-gray rounded-lg h-auto mb-10 max-w-[40rem]">
+          <div className="p-5 text-center flex justify-between items-center">
+            {/* <button
+              onClick={handleGoBack}
+              className="btn bg-green-600 hover:bg-green-500 text-white text-xl font-semibold rounded-full"
             >
               <img src="images/arrow.svg" className="w-[1.5rem]" alt="" />
-            </button>
-            <h2 className="text-3xl font-semibold">
-              Sign up as an <span className="text-green-700">Employee</span>
-            </h2>
+            </button> */}
+            <h2 className="text-2xl md:text-2xl font-semibold">Sign up as an Employee</h2>
           </div>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
-            {error && <div className="text-red-500 mb-4">{error}</div>}
             {[
               {
                 label: 'FIRST NAME',
@@ -124,7 +136,7 @@ const EmployeeForm = () => {
                   type={type}
                   name={name}
                   placeholder={placeholder}
-                  className="input input-bordered w-[30rem] h-[3rem] bg-gray-100"
+                  className="input input-bordered w-full max-w-[30rem] h-[3rem] bg-gray-100"
                   value={formData[name]}
                   onChange={handleChange}
                   required
@@ -132,7 +144,7 @@ const EmployeeForm = () => {
                 />
               </div>
             ))}
-            <div className="flex gap-2 w-[30rem]">
+            <div className="flex flex-col sm:flex-row gap-2 w-full max-w-[30rem]">
               <div className="flex-1">
                 <label className="block text-[1rem] font-[500] mb-1">DIAL CODE</label>
                 <input
@@ -143,7 +155,7 @@ const EmployeeForm = () => {
                   disabled
                 />
               </div>
-              <div className="flex-[3]">
+              <div className="flex-1">
                 <label className="block text-[1rem] font-[500] mb-1">PHONE NUMBER</label>
                 <input
                   name="phone_number"
@@ -157,17 +169,42 @@ const EmployeeForm = () => {
             <div className="form-control mt-6">
               <button
                 type="submit"
-                className={`btn ${
-                  isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-700'
+                className={`btn hover:text-gray-600 ${
+                  isLoading ? 'bg-gray-700 cursor-not-allowed' : 'bg-gray-700'
                 } text-xl text-white w-full`}
                 disabled={isLoading}
               >
-                {isLoading ? 'Signing Up...' : 'Sign Up'}
+                {isLoading ? (
+                  <>
+                    <p className="text-gray-600">Signing Up...</p>
+                    <div className="flex justify-center">
+                      <div className="w-6 h-6 border-4 border-t-transparent border-gray-700 rounded-full animate-spin"></div>
+                    </div>
+                  </>
+                ) : (
+                  'Sign Up'
+                )}
               </button>
             </div>
           </form>
         </div>
       </div>
+
+      {showToast && (
+        <div className="toast toast-end toast-top">
+          <div className="alert alert-error text-white p-5">
+            <span>{error}</span>
+          </div>
+        </div>
+      )}
+
+      {showSuccessToast && (
+        <div className="toast toast-end toast-top">
+          <div className="alert alert-success text-white p-5">
+            <span>Signup successful! Redirecting...</span>
+          </div>
+        </div>
+      )}
     </>
   );
 };

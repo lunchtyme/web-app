@@ -64,7 +64,10 @@ const CartContainer = ({
 
   return (
     <>
-      <div className="overflow-scroll bg-white shadow-2xl w-[35rem] rounded-lg p-5 h-[100vh] ml-auto">
+      <div
+        className="bg-white h-auto right-[5rem] rounded-lg
+      p-5 ml-auto  w-auto"
+      >
         <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-3">Shopping Cart</h2>
 
         {/* Empty Cart State */}
@@ -86,10 +89,16 @@ const CartContainer = ({
               {items.map((item, index) => (
                 <li
                   key={index}
-                  className="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm"
+                  className="flex justify-evenly gap-10 items-center bg-gray-50 p-4 rounded-lg shadow-sm"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="text-lg font-semibold text-gray-700">{item.name}</div>
+                    <div className="flex flex-col">
+                      <div className="text-lg font-semibold text-gray-700">{item.name}</div>
+                      <span className="text-lg text-gray-700 font-semibold mr-4">
+                        &#x20A6;{(item.price * item.quantity).toFixed(2)}
+                      </span>
+                    </div>
+
                     <div className="flex items-center">
                       <button
                         onClick={() => onDecrementItem(index)}
@@ -107,9 +116,6 @@ const CartContainer = ({
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <span className="text-lg text-gray-700 font-semibold mr-4">
-                      &#x20A6;{(item.price * item.quantity).toFixed(2)}
-                    </span>
                     <button
                       onClick={() => onRemoveItem(index)}
                       className="w-[3rem] h-[3rem] bg-gray-300 rounded-full hover:bg-gray-400"
@@ -136,7 +142,7 @@ const CartContainer = ({
                 </button>
                 <button
                   onClick={handleCheckout}
-                  className="w-full px-4 py-3 bg-green-600 text-white rounded-md hover:bg-green-500 transition duration-300 text-lg font-semibold"
+                  className="w-full px-4 py-3 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition duration-300 text-lg font-semibold"
                 >
                   Checkout
                 </button>

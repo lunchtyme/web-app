@@ -14,7 +14,7 @@ const Overview = () => {
       setData(fetchedData);
       console.log(fetchedData);
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching data:', error);
     }
   };
 
@@ -26,13 +26,13 @@ const Overview = () => {
     { number: data.orders || '0', groupName: 'Orders' },
     { number: data.users || '0', groupName: 'Users' },
     { number: data.employees || '0', groupName: 'Employees' },
-    { number: data.companies || '0', groupName: 'Company(ies)' },
+    { number: data.companies || '0', groupName: 'Companies' },
   ];
 
   return (
     <section className="p-5">
       <h2 className="text-2xl font-semibold mb-6">Overview</h2>
-      <div className="flex gap-10">
+      <div className="flex gap-10 flex-wrap">
         {stats.map(({ number, groupName }) => (
           <StatCard key={groupName} number={number} groupName={groupName} />
         ))}

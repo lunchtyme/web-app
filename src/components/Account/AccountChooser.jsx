@@ -1,25 +1,27 @@
 import React from 'react';
-import { CheckIcon } from '@heroicons/react/20/solid'; 
+import { CheckIcon } from '@heroicons/react/20/solid';
+
 const AccountChooser = ({ handleSelect, selected }) => {
   return (
     <div className="flex justify-center">
-      <section className="bg-gray-200 p-10 rounded-lg w-[40rem] flex flex-col items-center">
-        <h2 className="text-2xl font-semibold mb-1">How are you planning to use Lunchtyme?</h2>
-        <p className="text-lg mb-4 text-gray-700 font-[600]">
+      <section className="h-[100vh] bg-gray-200 p-10 rounded-lg w-full max-w-[40rem] flex flex-col items-center">
+        <h2 className="text-2xl sm:text-xl md:text-2xl font-semibold mb-1 text-center">
+          How are you planning to use Lunchtyme?
+        </h2>
+        <p className="mb-4 text-gray-700 font-semibold text-md sm:text-lg md:text-xl text-center">
           We'll streamline your setup experience accordingly.
         </p>
-      
-        <div className="flex gap-10 justify-center">
-        
+
+        <div className="flex flex-row gap-10 justify-center p-5 sm:p-10">
           <label
             htmlFor="account_type_individual"
-            className={`relative cursor-pointer w-[18rem] h-[24rem] bg-white p-5 flex
-              flex-col gap-4 rounded-xl justify-center items-center transition-all duration-300
+            className={`relative cursor-pointer sm:w-[18rem] h-[25rem] bg-white p-8 flex
+              flex-col gap-4 rounded-md justify-center items-center transition-all duration-300
               border-2 ${
-              selected === 'Individual'
-                ? 'border-green-500 shadow-md'
-                : 'border-transparent hover:border-4 hover:border-green-700'
-            }`}
+                selected === 'Individual'
+                  ? 'border-green-500 shadow-md'
+                  : 'border-transparent hover:border-4 hover:border-gray-500'
+              }`}
             onClick={() => handleSelect('Individual')}
           >
             <input
@@ -47,11 +49,12 @@ const AccountChooser = ({ handleSelect, selected }) => {
           {/* Company Account Option */}
           <label
             htmlFor="account_type_company"
-            className={`relative cursor-pointer w-[18rem] h-[24rem] bg-white p-5 flex flex-col gap-4 rounded-xl justify-center items-center transition-all duration-300 border-2 ${
-              selected === 'Company'
-                ? 'border-green-500 shadow-md'
-                : 'border-transparent hover:border-4 hover:border-green-600'
-            }`}
+            className={`relative cursor-pointer sm:w-[18rem] h-[25rem] bg-white p-8 flex
+              flex-col gap-4 rounded-md justify-center items-center transition-all duration-300 border-2 ${
+                selected === 'Company'
+                  ? 'border-green-500 shadow-md'
+                  : 'border-transparent hover:border-4 hover:border-gray-500'
+              }`}
             onClick={() => handleSelect('Company')}
           >
             <input

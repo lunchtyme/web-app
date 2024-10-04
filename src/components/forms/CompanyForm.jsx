@@ -71,9 +71,7 @@ const CompanyForm = () => {
         {/* Form container */}
         <div className="p-5 text-center">
           {/* Form header */}
-          <h2 className="text-3xl font-semibold">
-            Sign up as a <span className="text-green-700">Company</span>
-          </h2>
+          <h2 className="text-3xl font-semibold">Sign up as a Company</h2>
         </div>
         {/* Display error message if present */}
         {error && <div className="text-red-500 text-center mb-4">{error}</div>}
@@ -127,7 +125,7 @@ const CompanyForm = () => {
                 type={type}
                 name={name}
                 placeholder={placeholder}
-                className="input input-bordered w-[30rem] h-[3rem] bg-gray-100 "
+                className="input input-bordered w-[20rem] md:w-[30rem] h-[3rem] bg-gray-100 "
                 value={value ? value : formData[name]}
                 onChange={handleChange}
                 required
@@ -142,8 +140,8 @@ const CompanyForm = () => {
             <button
               type="submit"
               className={`btn text-white ${
-                loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600'
-              } text-xl w-full`}
+                loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-800'
+              } text-xl w-[20rem] md:w-full`}
               disabled={loading}
             >
               {loading ? 'Submitting...' : 'Submit'}

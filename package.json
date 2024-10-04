@@ -7,12 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "start": "webpack serve --mode development",
-    "bundle": "webpack --mode production"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
+    "@shopify/polaris": "^13.9.0",
+    "@shopify/polaris-icons": "^9.3.0",
     "axios": "^1.7.5",
     "js-cookie": "^3.0.5",
     "mobile-detect": "^1.4.5",

@@ -28,15 +28,15 @@ const Overview = () => {
     const existingItemIndex = cartItems.findIndex((item) => item.id === id);
 
     if (existingItemIndex >= 0) {
-      const updatedItems = cartItems.map((item, index) =>
-        index === existingItemIndex ? { ...item, quantity: item.quantity + 1 } : item,
+      const updatedItems = cartItems.map(
+        (item, index) =>
+          index === existingItemIndex ? { ...item, quantity: item.quantity + 1 } : item,
+        alert('Added to cart'),
       );
       setCartItems(updatedItems);
     } else {
       setCartItems([...cartItems, { id, name, price: parseFloat(price), quantity: 1 }]);
     }
-
-    setIsCartVisible(true);
   };
 
   const handleCloseCart = () => {
@@ -68,19 +68,28 @@ const Overview = () => {
     setCartItems([]);
   };
 
+  // Calculate total quantity of items in the cart
+  const totalItemsInCart = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <div className="flex">
       {/* Main Content */}
       <section className="p-5">
         <div className="w-auto bg-gray-100 p-10 rounded">
-          <h2 className="text-2xl p-5">Overview</h2>
+          <h2 className="text-4xl p-5 lato-bold">Menus</h2>
           {/* Button to toggle cart visibility */}
-          <div className="py-5">
+          <div className="py-5 w-full flex justify-end p-5">
             <button
               onClick={() => setIsCartVisible(!isCartVisible)}
-              className="mt-5 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 transition duration-300"
+              className="px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700 transition duration-300 relative"
             >
-              {isCartVisible ? 'Hide Cart' : 'Show Cart'}
+              {/* {isCartVisible ? 'Hide Cart' : 'Show Cart'} */}
+              <img src="/images/cart.svg" alt="" className="w-6" />
+
+              {/* Cart item count */}
+              <div className="absolute top-[-1rem] right-[-1rem] w-6 h-6 bg-gray-800 text-white rounded-full text-xs flex items-center justify-center">
+                {totalItemsInCart}
+              </div>
             </button>
           </div>
           <div className="flex flex-wrap gap-10">
@@ -114,7 +123,7 @@ const Overview = () => {
 
       {/* Cart Container */}
       {isCartVisible && (
-        <div className="w-auto border-4 border-gray-300">
+        <div className="w-auto">
           <CartContainer
             items={cartItems}
             total={total}

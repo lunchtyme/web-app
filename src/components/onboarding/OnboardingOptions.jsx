@@ -29,11 +29,11 @@ const OnboardingOptions = () => {
 
   if (accountType === null) {
     return (
-      <div
-        className="w-full h-[100vh] bg-gray-200 flex justify-center align-middle
-      border-2 border-red-700"
-      >
-        <div className="my-auto">
+      <div className="w-full h-[100vh] bg-gray-200 flex justify-center align-middle">
+        <div className="my-auto flex items-center gap-3">
+          <div className="flex justify-center">
+            <div className="w-6 h-6 border-4 border-t-transparent border-gray-500 rounded-full animate-spin"></div>
+          </div>
           <h2 className="text-3xl">Loading...</h2>
         </div>
       </div>

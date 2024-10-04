@@ -13,6 +13,8 @@ import EmployeeDashboard from './Employee/EmployeeDashboard';
 import NotFound from './utils/NotFound';
 import RequireAuth from './utils/RequireAuth';
 import AdminOnboard from './AdminOnboard';
+import Password from './components/forms/Password';
+import Password2 from './components/forms/Password2';
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
         <Route path="/login" element={<LogInPage />} />
         <Route path="/verify" element={<VerifyOTP />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/reset" element={<Password />} />
+        <Route path="/reset-password" element={<Password2 />} />
 
         {/**Private route */}
         <Route
@@ -63,7 +67,6 @@ const App = () => {
         {/* <Route path="/login" element={<LogInPage />} /> */}
 
         {/**Indefind Routes */}
-       
       </Routes>
     </>
   );

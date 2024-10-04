@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import  localStorageHelper  from '../../utils/localStorage.js';
+import localStorageHelper from '../../utils/localStorage.js';
 import APIHelper from '../../utils/APIHelper';
 
 // Define the VerifyOTP component
@@ -157,7 +157,7 @@ const VerifyOTP = () => {
             <button
               type="submit"
               className={`btn ${
-                loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600'
+                loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-800'
               } text-white text-lg w-full`}
               disabled={loading} // Disable button while loading
             >

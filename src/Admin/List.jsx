@@ -1,12 +1,14 @@
-// components/List.jsx
+// components/List.jsxquery
 import React, { useEffect, useState } from 'react';
 import Tables4 from '../utils/Tables4';
 import PaginationComponent from '../utils/PaginationComponent';
 import APIHelper from '../utils/APIHelper';
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 const List = () => {
+  const navigate = useNavigate();
   const headers = ['Image', 'Name', 'Price', 'Date', 'Status'];
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,7 +22,7 @@ const List = () => {
   const [showToast, setShowToast] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
   const token = Cookies.get('esp_lunchtyme_id');
 
   const handleInput = (e) => {
@@ -33,9 +35,7 @@ const List = () => {
     setError2(null);
 
     try {
-      const response2 = await APIHelper.makeSecureAPICall(token).get('food-menu?limit=10', {
-        params: { query },
-      });
+      const response2 = await APIHelper.makeSecureAPICall(token).get(`food-menu?query=${query}`);
       setResult(response2.data.data.list);
       setCurrentPage(1);
     } catch (error) {
@@ -92,9 +92,9 @@ const List = () => {
 
   return (
     <section className="p-8 bg-gray-50 min-h-screen rounded">
-      <div className="flex justify-between p-6 bg-white shadow-sm rounded-xl items-center mb-8">
+      {/* <div className="flex justify-between p-6 bg-white shadow-sm rounded-xl items-center mb-8">
         <h1 className="text-4xl font-semibold text-gray-800">Lunches</h1>
-      </div>
+      </div> */}
 
       <div className="flex justify-between items-center mb-8 space-x-4">
         <form
@@ -115,10 +115,15 @@ const List = () => {
             Search
           </button>
         </form>
+        <button className="btn btn-neutral" onClick={() => navigate('/admin/menu')}>
+          Create menu
+        </button>
       </div>
 
       {/* {message && <p className="text-red-500 text-center">{message}</p>}
       {error2 && <p className="text-red-500 text-center">{error2}</p>} */}
+      {result.length === 0 && query && <p>No results found for "{query}"</p>}
+      {result.length === 0 && !query && data.length === 0 && <p>No Lunches added!</p>}
 
       {loading || loading2 ? (
         <div className="flex justify-center items-center mt-10">
@@ -128,7 +133,7 @@ const List = () => {
         <>
           <Tables4
             headers={headers}
-            data={data}
+            data={currentData}
             emptyMessage="No Lunches added!"
             className="mt-4 shadow-lg rounded-xl overflow-hidden bg-white"
           />
@@ -143,16 +148,16 @@ const List = () => {
           </div>
 
           {showToast && (
-            <div className="toast toast-end toast-top">
-              <div className="alert alert-error text-white p-5">
+            <div className="toast toast-end toast-top mr-10 mt-16">
+              <div className="alert alert-error text-white p-5 rounded">
                 <span>{message}</span>
               </div>
             </div>
           )}
 
           {showSuccessToast && (
-            <div className="toast toast-end toast-top">
-              <div className="alert alert-success text-white p-5">
+            <div className="toast toast-end toast-top mr-10 mt-16">
+              <div className="alert alert-success text-white p-5 rounded">
                 <span>Table fetched successfully.</span>
               </div>
             </div>
