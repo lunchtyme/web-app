@@ -15,7 +15,6 @@ const Tables6 = ({ headers, data, emptyMessage }) => {
         orderId: itemId,
         newStatus: newStatus,
       });
-      console.log('Response:', response.data);
 
       setTableData((prevData) =>
         prevData.map((item) => (item._id === itemId ? { ...item, status: newStatus } : item)),

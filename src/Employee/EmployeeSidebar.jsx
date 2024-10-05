@@ -52,28 +52,28 @@ const EmployeeSidebar = () => {
           >
             {/* Sidebar content here */}
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/worker/overview">
+              <Link className="lato-bold text-xl flex gap-5 items-center" to="/worker/overview">
                 <img src="/images/HomeIcon.svg" alt="" className="w-6" />
-                Menu
+                Meals
               </Link>
             </li>
 
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/worker/orders">
+              <Link className="lato-bold text-xl flex gap-5 items-center" to="/worker/orders">
                 <img src="/images/OrderIcon.svg" alt="" className="w-6" />
                 Orders
               </Link>
             </li>
 
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/worker/analytics">
+              <Link className="lato-bold text-xl flex gap-5 items-center" to="/worker/analytics">
                 <img src="/images/analytics.svg" alt="" className="w-6" />
                 Analytics
               </Link>
             </li>
 
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/worker/suggestions">
+              <Link className="lato-bold text-xl flex gap-5 items-center" to="/worker/suggestions">
                 <img src="/images/add.svg" alt="" className="w-6" />
                 Meal suggestions
               </Link>

@@ -122,7 +122,7 @@ const Overview = () => {
               </button>
             </div>
 
-            <div className=" scrollbar-custom p-2 flex flex-wrap gap-10 overflow-x-hidden h-auto  border-2 border-red-400">
+            <div className="p-5 w-[70vw] scrollbar-custom flex flex-wrap gap-10 overflow-x-hidden h-auto">
               {menuItems.length > 0 ? (
                 menuItems.map((menuItem, index) => (
                   <MenuCard
@@ -136,7 +136,7 @@ const Overview = () => {
                 ))
               ) : (
                 <>
-                  <p>Loading menu items...</p>
+                  <p className="lato-bold">Loading menu items...</p>
                   <div className="flex justify-center items-center">
                     <div
                       className="spinner-border animate-spin inline-block w-8 h-8 border-2 border-t-transparent border-gray-400 rounded-full"

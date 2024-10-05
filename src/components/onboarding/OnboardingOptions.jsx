@@ -16,7 +16,6 @@ const OnboardingOptions = () => {
       try {
         const response = await APIHelper.makeSecureAPICall(token).get('auth/me');
         const { account_type } = response.data.data;
-        console.log(response);
 
         setAccountType(account_type);
       } catch (error) {

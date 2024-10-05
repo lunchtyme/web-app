@@ -16,7 +16,6 @@ const Overview = () => {
       const response = await APIHelper.makeSecureAPICall(token).get('analytics/company');
       const fetchedData = response.data.data;
       setData(fetchedData);
-      console.log(fetchedData);
     } catch (error) {
       console.error(error);
     }

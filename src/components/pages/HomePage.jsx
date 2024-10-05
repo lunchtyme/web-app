@@ -105,7 +105,7 @@ const HomePage = () => {
 
         {/* features */}
         <section className="w-full p-5 lg:p-10">
-          <div className="shadow-lg border-2 border-gray-800 rounded-lg flex flex-col gap-10 sm:flex-col md:flex-col lg:flex-row flex-wrap justify-evenly p-5 lg:p-10 items-center">
+          <div className="shadow-lg border-2 border-gray-300 rounded-lg flex flex-col gap-10 sm:flex-col md:flex-col lg:flex-row flex-wrap justify-evenly p-5 lg:p-10 items-center">
             <div className="w-full lg:w-[40%] flex flex-col gap-10">
               <p className="text-4xl lg:text-7xl lato-bold text-left leading-tight">
                 Delicious Features You'll Love

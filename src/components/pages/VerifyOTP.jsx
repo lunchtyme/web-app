@@ -49,20 +49,19 @@ const VerifyOTP = () => {
     setSuccess('');
 
     const otpCode = otp.join('');
-    console.log('OTP Code:', otpCode);
 
     const email = localStorageHelper.getLocalStorage('acct_mail');
-    if (!email) {
-      setError('Email not found. Please try again.');
-      setLoading(false);
-      return;
-    }
+    // if (!email) {
+    //   setError('Email not found. Please try again.');
+    //   setLoading(false);
+    //   return;
+    // }
 
     try {
       // Send the OTP code and email to the server for verification
       const response = await APIHelper.makeAPICall.post('auth/confirm-email', {
         otp: otpCode,
-        email, // Include the email in the request payload
+        email: email, // Include the email in the request payload
       });
 
       if (response.data.success) {
@@ -93,7 +92,9 @@ const VerifyOTP = () => {
 
     try {
       // Send a request to the server to resend the OTP
-      const response = await APIHelper.makeAPICall.post('auth/resend-verify-email', { email });
+      const response = await APIHelper.makeAPICall.post('auth/resend-verify-email', {
+        email: email,
+      });
 
       // Check if the OTP was resent successfully
       if (response.data.success) {
@@ -112,19 +113,11 @@ const VerifyOTP = () => {
 
   return (
     <>
-      <div className="p-10 flex justify-evenly bg-gray-200 align-middle">
+      <div className="p-10 flex bg-gray-200 align-middle">
         <Link to="/">
           {/* Link back to the home page */}
-          <h2 className="text-2xl font-semibold cursor-pointer">
-            launch<span className="text-green-600">tyme</span>
-          </h2>
+          <img src="/images/lunchtyme-black.svg" alt="" className="w-[10rem]" />
         </Link>
-        <button
-          onClick={handleGoBack} // Go back to the first step when clicked
-          className="btn bg-green-600 text-white w-[10rem] text-xl font-semibold"
-        >
-          Back
-        </button>
       </div>
 
       <div className="min-h-screen flex items-center justify-center bg-gray-200">

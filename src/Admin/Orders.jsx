@@ -19,7 +19,6 @@ const Orders = () => {
     try {
       const response = await APIHelper.makeSecureAPICall(token).get('orders');
       const fetchedData = response.data.data.list;
-      console.log(fetchedData);
       setShowSuccessToast(true);
       setData(fetchedData); // Correctly set the fetched data
     } catch (error) {

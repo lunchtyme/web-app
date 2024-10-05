@@ -29,12 +29,9 @@ const CartContainer = ({
       foodItems: checkoutItems,
     };
 
-    console.log(requestBody);
-
     try {
       const response = await APIHelper.makeSecureAPICall(token).post('orders', requestBody);
       setShowSuccessToast(true);
-      console.log(response.data);
       setMessage(response.data.message);
       navigate('/worker/orders');
     } catch (err) {

@@ -34,7 +34,6 @@ const Billings = () => {
         setAmount(''); // Reset the amount field
         setSuccess('Topup in progress!');
         window.location.href = response.data.data;
-        console.log(response.data.data);
       } else {
         throw new Error('Failed to top up');
       }
@@ -50,7 +49,6 @@ const Billings = () => {
       const response2 = await APIHelper.makeSecureAPICall(token).get('billings?limit=10');
       const fetchedData = response2.data.data.list;
       setData(fetchedData);
-      console.log(response2.data.data.list);
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +63,6 @@ const Billings = () => {
       const response3 = await APIHelper.makeSecureAPICall(token).get('analytics/company');
       const fetchedData2 = response3.data.data;
       setData2(fetchedData2);
-      console.log(fetchedData2);
     } catch (error) {
       console.error(error);
     }

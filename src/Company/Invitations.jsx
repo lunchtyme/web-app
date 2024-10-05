@@ -54,11 +54,9 @@ const Invitations = () => {
     setLoading(true);
     try {
       const response = await APIHelper.makeSecureAPICall(token).get('invitations/list');
-      console.log(response.data);
       setInvitations(response.data.data); // Update state with fetched data
     } catch (error) {
       setError('Failed to fetch invitations. Please try again.');
-      console.log(error.response.data);
     } finally {
       setLoading(false);
     }
