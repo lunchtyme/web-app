@@ -35,7 +35,6 @@ const CompanyForm = () => {
 
       // Check if the API response contains data
       if (createEmployeeAPIResponse && createEmployeeAPIResponse.data) {
-        console.log('API Response for Create Employee:', createEmployeeAPIResponse);
 
         setFormData({
           email: '',
@@ -53,7 +52,6 @@ const CompanyForm = () => {
 
         navigate('/verify');
       } else {
-        console.log('API Response for Create Employee:', createEmployeeAPIResponse);
         setError(createEmployeeAPIResponse.message || 'An error occurred');
       }
     } catch (error) {

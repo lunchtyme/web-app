@@ -32,7 +32,6 @@ const Menu = () => {
       ...prevData,
       health_benefits: allergyList,
     }));
-    console.log(allergyList);
   };
   const handleAllergensChange = (e) => {
     const value = e.target.value;
@@ -42,7 +41,6 @@ const Menu = () => {
       ...prevData,
       allergens: allergyList,
     }));
-    console.log(allergyList);
   };
   const handleConditionsChange = (e) => {
     const value = e.target.value;
@@ -52,7 +50,6 @@ const Menu = () => {
       ...prevData,
       suitable_for_conditions: allergyList,
     }));
-    console.log(allergyList);
   };
   const handleDietsChange = (e) => {
     const value = e.target.value;
@@ -62,7 +59,6 @@ const Menu = () => {
       ...prevData,
       suitable_for_diet: allergyList,
     }));
-    console.log(allergyList);
   };
 
   const categoriesList = [
@@ -256,7 +252,7 @@ const Menu = () => {
                   name="health_benefits"
                   value={formData.health_benefits.join(', ')} // Join array for display
                   onChange={handleHealthChange}
-                  placeholder="Enter allergies, separated by commas"
+                  placeholder="Enter benefits, separated by commas"
                   className="input input-bordered focus:outline-none"
                 />
               </div>
@@ -282,7 +278,7 @@ const Menu = () => {
                   name="suitable_for_conditions"
                   value={formData.suitable_for_conditions.join(', ')} // Join array for display
                   onChange={handleConditionsChange}
-                  placeholder="Enter allergies, separated by commas"
+                  placeholder="Enter conditions, separated by commas"
                   className="input input-bordered focus:outline-none"
                 />
               </div>
@@ -295,7 +291,7 @@ const Menu = () => {
                   name="suitable_for_diet"
                   value={formData.suitable_for_diet.join(', ')} // Join array for display
                   onChange={handleDietsChange}
-                  placeholder="Enter allergies, separated by commas"
+                  placeholder="Enter suitable diets, separated by commas"
                   className="input input-bordered focus:outline-none"
                 />
               </div>

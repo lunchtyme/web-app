@@ -19,7 +19,6 @@ const Transactions = () => {
     try {
       const response = await APIHelper.makeSecureAPICall(token).get('billings?limit=10');
       const fetchedData = response.data.data.list;
-      console.log(fetchedData);
       setData(fetchedData);
       setShowSuccessToast(true);
     } catch (error) {

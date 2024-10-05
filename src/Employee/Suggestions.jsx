@@ -35,7 +35,6 @@ const Suggestions = () => {
       if (response.data.success) {
         setShowSuccessToast(true); // Show success toast
         setData(response.data);
-        console.log(data);
         setFormData({ name: '', description: '', reason_for_suggestion: '' });
       } else {
         setError(response.data.message || 'Login failed. Please check your credentials.');

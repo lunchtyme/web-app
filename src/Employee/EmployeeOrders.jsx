@@ -6,14 +6,13 @@ import Cookies from 'js-cookie';
 const EmployeeOrders = () => {
   const headers = ['Name', 'Title', 'Date', 'Status'];
   const [data, setData] = useState('');
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const token = Cookies.get('esp_lunchtyme_id');
 
   const fetchData = async () => {
     try {
       const response = await APIHelper.makeSecureAPICall(token).get('orders');
       const fetchedData = response.data.data.list;
-      console.log(fetchedData);
       setData(fetchedData);
     } catch (error) {
       console.error(error);

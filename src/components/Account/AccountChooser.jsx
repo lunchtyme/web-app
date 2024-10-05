@@ -3,8 +3,8 @@ import { CheckIcon } from '@heroicons/react/20/solid';
 
 const AccountChooser = ({ handleSelect, selected }) => {
   return (
-    <div className="flex justify-center  border-red-400  border-4">
-      <section className=" border-red-400  border-4 h-[100vh] bg-gray-200 p-10 rounded-lg w-full max-w-[40rem] flex flex-col items-center">
+    <div className="flex justify-center ">
+      <section className="h-[100vh] bg-gray-200 p-10 rounded-lg w-full max-w-[40rem] flex flex-col items-center">
         <h2 className="text-2xl sm:text-xl md:text-2xl font-semibold mb-1 text-center">
           How are you planning to use Lunchtyme?
         </h2>

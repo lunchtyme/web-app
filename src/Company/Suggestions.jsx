@@ -35,7 +35,6 @@ const Suggestions = () => {
       if (response.data.success) {
         setShowSuccessToast(true); // Show success toast
         setData(response.data);
-        console.log(data);
       } else {
         setError(response.data.message || 'Login failed. Please check your credentials.');
         setShowToast(true); // Show error toast on failure

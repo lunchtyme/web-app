@@ -51,31 +51,37 @@ const Sidebar = () => {
           >
             {/* Sidebar content here */}
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/dashboard/overview">
+              <Link className="lato-bold text-xl flex gap-5 items-center" to="/dashboard/overview">
                 <img src="/images/HomeIcon.svg" alt="" className="w-6" />
                 Overview
               </Link>
             </li>
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/dashboard/employees">
+              <Link className="lato-bold text-xl flex gap-5 items-center" to="/dashboard/employees">
                 <img src="/images/employees.svg" alt="" className="w-6" />
                 Employees
               </Link>
             </li>
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/dashboard/invitations">
+              <Link
+                className="lato-bold text-xl flex gap-5 items-center"
+                to="/dashboard/invitations"
+              >
                 <img src="/images/invite.svg" alt="" className="w-6" />
                 Invitations
               </Link>
             </li>
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/dashboard/billings">
+              <Link className="lato-bold text-xl flex gap-5 items-center" to="/dashboard/billings">
                 <img src="/images/bill.svg" alt="" className="w-6" />
                 Billings
               </Link>
             </li>
             <li className="p-2">
-              <Link className="text-xl flex gap-5 items-center" to="/dashboard/suggestions">
+              <Link
+                className="lato-bold text-xl flex gap-5 items-center"
+                to="/dashboard/suggestions"
+              >
                 <img src="/images/add.svg" alt="" className="w-6" />
                 Meal suggestions
               </Link>

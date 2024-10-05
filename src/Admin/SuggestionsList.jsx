@@ -126,7 +126,7 @@ const SuggestionList = () => {
       {/* {message && <p className="text-red-500 text-center">{message}</p>}
       {error2 && <p className="text-red-500 text-center">{error2}</p>} */}
       {result.length === 0 && query && <p>No results found for "{query}"</p>}
-      {result.length === 0 && !query && data.length === 0 && <p>No Lunches added!</p>}
+      {result.length === 0 && !query && data.length === 0 && <p>No suggestions added!</p>}
 
       {loading || loading2 ? (
         <div className="flex justify-center items-center mt-10">

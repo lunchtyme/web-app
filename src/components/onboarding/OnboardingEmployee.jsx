@@ -33,7 +33,6 @@ const OnboardingEmployee = () => {
       ...prevData,
       medical_conditions: allergyList,
     }));
-    console.log(allergyList);
   };
 
   const handleDietChange = (e) => {
@@ -45,7 +44,6 @@ const OnboardingEmployee = () => {
       ...prevData,
       dietary_preferences: allergyList,
     }));
-    console.log(allergyList);
   };
 
   const handleAllergiesChange = (e) => {
@@ -56,14 +54,32 @@ const OnboardingEmployee = () => {
       ...prevData,
       allergies: allergyList,
     }));
-    console.log(allergyList);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Convert the lunch_time to 12-hour format with AM/PM and preserve leading zero
+    const convertTimeTo12Hour = (time) => {
+      let [hours, minutes] = time.split(':'); // Split hours and minutes
+      hours = parseInt(hours, 10); // Convert hours to integer
+      const ampm = hours >= 12 ? 'PM' : 'AM'; // Determine AM/PM
+      hours = hours % 12 || 12; // Convert hours to 12-hour format
+
+      // Ensure leading zero is preserved for single digit hours
+      const formattedHours = hours < 10 ? `0${hours}` : hours;
+
+      return `${formattedHours}:${minutes} ${ampm}`; // Return formatted time
+    };
+
+    const formattedData = {
+      ...formData,
+      lunch_time: convertTimeTo12Hour(formData.lunch_time), // Format the lunch_time
+    };
+
     try {
-      const response = await APIHelper.makeSecureAPICall(token).post('auth/onboard', formData);
-      if (response.status === 200) {
+      const response = await APIHelper.makeSecureAPICall(token).post('auth/onboard', formattedData);
+      if (response.data.success) {
         navigate('/worker/overview');
       }
     } catch (error) {

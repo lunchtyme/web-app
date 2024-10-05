@@ -6,7 +6,7 @@ import APIHelper from './utils/APIHelper';
 const AdminOnboard = () => {
   const navigate = useNavigate();
   const [accountType, setAccountType] = useState(null);
-  const [error, setError] = useState('')
+  const [error, setError] = useState('');
   const token = Cookies.get('esp_lunchtyme_id');
 
   useEffect(() => {
@@ -14,11 +14,10 @@ const AdminOnboard = () => {
       try {
         const response = await APIHelper.makeSecureAPICall(token).get('auth/me');
         const { account_type } = response.data.data;
-        console.log(response);
 
         setAccountType(account_type);
       } catch (error) {
-        setError(error.data)
+        setError(error.data);
         console.error('Error fetching account type:', error.data);
       }
     };
@@ -28,10 +27,7 @@ const AdminOnboard = () => {
 
   if (accountType === null) {
     return (
-      <div
-        className="w-full h-[100vh] bg-gray-200 flex justify-center align-middle
-      border-2 border-red-700"
-      >
+      <div className="w-full h-[100vh] bg-gray-200 flex justify-center align-middle">
         <div className="my-auto">
           <h2 className="text-3xl">Loading...</h2>
         </div>
